@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SpendEase</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="log_in">Log In</string>
+    <string name="log_in_btn">Log in</string>
+    <string name="haven_t_an_account">haven\'t an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="or">OR</string>
+    <string name="google">Google</string>
 </resources>
