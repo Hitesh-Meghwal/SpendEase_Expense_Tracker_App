@@ -8,4 +8,18 @@
     <string name="sign_up">Sign Up</string>
     <string name="or">OR</string>
     <string name="google">Google</string>
+    <string name="googleimg">Googleimg</string>
+    <string name="enter_username_signup">Enter Username</string>
+    <string name="enter_email_signup">Enter Email</string>
+    <string name="enter_password_signup">Enter Password</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="have_an_account">have an account?</string>
+    <string name="log_in_in_sign_up">Log in</string>
+    <string name="sign_up_tv">Sign Up</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_monthly_budget">Enter Monthly Budget</string>
+    <string name="enter_yearly_budget">Enter Yearly Budget</string>
+    <string name="let_s_go">Let\'s Go</string>
+    <string name="add_few_details_befor_you_continue">Add few details before you Continue...!</string>
+    <string name="forget_password">Forget Password?</string>
 </resources>
