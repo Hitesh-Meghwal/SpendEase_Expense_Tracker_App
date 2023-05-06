@@ -1,6 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.spendease.UserAuthentication
 
-import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -59,7 +60,7 @@ class Signup : AppCompatActivity() {
         if(getusername.isEmpty()){
             username.setError("Username cannot be empty!")
         }
-        else if(getemail.isEmpty() && getemail.matches(checkemail)){
+        else if(getemail.isEmpty() && getemail.matches(checkemail)){      //or we can do "&& Patterns.EMAIL_ADDRESS.matcher(getemail).matches()"
             email.setError("Email cannot be empty!")
         }
         else if(getpassword.isEmpty() && passwordlen){
@@ -78,10 +79,11 @@ class Signup : AppCompatActivity() {
                     progressDialog.cancel()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Something went wrong!\n"+e.message, Toast.LENGTH_SHORT).show()
                     progressDialog.cancel()
                 }
-            progressDialog.setMessage("Signing ....")
+            progressDialog.setMessage("Signing ...")
+            progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
         }
     }

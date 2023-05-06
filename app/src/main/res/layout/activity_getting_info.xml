@@ -57,9 +57,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:hint="@string/enter_name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -74,9 +74,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_70sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:hint="@string/enter_monthly_budget">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -91,9 +91,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_125sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:hint="@string/enter_yearly_budget">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -109,9 +109,9 @@
             android:id="@+id/currencyspinner_id"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_180sdp"
-            android:layout_marginEnd="@dimen/_5sdp" />
+            android:layout_marginEnd="@dimen/_15sdp" />
 
         <Button
             android:id="@+id/letsgo_id"

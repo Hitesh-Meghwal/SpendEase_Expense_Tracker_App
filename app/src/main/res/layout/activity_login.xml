@@ -34,13 +34,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_50sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:hint="@string/enter_username">
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:hint="@string/enter_email">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/username_id"
+                android:id="@+id/email_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/baseline_mail_outline_24"
@@ -54,9 +54,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_115sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:hint="@string/enter_password"
             app:passwordToggleEnabled="true">
 
@@ -115,7 +115,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
+        android:id="@+id/cardView2"
         android:layout_width="61dp"
         android:layout_height="64dp"
         android:layout_marginTop="34dp"
