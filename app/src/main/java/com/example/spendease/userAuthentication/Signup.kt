@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.spendease.UserAuthentication
+package com.example.spendease.userAuthentication
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -72,7 +72,6 @@ class Signup : AppCompatActivity() {
                     firestore.collection("User")
                         .document(FirebaseAuth.getInstance().uid.toString())
                         .set(UserModal(getusername,getemail,getpassword))
-
                     val switchtologin = Intent(this, Login::class.java)
                     startActivity(switchtologin)
                     Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()

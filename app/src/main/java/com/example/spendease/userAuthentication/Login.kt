@@ -1,4 +1,4 @@
-package com.example.spendease.UserAuthentication
+package com.example.spendease.userAuthentication
 
 import android.app.ProgressDialog
 import android.content.ContentValues.TAG
@@ -130,13 +130,14 @@ class Login : AppCompatActivity() {
         startActivityForResult(signinIntent,RC_SIGN_IN)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == RC_SIGN_IN){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-            val account = task.getResult(ApiException::class.java)
-            handleSignInResult(account)
+                val account = task.getResult(ApiException::class.java)
+                handleSignInResult(account)
             }
             catch (e:ApiException){
                 Log.w(TAG,"Google Sign in Failed!",e)
@@ -146,7 +147,7 @@ class Login : AppCompatActivity() {
 
     private fun handleSignInResult(acct: GoogleSignInAccount) {
         Log.d(TAG, "FirebaseAuthWithGoogle" + acct.id)
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)   //set of identifying information = credential
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

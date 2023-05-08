@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.spendease.UserAuthentication.Login
+import com.example.spendease.userAuthentication.Login
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")

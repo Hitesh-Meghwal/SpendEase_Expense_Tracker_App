@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="bottom"
+    android:padding="@dimen/_8sdp"
+    android:layout_height="@dimen/_180sdp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="160dp"
+        android:layout_height="150dp"
+        android:padding="@dimen/_3sdp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/profileimg"
+        android:src="@drawable/hitesh"
+        app:shapeAppearanceOverlay="@style/roundImageView"
+        app:strokeWidth="@dimen/_2sdp"
+        app:strokeColor="@color/lightblue"
+        />
+
+</LinearLayout>
