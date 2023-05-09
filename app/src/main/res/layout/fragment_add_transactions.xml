@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".fragments.AddTransactions">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_id"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="New Transactions"
+                app:titleCentered="true"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_520sdp">
+
+
+        <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="320dp"
+                android:text="@string/category"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <GridLayout
+                android:id="@+id/gridselector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_13sdp"
+                android:columnCount="3"
+                android:padding="@dimen/_3sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/foodbtn"
+                    style="@style/category_selector_button"
+                    android:layout_width="@dimen/_93sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:text="@string/food"
+                    android:textSize="@dimen/_10ssp"
+                    app:icon="@drawable/ic_baseline_fastfood_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/_10sdp"
+                    app:iconSize="@dimen/_25sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/shoppingbtn"
+                    style="@style/category_selector_button"
+                    android:layout_width="@dimen/_93sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:text="@string/shopping"
+                    app:icon="@drawable/ic_baseline_shopping_cart_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/_10sdp"
+                    app:iconSize="@dimen/_25sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/educationbtn"
+                    style="@style/category_selector_button"
+                    android:layout_width="@dimen/_98sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:text="@string/education"
+                    app:icon="@drawable/ic_baseline_education_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/_10sdp"
+                    app:iconSize="@dimen/_25sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/healthbtn"
+                    style="@style/category_selector_button"
+                    android:layout_width="@dimen/_93sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:text="@string/health"
+                    app:icon="@drawable/ic_baseline_health_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/_10sdp"
+                    app:iconSize="@dimen/_25sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/otherbtn"
+                    style="@style/category_selector_button"
+                    android:layout_width="@dimen/_93sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:text="@string/other"
+                    app:icon="@drawable/ic_baseline_category_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/_10sdp"
+                    app:iconSize="@dimen/_25sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/transportbtn"
+                    style="@style/category_selector_button"
+                    android:layout_width="@dimen/_98sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:text="@string/transport"
+                    app:icon="@drawable/ic_baseline_directions_transport_24"
+                    app:iconGravity="textTop"
+                    app:iconPadding="@dimen/_10sdp"
+                    app:iconSize="@dimen/_25sdp" />
+
+            </GridLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="337dp"
+            android:text="@string/details"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gridselector" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:hint="@string/title"
+            app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_5sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_5sdp"
+            app:boxCornerRadiusTopStart="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:startIconDrawable="@drawable/ic_baseline_edit_24"
+            tools:layout_editor_absoluteX="19dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:hint="@string/amount"
+            app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_5sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_5sdp"
+            app:boxCornerRadiusTopStart="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            app:startIconDrawable="@drawable/ic_baseline_currency_rupee_24"
+            tools:layout_editor_absoluteX="19dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="phone" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:hint="@string/date"
+            app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_5sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_5sdp"
+            app:boxCornerRadiusTopStart="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            app:startIconDrawable="@drawable/ic_baseline_calendar_month_24"
+            tools:layout_editor_absoluteX="19dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textlayout4"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/note"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_5sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_5sdp"
+            app:boxCornerRadiusTopStart="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+            tools:layout_editor_absoluteX="19dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/addtransaction"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="89dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/login_button"
+            android:text="@string/add_transaction"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textlayout4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

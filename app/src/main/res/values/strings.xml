@@ -43,4 +43,19 @@
     <string name="your_expenses">Your Expenses</string>
     <string name="icon">icon</string>
     <string name="addtransactions">addtransactions</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="category">Category</string>
+    <string name="food">Food</string>
+    <string name="shopping">Shopping</string>
+    <string name="education">Education</string>
+    <string name="transport">Transport</string>
+    <string name="health">Health</string>
+    <string name="other">Other</string>
+    <string name="details">Details</string>
+    <string name="title">Title</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="note">Note</string>
+    <string name="add_transaction">Add transaction</string>
 </resources>

@@ -12,4 +12,11 @@
     <style name="roundImageView" parent="">
         <item name="cornerSize">50%</item>
     </style>
+    
+<!--    add transactions category selector button-->
+    <style name="category_selector_button" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/textSecondary</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="iconTint">@color/textSecondary</item>
+    </style>
 </resources>
