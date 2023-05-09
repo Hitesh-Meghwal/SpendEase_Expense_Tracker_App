@@ -36,4 +36,11 @@
     <string name="dashboard">Dashboard</string>
     <string name="darklightmode">Darklightmode</string>
     <string name="log_out">Log out</string>
+    <string name="cardimage">cardimage</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="add_your_transcations_for_this_month">Add your transcations for this month!!</string>
+    <string name="monthly_budget">Monthly Budget</string>
+    <string name="your_expenses">Your Expenses</string>
+    <string name="icon">icon</string>
+    <string name="addtransactions">addtransactions</string>
 </resources>
