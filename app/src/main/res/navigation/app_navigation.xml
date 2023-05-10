@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/dashboard">
+
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="com.example.spendease.fragments.Dashboard"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboard_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_dashboard_to_allTransactions"
+            app:destination="@id/allTransactions" />
+    </fragment>
+    <fragment
+        android:id="@+id/allTransactions"
+        android:name="com.example.spendease.fragments.AllTransactions"
+        android:label="fragment_all_transactions"
+        tools:layout="@layout/fragment_all_transactions" >
+        <action
+            android:id="@+id/action_allTransactions_to_profile"
+            app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_allTransactions_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.spendease.fragments.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile_to_allTransactions"
+            app:destination="@id/allTransactions" />
+        <action
+            android:id="@+id/action_profile_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
+</navigation>
