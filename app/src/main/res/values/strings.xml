@@ -58,4 +58,20 @@
     <string name="date">Date</string>
     <string name="note">Note</string>
     <string name="add_transaction">Add transaction</string>
+    <string name="all">All</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="all_transactions">All Transactions</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="september">September</string>
+    <string name="august">August</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="your_transactions">Your Transactions</string>
 </resources>

@@ -19,4 +19,22 @@
         <item name="android:textColor">@color/textSecondary</item>
         <item name="iconTint">@color/textSecondary</item>
     </style>
+
+<!--    transactions selector button-->
+    <style name="transaction_selector_btn" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/purple_200</item>
+        <item name="android:textColor">@color/purple_200</item>
+        <item name="iconTint">@color/purple_200 </item>
+    </style>
+
+    <!--    monthly selector button-->
+    <style name="selector_button" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/textSecondary</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="iconTint">@color/textSecondary</item>
+    </style>
+
+    <style name="button_overlay" >
+        <item name="colorSurface">@android:color/white</item>
+    </style>
 </resources>

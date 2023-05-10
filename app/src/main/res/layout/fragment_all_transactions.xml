@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".fragments.AllTransactions">
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleselector"
+        style="@style/button_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:checkedButton="@+id/all"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/all"
+            style="@style/transaction_selector_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:text="@string/all" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/monthly"
+            style="@style/transaction_selector_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:text="@string/monthly" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/yearly"
+            style="@style/transaction_selector_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            android:text="@string/yearly" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/toggleselector"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/all_transactions"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/yearlyspinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <HorizontalScrollView
+                android:id="@+id/montlyselector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@+id/title">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/january"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/january"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/february"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/february"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/march"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/march"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/april"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/april"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/may"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/may"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/june"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/june"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/july"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="July"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/august"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/august"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/september"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/september"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/october"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/october"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/november"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/november"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/december"
+                        style="@style/selector_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/december"
+                        android:textSize="@dimen/_10ssp" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/noTransactionsDoneText"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_250sdp"
+                android:text=""
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/_13ssp"
+                android:layout_margin="@dimen/_16sdp"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/montlyselector"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_card"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_margin="@dimen/_15sdp"
+                android:backgroundTint="@color/cardBackground"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_4sdp"
+                app:layout_constraintTop_toBottomOf="@+id/montlyselector">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:text="@string/monthly_budget"
+                        android:textColor="@color/textSecondary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/budgettv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="@dimen/_15ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text" />
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:text="@string/your_expenses"
+                        android:textColor="@color/textSecondary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/budgettv" />
+
+                    <TextView
+                        android:id="@+id/expensetv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:text=""
+                        android:textColor="@color/textPrimary"
+                        android:textSize="@dimen/_25ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text2" />
+
+                    <ImageView
+                        android:id="@+id/indicator"
+                        android:layout_width="@dimen/_22sdp"
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:contentDescription="@string/icon"
+                        android:src="@drawable/ic_positive_amount"
+                        app:layout_constraintBottom_toBottomOf="@id/text2"
+                        app:layout_constraintStart_toEndOf="@id/text2"
+                        app:layout_constraintTop_toTopOf="@id/text2" />
+
+                    <TextView
+                        android:id="@+id/datetv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:background="@drawable/round"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingTop="@dimen/_1sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:paddingBottom="@dimen/_1sdp"
+                        android:text=""
+                        android:textColor="@color/textSecondary"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <org.eazegraph.lib.charts.PieChart
+                        android:id="@+id/piechart"
+                        android:layout_width="@dimen/_140sdp"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/_10sdp"
+                        app:egInnerPaddingColor="@color/cardBackground"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/your_transactions"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_card" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/transactionrecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_70sdp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
