@@ -10,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.example.spendease.R
+import com.example.spendease.navigation.NavigationDrawer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -63,6 +65,19 @@ class Login : AppCompatActivity() {
             googleSignIn()
         }
 
+        setUpSignUp()
+
+    }
+
+    // if user is already login then he/she redirect to next activity
+    private fun setUpSignUp(){
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        if(account != null){
+            goToNextPage()
+        }
+        else{
+            googleSignIn()
+        }
     }
 
     private fun logIn(){
@@ -181,6 +196,11 @@ class Login : AppCompatActivity() {
         progressDialog.setMessage("Logging...")
         progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
+    }
+
+    private fun goToNextPage() {
+        val intent = Intent(this,NavigationDrawer::class.java)
+        startActivity(intent)
     }
 
     private fun notifyUser(message:String){

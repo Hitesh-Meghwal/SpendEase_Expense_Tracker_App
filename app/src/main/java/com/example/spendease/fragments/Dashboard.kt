@@ -1,12 +1,16 @@
 package com.example.spendease.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.spendease.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 
@@ -20,10 +24,19 @@ class Dashboard : Fragment() {
     private var totalHealth = 0.0f
     private var totalEducation = 0.0f
     private var totalOthers = 0.0f
+    lateinit var drawerLayout: DrawerLayout
+    lateinit var navigationView: NavigationView
+    lateinit var userDetails: SharedPreferences
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        drawerLayout = requireActivity().findViewById(R.id.drawerlayout)
+        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
+        val bottomnav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
+        bottomnav.visibility = View.VISIBLE
         return view
+
 
     }
 
@@ -43,7 +56,6 @@ class Dashboard : Fragment() {
         pieChart.addPieSlice(PieModel("Left",totalGoal-(totalExpense.toFloat()), ContextCompat.getColor(requireContext(), R.color.background_deep)))
     }
     pieChart.startAnimation()
-
     }
 
 }
