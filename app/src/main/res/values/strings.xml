@@ -77,4 +77,5 @@
     <string name="fab">FAB</string>
     <string name="monthly_budget_profile">Monthly Budget</string>
     <string name="yearly_budget_profile">Yearly Budget</string>
+    <string name="editfab">editfab</string>
 </resources>

@@ -95,7 +95,7 @@
                 android:text=""
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/_14sdp"
-                app:layout_constraintBottom_toTopOf="@+id/ddmmyyyytv_id"
+                app:layout_constraintBottom_toTopOf="@+id/datetv_id"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.924"
                 app:layout_constraintStart_toEndOf="@+id/titletv_id"
@@ -103,7 +103,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/ddmmyyyytv_id"
+                android:id="@+id/datetv_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="75dp"
