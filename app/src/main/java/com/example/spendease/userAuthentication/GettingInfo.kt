@@ -5,7 +5,10 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telecom.Call.Details
+import android.widget.Adapter
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.Toast
 import com.example.spendease.R
 import com.example.spendease.navigation.NavigationDrawer
@@ -18,6 +21,7 @@ class GettingInfo : AppCompatActivity() {
     lateinit var monthlybudget : TextInputEditText
     lateinit var yearlybudget : TextInputEditText
     lateinit var userDetails: SharedPreferences
+    lateinit var currencypicker : Spinner
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_getting_info)
@@ -28,9 +32,17 @@ class GettingInfo : AppCompatActivity() {
         val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
         letsgobtn = findViewById(R.id.letsgo_id)
         userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
+        currencyselector()
         letsgobtn.setOnClickListener {
             saveUserData()
         }
+    }
+
+    private fun currencyselector(){
+        currencypicker = findViewById(R.id.currencyspinner_id)
+        val currency : List<String> = listOf("₹ Indian Rupee","$ Dollar","£ United Kingdom Pound","$ Argentina Peso","ƒ Aruba Guilder","₼ Azerbaijan Manat","Br Belarus Ruble","лв Bulgaria Lev","R$ Brazil Real","៛ Cambodia Riel","¥ China Yuan Renminbi","৳ Bangladeshi taka")
+        val currencyadapter = ArrayAdapter(this, R.layout.currency_item,currency)
+        currencypicker.adapter = currencyadapter
     }
 
     private fun goToNextScreen(){
@@ -44,8 +56,8 @@ class GettingInfo : AppCompatActivity() {
         yearlybudget = findViewById(R.id.enteryearlyb_id)
 
         val username = name.text.toString()
-        val usermonthlybudget = monthlybudget.text.toString()
-        val usereyearlybudget = yearlybudget.text.toString()
+        val usermonthlybudget = monthlybudget.text.toString().trim()
+        val usereyearlybudget = yearlybudget.text.toString().trim()
 
         if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty()){
             Toast.makeText(this, "Enter all details to continue...", Toast.LENGTH_SHORT).show()
