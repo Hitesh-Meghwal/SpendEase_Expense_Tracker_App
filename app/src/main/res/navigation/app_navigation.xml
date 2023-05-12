@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
     app:startDestination="@id/dashboard">
-
     <fragment
         android:id="@+id/dashboard"
         android:name="com.example.spendease.fragments.Dashboard"
@@ -14,14 +13,8 @@
             android:id="@+id/action_dashboard_to_allTransactions"
             app:destination="@id/allTransactions" />
         <action
-            android:id="@+id/action_dashboard_to_profile"
+            android:id="@+id/action_dashboard_to_profile2"
             app:destination="@id/profile" />
-        <action
-            android:id="@+id/action_dashboard_to_addTransactions"
-            app:destination="@id/addTransactions" />
-        <action
-            android:id="@+id/action_dashboard_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
     </fragment>
     <fragment
         android:id="@+id/allTransactions"
@@ -29,14 +22,11 @@
         android:label="fragment_all_transactions"
         tools:layout="@layout/fragment_all_transactions" >
         <action
-            android:id="@+id/action_allTransactions_to_profile"
+            android:id="@+id/action_allTransactions_to_profile2"
             app:destination="@id/profile" />
         <action
             android:id="@+id/action_allTransactions_to_dashboard"
             app:destination="@id/dashboard" />
-        <action
-            android:id="@+id/action_allTransactions_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
     </fragment>
     <fragment
         android:id="@+id/profile"
@@ -44,24 +34,10 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profile_to_allTransactions"
+            android:id="@+id/action_profile2_to_allTransactions"
             app:destination="@id/allTransactions" />
         <action
-            android:id="@+id/action_profile_to_dashboard"
+            android:id="@+id/action_profile2_to_dashboard"
             app:destination="@id/dashboard" />
     </fragment>
-    <fragment
-        android:id="@+id/addTransactions"
-        android:name="com.example.spendease.fragments.AddTransactions"
-        android:label="fragment_add_transactions"
-        tools:layout="@layout/fragment_add_transactions" >
-        <action
-            android:id="@+id/action_addTransactions_to_dashboard"
-            app:destination="@id/dashboard" />
-    </fragment>
-    <fragment
-        android:id="@+id/transactionDetails"
-        android:name="com.example.spendease.fragments.TransactionDetails"
-        android:label="fragment_transaction__details"
-        tools:layout="@layout/fragment_transaction__details" />
 </navigation>

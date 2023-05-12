@@ -31,10 +31,10 @@ class Dashboard : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        drawerLayout = requireActivity().findViewById(R.id.drawerlayout)
-        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
-        val bottomnav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
-        bottomnav.visibility = View.VISIBLE
+//        drawerLayout = requireActivity().findViewById(R.id.drawerlayout)
+//        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
+//        val bottomnav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
+//        bottomnav.visibility = View.VISIBLE
         return view
 
 
