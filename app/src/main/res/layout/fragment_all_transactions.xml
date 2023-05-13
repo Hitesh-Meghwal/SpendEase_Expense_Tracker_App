@@ -57,8 +57,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/title"
@@ -75,9 +74,9 @@
 
             <Spinner
                 android:id="@+id/yearlyspinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_width="124dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
                 android:spinnerMode="dropdown"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -227,17 +226,16 @@
                 android:id="@+id/noTransactionsDoneText"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_250sdp"
+                android:layout_margin="@dimen/_16sdp"
+                android:gravity="center"
                 android:text=""
                 android:textColor="@color/textSecondary"
                 android:textSize="@dimen/_13ssp"
-                android:layout_margin="@dimen/_16sdp"
-                android:gravity="center"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/montlyselector"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/montlyselector" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/main_card"
@@ -364,7 +362,7 @@
                 android:layout_marginBottom="@dimen/_70sdp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
-                />
+                tools:listitem="@layout/transaction_itemlist" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
