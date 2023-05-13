@@ -5,16 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.spendease.R
+import com.example.spendease.navigation.NavigationDrawer
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AddTransactions : Fragment() {
     lateinit var bottomnav : BottomNavigationView
+    lateinit var toolbar: MaterialToolbar
+    lateinit var drawerLayout: DrawerLayout
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_transactions, container, false)
         bottomnav = requireActivity().findViewById(R.id.bottomnavigation_id)
+        toolbar = requireActivity().findViewById(R.id.toolbar_id)
+        toolbar.title = "New Transactions"
+
         bottomnav.visibility = View.GONE
         return view
     }

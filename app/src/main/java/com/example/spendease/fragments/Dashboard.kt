@@ -29,18 +29,13 @@ class Dashboard : Fragment() {
     private var totalEducation = 0.0f
     private var totalOthers = 0.0f
     lateinit var fab : FloatingActionButton
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var navigationView: NavigationView
+//    lateinit var drawerLayout: DrawerLayout
+//    lateinit var navigationView: NavigationView
     lateinit var userDetails: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
-//        drawerLayout = requireActivity().findViewById(R.id.drawerlayout)
-//        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
-//        val bottomnav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
-//        bottomnav.visibility = View.VISIBLE
-
 //        Switch to AddTransaction Fragment
         fab = view.findViewById(R.id.addnewtransactions)
         fab.setOnClickListener {
@@ -51,7 +46,6 @@ class Dashboard : Fragment() {
 
 
     }
-
 
 //    To show PiChart in cardview to users
     private fun showPiChart(){
