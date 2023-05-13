@@ -15,6 +15,11 @@
         <action
             android:id="@+id/action_dashboard_to_profile2"
             app:destination="@id/profile" />
+        <action
+            android:id="@+id/action_dashboard_to_addTransactions"
+            app:destination="@id/addTransactions"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/allTransactions"
@@ -40,4 +45,9 @@
             android:id="@+id/action_profile2_to_dashboard"
             app:destination="@id/dashboard" />
     </fragment>
+    <fragment
+        android:id="@+id/addTransactions"
+        android:name="com.example.spendease.fragments.AddTransactions"
+        android:label="fragment_add_transactions"
+        tools:layout="@layout/fragment_add_transactions" />
 </navigation>

@@ -8,8 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.findNavController
 import com.example.spendease.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
@@ -24,6 +28,7 @@ class Dashboard : Fragment() {
     private var totalHealth = 0.0f
     private var totalEducation = 0.0f
     private var totalOthers = 0.0f
+    lateinit var fab : FloatingActionButton
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var userDetails: SharedPreferences
@@ -35,6 +40,13 @@ class Dashboard : Fragment() {
 //        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
 //        val bottomnav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
 //        bottomnav.visibility = View.VISIBLE
+
+//        Switch to AddTransaction Fragment
+        fab = view.findViewById(R.id.addnewtransactions)
+        fab.setOnClickListener {
+            addtransactionfragment()
+        }
+
         return view
 
 
@@ -56,6 +68,11 @@ class Dashboard : Fragment() {
         pieChart.addPieSlice(PieModel("Left",totalGoal-(totalExpense.toFloat()), ContextCompat.getColor(requireContext(), R.color.background_deep)))
     }
     pieChart.startAnimation()
+    }
+
+    private fun addtransactionfragment(){
+        val action = DashboardDirections.actionDashboardToAddTransactions()
+        findNavController().navigate(action)
     }
 
 }

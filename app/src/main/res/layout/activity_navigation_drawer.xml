@@ -36,7 +36,7 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?attr/actionBarSize"
                 app:menu="@menu/toolbar_menu"
                 app:title="SpendEase" />
 
@@ -45,10 +45,7 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomnavigation_id"
             android:layout_width="match_parent"
-            android:layout_height="69dp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:background="@drawable/bottomround_corner"
+            android:layout_height="?attr/actionBarSize"
             android:elevation="@dimen/_10sdp"
             app:itemIconSize="@dimen/_13sdp"
             app:itemIconTint="@drawable/bottomitem_selector"
@@ -64,13 +61,12 @@
             android:id="@+id/fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="800dp"
+            android:layout_height="600dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="@+id/bottomnavigation_id"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.0"
             app:navGraph="@navigation/app_navigation" />
 
 
