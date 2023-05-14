@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import com.example.spendease.R
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -29,6 +31,7 @@ class Dashboard : Fragment() {
     private var totalEducation = 0.0f
     private var totalOthers = 0.0f
     lateinit var fab : FloatingActionButton
+    lateinit var toolbar: MaterialToolbar
 //    lateinit var drawerLayout: DrawerLayout
 //    lateinit var navigationView: NavigationView
     lateinit var userDetails: SharedPreferences
@@ -36,6 +39,7 @@ class Dashboard : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+
 //        Switch to AddTransaction Fragment
         fab = view.findViewById(R.id.addnewtransactions)
         fab.setOnClickListener {
@@ -46,8 +50,17 @@ class Dashboard : Fragment() {
 
 
     }
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.show()
+        // Show the bottom navigation again
+        val bottomnav = requireActivity().findViewById<View>(R.id.bottomnavigation_id)
+        bottomnav.visibility = View.VISIBLE
+    }
 
-//    To show PiChart in cardview to users
+
+
+    //    To show PiChart in cardview to users
     private fun showPiChart(){
 
     pieChart = requireView().findViewById(R.id.piechart)

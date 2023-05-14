@@ -3,6 +3,7 @@ package com.example.spendease.navigation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -26,6 +27,7 @@ class NavigationDrawer : AppCompatActivity(){
         drawerLayout =findViewById(R.id.drawerlayout)
         navigationView = findViewById(R.id.navigation_drawer)
         toolbar = findViewById(R.id.toolbar_id)
+        setSupportActionBar(toolbar)
 
         val bottomnav = findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
 
@@ -39,5 +41,7 @@ class NavigationDrawer : AppCompatActivity(){
 
 
     }
+
+
 
 }

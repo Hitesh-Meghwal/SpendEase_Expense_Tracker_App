@@ -49,5 +49,9 @@
         android:id="@+id/addTransactions"
         android:name="com.example.spendease.fragments.AddTransactions"
         android:label="fragment_add_transactions"
-        tools:layout="@layout/fragment_add_transactions" />
+        tools:layout="@layout/fragment_add_transactions" >
+        <action
+            android:id="@+id/action_addTransactions_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
 </navigation>

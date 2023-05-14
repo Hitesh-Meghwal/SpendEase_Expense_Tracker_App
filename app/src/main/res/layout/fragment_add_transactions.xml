@@ -13,118 +13,138 @@
     android:orientation="vertical"
     tools:context=".fragments.AddTransactions">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/newtranstoolbar_id"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="New Transactions"
+            app:titleCentered="true"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_520sdp">
+        android:layout_height="@dimen/_600sdp">
 
 
         <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="320dp"
-                android:text="@string/category"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/category"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.048"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <GridLayout
-                android:id="@+id/gridselector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_13sdp"
-                android:columnCount="3"
-                android:padding="@dimen/_3sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView">
+        <GridLayout
+            android:id="@+id/gridselector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:padding="@dimen/_3sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/foodbtn"
-                    style="@style/category_selector_button"
-                    android:layout_width="@dimen/_93sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:text="@string/food"
-                    android:textSize="@dimen/_10ssp"
-                    app:icon="@drawable/ic_baseline_fastfood_24"
-                    app:iconGravity="textTop"
-                    app:iconPadding="@dimen/_10sdp"
-                    app:iconSize="@dimen/_25sdp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/foodbtn"
+                style="@style/category_selector_button"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:text="@string/food"
+                android:textSize="@dimen/_10ssp"
+                app:icon="@drawable/ic_baseline_fastfood_24"
+                app:iconGravity="textTop"
+                app:iconPadding="@dimen/_10sdp"
+                app:iconSize="@dimen/_25sdp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/shoppingbtn"
-                    style="@style/category_selector_button"
-                    android:layout_width="@dimen/_93sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:text="@string/shopping"
-                    app:icon="@drawable/ic_baseline_shopping_cart_24"
-                    app:iconGravity="textTop"
-                    app:iconPadding="@dimen/_10sdp"
-                    app:iconSize="@dimen/_25sdp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/shoppingbtn"
+                style="@style/category_selector_button"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:text="@string/shopping"
+                android:textSize="@dimen/_10ssp"
+                app:icon="@drawable/ic_baseline_shopping_cart_24"
+                app:iconGravity="textTop"
+                app:iconPadding="@dimen/_10sdp"
+                app:iconSize="@dimen/_25sdp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/educationbtn"
-                    style="@style/category_selector_button"
-                    android:layout_width="@dimen/_98sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:text="@string/education"
-                    app:icon="@drawable/ic_baseline_education_24"
-                    app:iconGravity="textTop"
-                    app:iconPadding="@dimen/_10sdp"
-                    app:iconSize="@dimen/_25sdp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/educationbtn"
+                style="@style/category_selector_button"
+                android:layout_width="@dimen/_93sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:text="@string/education"
+                android:textSize="@dimen/_10ssp"
+                app:icon="@drawable/ic_baseline_education_24"
+                app:iconGravity="textTop"
+                app:iconPadding="@dimen/_10sdp"
+                app:iconSize="@dimen/_25sdp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/healthbtn"
-                    style="@style/category_selector_button"
-                    android:layout_width="@dimen/_93sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:text="@string/health"
-                    app:icon="@drawable/ic_baseline_health_24"
-                    app:iconGravity="textTop"
-                    app:iconPadding="@dimen/_10sdp"
-                    app:iconSize="@dimen/_25sdp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/healthbtn"
+                style="@style/category_selector_button"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:text="@string/health"
+                android:textSize="@dimen/_10ssp"
+                app:icon="@drawable/ic_baseline_health_24"
+                app:iconGravity="textTop"
+                app:iconPadding="@dimen/_10sdp"
+                app:iconSize="@dimen/_25sdp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/otherbtn"
-                    style="@style/category_selector_button"
-                    android:layout_width="@dimen/_93sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:text="@string/other"
-                    app:icon="@drawable/ic_baseline_category_24"
-                    app:iconGravity="textTop"
-                    app:iconPadding="@dimen/_10sdp"
-                    app:iconSize="@dimen/_25sdp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/otherbtn"
+                style="@style/category_selector_button"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:text="@string/other"
+                android:textSize="@dimen/_10ssp"
+                app:icon="@drawable/ic_baseline_category_24"
+                app:iconGravity="textTop"
+                app:iconPadding="@dimen/_10sdp"
+                app:iconSize="@dimen/_25sdp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/transportbtn"
-                    style="@style/category_selector_button"
-                    android:layout_width="@dimen/_98sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:text="@string/transport"
-                    app:icon="@drawable/ic_baseline_directions_transport_24"
-                    app:iconGravity="textTop"
-                    app:iconPadding="@dimen/_10sdp"
-                    app:iconSize="@dimen/_25sdp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/transportbtn"
+                style="@style/category_selector_button"
+                android:layout_width="@dimen/_93sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:text="@string/transport"
+                android:textSize="@dimen/_10ssp"
+                app:icon="@drawable/ic_baseline_directions_transport_24"
+                app:iconGravity="textTop"
+                app:iconPadding="@dimen/_10sdp"
+                app:iconSize="@dimen/_25sdp" />
 
-            </GridLayout>
+        </GridLayout>
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="337dp"
+            android:layout_marginTop="20dp"
             android:text="@string/details"
             android:textColor="@color/textPrimary"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_15sdp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.06"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gridselector" />
 
@@ -222,7 +242,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:gravity="top"
+                android:maxLength="300"
                 android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -231,9 +253,9 @@
             android:layout_width="@dimen/_180sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="88dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="89dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/login_button"
             android:text="@string/add_transaction"
             android:textSize="@dimen/_14ssp"
