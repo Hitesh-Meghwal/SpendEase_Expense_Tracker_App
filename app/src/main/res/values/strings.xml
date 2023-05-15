@@ -78,4 +78,8 @@
     <string name="monthly_budget_profile">Monthly Budget</string>
     <string name="yearly_budget_profile">Yearly Budget</string>
     <string name="editfab">editfab</string>
+    <string name="update_details">Update Details</string>
+    <string name="name">Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
 </resources>

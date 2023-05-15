@@ -168,7 +168,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/recent_transactions"
                 android:textColor="@color/textPrimary"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_card" />

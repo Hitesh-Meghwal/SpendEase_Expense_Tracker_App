@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_profile2_to_dashboard"
             app:destination="@id/dashboard" />
+        <action
+            android:id="@+id/action_profile_to_updateUserDetailsDialog"
+            app:destination="@id/updateUserDetailsDialog" />
     </fragment>
     <fragment
         android:id="@+id/addTransactions"
@@ -54,4 +57,9 @@
             android:id="@+id/action_addTransactions_to_dashboard"
             app:destination="@id/dashboard" />
     </fragment>
+    <dialog
+        android:id="@+id/updateUserDetailsDialog"
+        android:name="com.example.spendease.fragments.UpdateUserDetailsDialog"
+        android:label="fragment_update_user_details_dialog"
+        tools:layout="@layout/fragment_update_user_details_dialog" />
 </navigation>
