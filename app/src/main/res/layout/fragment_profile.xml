@@ -50,15 +50,16 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/editfab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="@dimen/_8sdp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="15dp"
-            android:background="@color/background"
+            app:fabCustomSize="40dp"
+            android:backgroundTint="@color/background"
             android:contentDescription="@string/fab"
             android:src="@drawable/ic_baseline_edit_24"
-            app:fabSize="mini"
+            app:maxImageSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

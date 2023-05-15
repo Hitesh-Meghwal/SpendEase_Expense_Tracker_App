@@ -1,11 +1,13 @@
 package com.example.spendease.fragments
 
 import android.content.SharedPreferences
+import android.media.midi.MidiOutputPort
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -45,9 +47,17 @@ class Dashboard : Fragment() {
         fab.setOnClickListener {
             addtransactionfragment()
         }
-
+        getdata()
         return view
 
+
+    }
+
+    private fun getdata(){
+        val showname = view?.findViewById<TextView>(R.id.textView7)
+        userDetails = requireActivity().getSharedPreferences("UserDetails",AppCompatActivity.MODE_PRIVATE)
+        val getname = userDetails.getString("Name","Helllo")
+        showname?.text = getname
 
     }
 

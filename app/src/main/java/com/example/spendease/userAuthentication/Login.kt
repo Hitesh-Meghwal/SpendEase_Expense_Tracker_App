@@ -3,6 +3,7 @@ package com.example.spendease.userAuthentication
 import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -37,6 +38,7 @@ class Login : AppCompatActivity() {
     lateinit var firebaseAuth: FirebaseAuth
     lateinit var GsignInOptions: GoogleSignInOptions
     lateinit var GsignInClient: GoogleSignInClient
+    lateinit var UserDetails : SharedPreferences
     val RC_SIGN_IN = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +98,11 @@ class Login : AppCompatActivity() {
         else{
             firebaseAuth.signInWithEmailAndPassword(getemail, getpassword)
                 .addOnSuccessListener {
+                    UserDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
+                    val editor = UserDetails.edit()
+                    editor.putBoolean("isFirstTime",true)
+                    editor.apply()
+
                     val gettinginfointent = Intent(this,GettingInfo::class.java)
                     startActivity(gettinginfointent)
                     Toast.makeText(this, "Logging Successfully!", Toast.LENGTH_SHORT).show()
