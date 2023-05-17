@@ -1,5 +1,7 @@
 package com.example.spendease.fragments
 
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.media.midi.MidiOutputPort
 import android.os.Bundle
@@ -47,17 +49,21 @@ class Dashboard : Fragment() {
         fab.setOnClickListener {
             addtransactionfragment()
         }
-        getdata()
         return view
-
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        getdata()
+    }
+
     private fun getdata(){
-        val showname = view?.findViewById<TextView>(R.id.textView7)
-        userDetails = requireActivity().getSharedPreferences("UserDetails",AppCompatActivity.MODE_PRIVATE)
-        val getname = userDetails.getString("Name","Helllo")
-        showname?.text = getname
+        val shownametv = view?.findViewById<TextView>(R.id.textView7)
+        userDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
+        val getname = userDetails.getString("Name","")
+        shownametv?.text = getname
 
     }
 

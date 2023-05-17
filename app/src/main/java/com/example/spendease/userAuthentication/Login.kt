@@ -71,15 +71,16 @@ class Login : AppCompatActivity() {
 
     }
 
-    // if user is already login then he/she redirect to next activity
+    // if user is already login then he/she redirect to next activity if user is login with GoogleAccount
     private fun setUpSignUp(){
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if(account != null){
             goToNextPage()
         }
-        else{
-            googleSignIn()
-        }
+//        else{
+//            logIn()
+//            googleSignIn()
+//        }
     }
 
     private fun logIn(){
@@ -102,11 +103,18 @@ class Login : AppCompatActivity() {
                     val editor = UserDetails.edit()
                     editor.putBoolean("isFirstTime",true)
                     editor.apply()
+                    val currentUser = firebaseAuth.currentUser
+                    if(currentUser != null){
+                        val mainactivity = Intent(this,NavigationDrawer::class.java)
+                        startActivity(mainactivity)
+                    }
+                    else{
+                        val gettinginfointent = Intent(this,GettingInfo::class.java)
+                        startActivity(gettinginfointent)
+                        Toast.makeText(this, "Logging Successfully!", Toast.LENGTH_SHORT).show()
+                        progressDialog.cancel()
+                    }
 
-                    val gettinginfointent = Intent(this,GettingInfo::class.java)
-                    startActivity(gettinginfointent)
-                    Toast.makeText(this, "Logging Successfully!", Toast.LENGTH_SHORT).show()
-                    progressDialog.cancel()
                 }
                 .addOnFailureListener { e->
                     notifyUser("Email does not found \nPlease Sign Up!"+e.message)

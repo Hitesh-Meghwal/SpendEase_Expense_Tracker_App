@@ -1,5 +1,6 @@
 package com.example.spendease.navigation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -12,9 +13,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.spendease.R
+import com.example.spendease.userAuthentication.Login
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class NavigationDrawer : AppCompatActivity(){
     lateinit var drawerLayout: DrawerLayout
@@ -46,7 +49,21 @@ class NavigationDrawer : AppCompatActivity(){
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu,menu)
         return super.onCreateOptionsMenu(menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.logout_id->{
+                val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
+                val editor = userDetails.edit()
+                editor.putBoolean("isFirstTime",false)
+                editor.apply()
+//                FirebaseAuth.getInstance().signOut()
+                val i = Intent(this,Login::class.java)
+                startActivity(i)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

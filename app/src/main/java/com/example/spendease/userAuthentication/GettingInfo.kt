@@ -1,5 +1,6 @@
 package com.example.spendease.userAuthentication
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,6 @@ class GettingInfo : AppCompatActivity() {
     private fun setData(){
         val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
         letsgobtn = findViewById(R.id.letsgo_id)
-        userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
         currencyselector()
         letsgobtn.setOnClickListener {
             saveUserData()
@@ -63,8 +63,9 @@ class GettingInfo : AppCompatActivity() {
             Toast.makeText(this, "Enter all details to continue...", Toast.LENGTH_SHORT).show()
         }
         else{
-            val editor : SharedPreferences.Editor = userDetails.edit()
-            editor.putBoolean("isFirstTime",false)
+            userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
+            val editor = userDetails.edit()
+//            editor.putBoolean("isFirstTime",false)
             editor.putString("Name",username)
             editor.putString("MonthlyBudget",usermonthlybudget)
             editor.putString("YearlyBudget",usereyearlybudget)
