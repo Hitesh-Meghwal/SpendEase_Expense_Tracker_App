@@ -65,13 +65,14 @@ class GettingInfo : AppCompatActivity() {
         }
         else{
             userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
+            val userEmail = userDetails.getString("email","")
             val editor = userDetails.edit()
-            editor.putBoolean("isFirstTime",false)
-            editor.putString("Name",username)
-            editor.putString("MonthlyBudget",usermonthlybudget)
-            editor.putString("YearlyBudget",usereyearlybudget)
-            editor.putString("Currency_name",currency.trim())
-            editor.putString("Currency",currency.split(" ")[0].trim())
+//            editor.putBoolean(userEmail+"isFirstTime",false)
+            editor.putString(userEmail+"Name",username)
+            editor.putString(userEmail+"MonthlyBudget",usermonthlybudget)
+            editor.putString(userEmail+"YearlyBudget",usereyearlybudget)
+            editor.putString(userEmail+"Currency_name",currency.trim())
+            editor.putString(userEmail+"Currency",currency.split(" ")[0].trim())
             editor.apply()
             goToNextScreen()
 

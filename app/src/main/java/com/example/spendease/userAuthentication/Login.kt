@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 
 
 @Suppress("DEPRECATION")
@@ -75,33 +76,31 @@ class Login : AppCompatActivity() {
         email = findViewById(R.id.email_id)
         password = findViewById(R.id.password_id)
 
-        val getemail = email.text.toString().trim()
-        val getpassword = password.text.toString()
+        val userEmail = email.text.toString().trim()
+        val userPassword = password.text.toString()
         firebaseAuth = FirebaseAuth.getInstance()
-        if (getemail.isEmpty()){
+        if (userEmail.isEmpty()){
             email.setError("Email cannot be empty!")
         }
-        else if(getpassword.isEmpty()){
+        else if(userPassword.isEmpty()){
             password.setError("Password cannot be empty!")
         }
         else{
-            firebaseAuth.signInWithEmailAndPassword(getemail, getpassword)
-                .addOnSuccessListener{
-                    val editor = UserDetails.edit()
-                    editor.putBoolean("isFirstTime", true)
-                    editor.apply()
-                    val userdetails = getUserDetailsFromSharedPreferences()
-                    if(userdetails != null) {
+            firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword)
+                .addOnSuccessListener {
+                    val isGettingInfoShown = UserDetails.getBoolean("getting_info_show",false)
+                    if (!isGettingInfoShown) {
+                        val editor = UserDetails.edit()
+                        editor.putBoolean("isFirstTime", true)
+                        editor.putString("email", userEmail)
+                        editor.apply()
+                        val mainactivity = Intent(this, GettingInfo::class.java)
+                        startActivity(mainactivity)
+                    } else {
                         val mainactivity = Intent(this, NavigationDrawer::class.java)
                         startActivity(mainactivity)
                     }
-                    else {
-                        val gettinginfointent = Intent(this, GettingInfo::class.java)
-                        startActivity(gettinginfointent)
-                        Toast.makeText(this, "Logging Successfully!", Toast.LENGTH_SHORT).show()
-                        progressDialog.cancel()
-                    }
-                    }
+                }
                     .addOnFailureListener { e ->
                         notifyUser("Email does not found \nPlease Sign Up!" + e.message)
                         progressDialog.cancel()
@@ -200,7 +199,6 @@ class Login : AppCompatActivity() {
     }
 
     private fun getUserDetailsFromSharedPreferences() {
-        UserDetails.getBoolean("isFirstTime",false)
         UserDetails.getString("Name","")
         UserDetails.getString("MonthlyBudget","")
         UserDetails.getString("YearlyBudget","")

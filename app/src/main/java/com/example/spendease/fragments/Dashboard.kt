@@ -62,7 +62,8 @@ class Dashboard : Fragment() {
     private fun getdata(){
         val shownametv = view?.findViewById<TextView>(R.id.textView7)
         userDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
-        val getname = userDetails.getString("Name","")
+        val userEmail = userDetails.getString("email","")
+        val getname = userDetails.getString(userEmail+"Name","")
         shownametv?.text = getname
 
     }
