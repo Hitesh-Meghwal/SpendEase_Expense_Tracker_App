@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.spendease.navigation.NavigationDrawer
 import com.example.spendease.userAuthentication.Login
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -21,9 +22,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkingUserExistence(){
+        // if user is already login then he/she redirect to next activity if user is login with GoogleAccount
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        // if user is already login then he/she redirect to next activity if user is login with email and password
         val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
         val check = userDetails.getBoolean("isFirstTime",false)
-        if(check) {
+
+        if(check || account != null) {
             val i = Intent(this,NavigationDrawer::class.java)
             startActivity(i)
         }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
+import android.hardware.usb.UsbRequest
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -52,6 +53,7 @@ class Login : AppCompatActivity() {
 
         progressDialog = ProgressDialog(this)
         firebaseAuth = FirebaseAuth.getInstance()
+        UserDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
 
         loginbtn.setOnClickListener {
             logIn()
@@ -67,20 +69,6 @@ class Login : AppCompatActivity() {
             googleSignIn()
         }
 
-        setUpSignUp()
-
-    }
-
-    // if user is already login then he/she redirect to next activity if user is login with GoogleAccount
-    private fun setUpSignUp(){
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        if(account != null){
-            goToNextPage()
-        }
-//        else{
-//            logIn()
-//            googleSignIn()
-//        }
     }
 
     private fun logIn(){
@@ -98,28 +86,26 @@ class Login : AppCompatActivity() {
         }
         else{
             firebaseAuth.signInWithEmailAndPassword(getemail, getpassword)
-                .addOnSuccessListener {
-                    UserDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
+                .addOnSuccessListener{
                     val editor = UserDetails.edit()
-                    editor.putBoolean("isFirstTime",true)
+                    editor.putBoolean("isFirstTime", true)
                     editor.apply()
-                    val currentUser = firebaseAuth.currentUser
-                    if(currentUser != null){
-                        val mainactivity = Intent(this,NavigationDrawer::class.java)
+                    val userdetails = getUserDetailsFromSharedPreferences()
+                    if(userdetails != null) {
+                        val mainactivity = Intent(this, NavigationDrawer::class.java)
                         startActivity(mainactivity)
                     }
-                    else{
-                        val gettinginfointent = Intent(this,GettingInfo::class.java)
+                    else {
+                        val gettinginfointent = Intent(this, GettingInfo::class.java)
                         startActivity(gettinginfointent)
                         Toast.makeText(this, "Logging Successfully!", Toast.LENGTH_SHORT).show()
                         progressDialog.cancel()
                     }
-
-                }
-                .addOnFailureListener { e->
-                    notifyUser("Email does not found \nPlease Sign Up!"+e.message)
-                    progressDialog.cancel()
-                }
+                    }
+                    .addOnFailureListener { e ->
+                        notifyUser("Email does not found \nPlease Sign Up!" + e.message)
+                        progressDialog.cancel()
+                    }
             progressDialog.setMessage("Logging ...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
@@ -213,9 +199,14 @@ class Login : AppCompatActivity() {
         progressDialog.show()
     }
 
-    private fun goToNextPage() {
-        val intent = Intent(this,NavigationDrawer::class.java)
-        startActivity(intent)
+    private fun getUserDetailsFromSharedPreferences() {
+        UserDetails.getBoolean("isFirstTime",false)
+        UserDetails.getString("Name","")
+        UserDetails.getString("MonthlyBudget","")
+        UserDetails.getString("YearlyBudget","")
+        UserDetails.getString("Currency_name","")
+        UserDetails.getString("Currency","")
+
     }
 
     private fun notifyUser(message:String){

@@ -58,6 +58,7 @@ class GettingInfo : AppCompatActivity() {
         val username = name.text.toString()
         val usermonthlybudget = monthlybudget.text.toString().trim()
         val usereyearlybudget = yearlybudget.text.toString().trim()
+        val currency = currencypicker.selectedItem.toString()
 
         if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty()){
             Toast.makeText(this, "Enter all details to continue...", Toast.LENGTH_SHORT).show()
@@ -65,10 +66,12 @@ class GettingInfo : AppCompatActivity() {
         else{
             userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
             val editor = userDetails.edit()
-//            editor.putBoolean("isFirstTime",false)
+            editor.putBoolean("isFirstTime",false)
             editor.putString("Name",username)
             editor.putString("MonthlyBudget",usermonthlybudget)
             editor.putString("YearlyBudget",usereyearlybudget)
+            editor.putString("Currency_name",currency.trim())
+            editor.putString("Currency",currency.split(" ")[0].trim())
             editor.apply()
             goToNextScreen()
 

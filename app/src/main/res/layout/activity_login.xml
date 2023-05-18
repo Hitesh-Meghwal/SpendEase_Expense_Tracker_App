@@ -118,7 +118,6 @@
         android:id="@+id/cardView2"
         android:layout_width="61dp"
         android:layout_height="64dp"
-        android:layout_marginTop="34dp"
         app:cardCornerRadius="@dimen/_100sdp"
         app:cardElevation="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
