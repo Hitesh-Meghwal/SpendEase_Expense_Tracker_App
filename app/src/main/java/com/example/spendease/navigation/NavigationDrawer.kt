@@ -55,14 +55,7 @@ class NavigationDrawer : AppCompatActivity(){
         when(item.itemId){
             R.id.logout_id->{
                 val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
-                val userEmail = userDetails.getString("email","")
                 val editor = userDetails.edit()
-//                editor.putBoolean("isFirstTime",false)
-//                editor.remove(userEmail + "Name")
-//                editor.remove(userEmail + "MonthlyBudget")
-//                editor.remove(userEmail + "YearlyBudget")
-//                editor.remove(userEmail + "Currency_name")
-//                editor.remove(userEmail + "Currency")
                 editor.apply()
 //                FirebaseAuth.getInstance().signOut()
                 val i = Intent(this,Login::class.java)

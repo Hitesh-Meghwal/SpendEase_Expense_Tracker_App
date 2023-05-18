@@ -3,8 +3,6 @@ package com.example.spendease.userAuthentication
 import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.content.SharedPreferences
-import android.hardware.usb.UsbRequest
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -12,9 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import com.example.spendease.R
-import com.example.spendease.navigation.NavigationDrawer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -25,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 
 
 @Suppress("DEPRECATION")
@@ -40,7 +35,6 @@ class Login : AppCompatActivity() {
     lateinit var firebaseAuth: FirebaseAuth
     lateinit var GsignInOptions: GoogleSignInOptions
     lateinit var GsignInClient: GoogleSignInClient
-    lateinit var UserDetails : SharedPreferences
     val RC_SIGN_IN = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +48,6 @@ class Login : AppCompatActivity() {
 
         progressDialog = ProgressDialog(this)
         firebaseAuth = FirebaseAuth.getInstance()
-        UserDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
 
         loginbtn.setOnClickListener {
             logIn()
@@ -76,35 +69,27 @@ class Login : AppCompatActivity() {
         email = findViewById(R.id.email_id)
         password = findViewById(R.id.password_id)
 
-        val userEmail = email.text.toString().trim()
-        val userPassword = password.text.toString()
+        val getemail = email.text.toString().trim()
+        val getpassword = password.text.toString()
         firebaseAuth = FirebaseAuth.getInstance()
-        if (userEmail.isEmpty()){
+        if (getemail.isEmpty()){
             email.setError("Email cannot be empty!")
         }
-        else if(userPassword.isEmpty()){
+        else if(getpassword.isEmpty()){
             password.setError("Password cannot be empty!")
         }
         else{
-            firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword)
+            firebaseAuth.signInWithEmailAndPassword(getemail, getpassword)
                 .addOnSuccessListener {
-                    val isGettingInfoShown = UserDetails.getBoolean("getting_info_show",false)
-                    if (!isGettingInfoShown) {
-                        val editor = UserDetails.edit()
-                        editor.putBoolean("isFirstTime", true)
-                        editor.putString("email", userEmail)
-                        editor.apply()
-                        val mainactivity = Intent(this, GettingInfo::class.java)
-                        startActivity(mainactivity)
-                    } else {
-                        val mainactivity = Intent(this, NavigationDrawer::class.java)
-                        startActivity(mainactivity)
-                    }
+                    val gettinginfointent = Intent(this,GettingInfo::class.java)
+                    startActivity(gettinginfointent)
+                    Toast.makeText(this, "Logging Successfully!", Toast.LENGTH_SHORT).show()
+                    progressDialog.cancel()
                 }
-                    .addOnFailureListener { e ->
-                        notifyUser("Email does not found \nPlease Sign Up!" + e.message)
-                        progressDialog.cancel()
-                    }
+                .addOnFailureListener { e->
+                    notifyUser("Email does not found \nPlease Sign Up!"+e.message)
+                    progressDialog.cancel()
+                }
             progressDialog.setMessage("Logging ...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
@@ -196,15 +181,6 @@ class Login : AppCompatActivity() {
         progressDialog.setMessage("Logging...")
         progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
-    }
-
-    private fun getUserDetailsFromSharedPreferences() {
-        UserDetails.getString("Name","")
-        UserDetails.getString("MonthlyBudget","")
-        UserDetails.getString("YearlyBudget","")
-        UserDetails.getString("Currency_name","")
-        UserDetails.getString("Currency","")
-
     }
 
     private fun notifyUser(message:String){
