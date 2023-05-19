@@ -1,5 +1,6 @@
 package com.example.spendease.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -16,13 +17,20 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.R
+import com.example.spendease.ViewModal.TransactionViewModal
+import com.example.spendease.userAuthentication.GettingInfo
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.geo.type.Viewport
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
+import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class Dashboard : Fragment() {
     lateinit var pieChart: PieChart
@@ -34,6 +42,7 @@ class Dashboard : Fragment() {
     private var totalHealth = 0.0f
     private var totalEducation = 0.0f
     private var totalOthers = 0.0f
+    lateinit var viewModal : TransactionViewModal
     lateinit var fab : FloatingActionButton
     lateinit var toolbar: MaterialToolbar
 //    lateinit var drawerLayout: DrawerLayout
@@ -49,20 +58,54 @@ class Dashboard : Fragment() {
         fab.setOnClickListener {
             addtransactionfragment()
         }
+        getdata()
         return view
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        getdata()
-    }
-
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     private fun getdata(){
-        val shownametv = view?.findViewById<TextView>(R.id.textView7)
+        val recenttransactiontxt = requireActivity().findViewById<TextView>(R.id.text1)
+        val noTransationtext = requireActivity().findViewById<TextView>(R.id.noTransactionsDoneText)
+        val transrecyclerview = requireActivity().findViewById<RecyclerView>(R.id.transactionrecyclerview)
+
         userDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
         val getname = userDetails.getString("Name","")
-        shownametv?.text = getname
+        val getMonthlyBudget = userDetails.getString("MonthlyBudget","")
+
+        val formatmonth = SimpleDateFormat("MM")
+        val currentMonth = formatmonth.format(Calendar.getInstance().time)
+        val formatyear = SimpleDateFormat("YYYY")
+        val currentYear = formatyear.format(Calendar.getInstance().time)
+        val format = SimpleDateFormat("MMMM")
+        val datatv = requireActivity().findViewById<TextView>(R.id.datetv)
+        datatv.text = "${format.format(Calendar.getInstance().time)} $currentYear"
+        val nametv = requireActivity().findViewById<TextView>(R.id.textView7)
+        nametv.text = "Hi $getname !!"
+
+        totalExpense = 0.0
+        totalGoal = getMonthlyBudget?.toFloat()!!
+        totalFood = 0.0f
+        totalHealth = 0.0f
+        totalEducation = 0.0f
+        totalOthers = 0.0f
+        totalShopping = 0.0f
+        totalTransport = 0.0f
+
+        viewModal.getMonthlyTransaction(currentMonth.toInt(),currentYear.toInt()).observe(viewLifecycleOwner) { transactionList ->
+            if (transactionList.isEmpty()){
+                noTransationtext.text = "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transactions"
+                noTransationtext.visibility = View.VISIBLE
+                noTransationtext.visibility = View.GONE
+                recenttransactiontxt.visibility = View.GONE
+            }
+            else{
+                recenttransactiontxt.visibility = View.VISIBLE
+                noTransationtext.visibility = View.GONE
+                transrecyclerview.visibility = View.VISIBLE
+            }
+        }
+
 
     }
 

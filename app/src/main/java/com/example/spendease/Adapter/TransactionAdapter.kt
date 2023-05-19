@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.ColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.R
 import com.example.spendease.TransactionData
-import com.example.spendease.fragments.AllTransactions
-import com.example.spendease.fragments.Dashboard
+import com.example.spendease.fragments.AllTransactionsDirections
+import com.example.spendease.fragments.DashboardDirections
 
 class TransactionAdapter(val context: Context, val activity: Activity, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
     class  transactionViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
@@ -84,16 +83,16 @@ class TransactionAdapter(val context: Context, val activity: Activity, val fragm
             }
         }
 
-//        holder.itemView.setOnClickListener {
-//            if (fragment =="Dashboard"){
-//               val argument = DashboardDirections.goToTransactionDetails(data,fragment)
-//                Navigation.findNavController(it).navigate(argument)
-//                }
-//            else if(fragment == "AllTransactions"){
-//                val argument = AllTransactionsDirections.allTransactionToTransactionDetails(data,fragment)
-//                Navigation.findNavController(it).navigate(argument)
-//            }
-//        }
+        holder.itemView.setOnClickListener {
+            if (fragment =="Dashboard"){
+               val argument = DashboardDirections.actionDashboardToTransactionDetails(data,fragment)
+                Navigation.findNavController(it).navigate(argument)
+                }
+            else if(fragment == "AllTransactions"){
+                val argument = AllTransactionsDirections.actionAllTransactionsToTransactionDetails(data,fragment)
+                Navigation.findNavController(it).navigate(argument)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
