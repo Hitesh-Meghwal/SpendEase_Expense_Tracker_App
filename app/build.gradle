@@ -56,6 +56,10 @@ dependencies {
 //  Firebase Authentication
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
+    //Room Database
+    implementation "androidx.room:room-runtime:2.5.1"
+    annotationProcessor("androidx.room:room-compiler:2.5.1")
+
 //  UI dependency
     implementation 'com.airbnb.android:lottie:6.0.0'
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
