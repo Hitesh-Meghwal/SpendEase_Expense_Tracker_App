@@ -11,12 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.R
 import com.example.spendease.TransactionData
-import com.example.spendease.fragments.AllTransactionsDirections
-import com.example.spendease.fragments.DashboardDirections
 
 class TransactionAdapter(val context: Context, val activity: Activity, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
     class  transactionViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
@@ -83,16 +80,16 @@ class TransactionAdapter(val context: Context, val activity: Activity, val fragm
             }
         }
 
-        holder.itemView.setOnClickListener {
-            if (fragment =="Dashboard"){
-               val argument = DashboardDirections.actionDashboardToTransactionDetails(data,fragment)
-                Navigation.findNavController(it).navigate(argument)
-                }
-            else if(fragment == "AllTransactions"){
-                val argument = AllTransactionsDirections.actionAllTransactionsToTransactionDetails(data,fragment)
-                Navigation.findNavController(it).navigate(argument)
-            }
-        }
+//        holder.itemView.setOnClickListener {
+//            if (fragment =="Dashboard"){
+//               val argument = DashboardDirections.actionDashboardToTransactionDetails()
+//                Navigation.findNavController(it).navigate(argument)
+//                }
+//            else if(fragment == "AllTransactions"){
+//                val argument = AllTransactionsDirections.actionAllTransactionsToTransactionDetails()
+//                Navigation.findNavController(it).navigate(argument)
+//            }
+//        }
     }
 
     override fun getItemCount(): Int {

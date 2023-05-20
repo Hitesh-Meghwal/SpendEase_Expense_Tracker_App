@@ -30,7 +30,7 @@ class NavigationDrawer : AppCompatActivity(){
         setContentView(R.layout.activity_navigation_drawer)
 
         drawerLayout =findViewById(R.id.drawerlayout)
-        navigationView = findViewById(R.id.navigation_drawer)
+//        navigationView = findViewById(R.id.navigation_drawer)
         toolbar = findViewById(R.id.toolbar_id)
         setSupportActionBar(toolbar)
 
