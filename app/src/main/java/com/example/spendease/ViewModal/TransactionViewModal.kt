@@ -7,13 +7,14 @@ import com.example.spendease.Repository.TransactionRepository
 import com.example.spendease.TransactionData
 import com.example.spendease.TransactionDatabase.TransactionDatabase
 
-class TransactionViewModal(application: Application) : AndroidViewModel(application) {
+class TransactionViewModal(application:Application) : AndroidViewModel(application) {
 
     private val repository : TransactionRepository
 
     init {
         val dao = TransactionDatabase.getDatabaseInstance(application).getTransactionDao()
         repository = TransactionRepository(dao)
+
     }
 
     fun addTransaction(transactionData: TransactionData){

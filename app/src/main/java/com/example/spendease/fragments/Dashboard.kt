@@ -39,7 +39,7 @@ class Dashboard : Fragment() {
     private var totalHealth = 0.0f
     private var totalEducation = 0.0f
     private var totalOthers = 0.0f
-    private var viewModal : TransactionViewModal by viewModels()
+    private val viewModal : TransactionViewModal by viewModels()
     lateinit var fab : FloatingActionButton
     lateinit var toolbar: MaterialToolbar
     lateinit var drawerLayout: DrawerLayout
@@ -53,7 +53,6 @@ class Dashboard : Fragment() {
 //        Switch to AddTransaction Fragment
         fab = view.findViewById(R.id.addnewtransactions)
 //        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
-
         val args = DashboardDirections.actionDashboardToAddTransactions(TransactionData(null,"","","",0.0,"",0,0,0,""),false)
         fab.setOnClickListener {
             Navigation.findNavController(view).navigate(args)
@@ -92,7 +91,8 @@ class Dashboard : Fragment() {
         totalShopping = 0.0f
         totalTransport = 0.0f
 
-        viewModal.getMonthlyTransaction(currentMonth.toInt(),currentYear.toInt()).observe(viewLifecycleOwner) { transactionList ->
+//        viewModal = ViewModelProvider(this).get(TransactionViewModal::class.java)
+        viewModal.getMonthlyTransaction(currentMonth.toInt(),currentYear.toInt()).observe(viewLifecycleOwner){ transactionList ->
             if (transactionList.isEmpty()){
                 noTransationtext.text = "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transactions"
                 noTransationtext.visibility = View.VISIBLE
@@ -176,10 +176,5 @@ class Dashboard : Fragment() {
     pieChart.startAnimation()
     }
 
-
-//    private fun navigationDrawer(){
-//        navigationView.bringToFront()
-//
-//    }
 
 }
