@@ -198,6 +198,7 @@
         android:layout_gravity="bottom|end"
         android:contentDescription="@string/addtransactions"
         android:foregroundGravity="center"
+        app:shapeAppearanceOverlay="@style/roundImageView"
         android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

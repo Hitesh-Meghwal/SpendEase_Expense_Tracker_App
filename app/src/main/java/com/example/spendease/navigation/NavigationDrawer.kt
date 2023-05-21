@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.spendease.R
+import com.example.spendease.fragments.Dashboard
 import com.example.spendease.userAuthentication.Login
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,7 +32,7 @@ class NavigationDrawer : AppCompatActivity(){
         setContentView(R.layout.activity_navigation_drawer)
 
         drawerLayout =findViewById(R.id.drawerlayout)
-//        navigationView = findViewById(R.id.navigation_drawer)
+        navigationView = findViewById(R.id.navigation_drawer)
         toolbar = findViewById(R.id.toolbar_id)
         setSupportActionBar(toolbar)
 
@@ -45,6 +46,7 @@ class NavigationDrawer : AppCompatActivity(){
         val navController = navHostFragment.navController
 //        navController = findNavController(R.id.fragment)
         bottomnav.setupWithNavController(navController)
+        navigationView.setupWithNavController(navController)
 
 
     }
@@ -67,7 +69,6 @@ class NavigationDrawer : AppCompatActivity(){
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 
 }

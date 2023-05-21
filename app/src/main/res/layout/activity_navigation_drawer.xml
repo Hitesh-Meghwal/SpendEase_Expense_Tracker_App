@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/drawerlayout"
+    tools:openDrawer="start"
     tools:context=".navigation.NavigationDrawer">
-<!--    tools:openDrawer="start"-->
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_drawer"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_220sdp"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:layout_gravity="start"

@@ -57,7 +57,7 @@ class Dashboard : Fragment() {
         fab.setOnClickListener {
             Navigation.findNavController(view).navigate(args)
         }
-        getdata()
+//        getdata()
         return view
 
     }
@@ -92,40 +92,50 @@ class Dashboard : Fragment() {
         totalTransport = 0.0f
 
 //        viewModal = ViewModelProvider(this).get(TransactionViewModal::class.java)
-        viewModal.getMonthlyTransaction(currentMonth.toInt(),currentYear.toInt()).observe(viewLifecycleOwner){ transactionList ->
-            if (transactionList.isEmpty()){
-                noTransationtext.text = "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transactions"
+        viewModal.getMonthlyTransaction(currentMonth.toInt(),currentYear.toInt()).observe(viewLifecycleOwner) { transactionList ->
+            if (transactionList.isEmpty()) {
+                noTransationtext.text =
+                    "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transactions"
                 noTransationtext.visibility = View.VISIBLE
                 noTransationtext.visibility = View.GONE
                 recenttransactiontxt.visibility = View.GONE
-            }
-            else{
+            } else {
                 recenttransactiontxt.visibility = View.VISIBLE
                 noTransationtext.visibility = View.GONE
                 transrecyclerview.visibility = View.VISIBLE
             }
             transrecyclerview.layoutManager = LinearLayoutManager(requireContext())
-            transrecyclerview.adapter = TransactionAdapter(requireContext(),requireActivity(),"Dashboard",transactionList.reversed())
+            transrecyclerview.adapter = TransactionAdapter(
+                requireContext(),
+                requireActivity(),
+                "Dashboard",
+                transactionList.reversed()
+            )
 
-            for (i in transactionList){
+            for (i in transactionList) {
                 totalExpense += i.amount
-                when(i.category){
-                    "Food" ->{
+                when (i.category) {
+                    "Food" -> {
                         totalFood += (i.amount.toFloat())
                     }
-                    "Shopping"->{
+
+                    "Shopping" -> {
                         totalShopping += (i.amount.toFloat())
                     }
-                    "Education"->{
+
+                    "Education" -> {
                         totalEducation += (i.amount.toFloat())
                     }
-                    "Others"->{
+
+                    "Others" -> {
                         totalOthers += (i.amount.toFloat())
                     }
-                    "Health"->{
+
+                    "Health" -> {
                         totalHealth += (i.amount.toFloat())
                     }
-                    "Transport"->{
+
+                    "Transport" -> {
                         totalTransport += (i.amount.toFloat())
                     }
                 }
@@ -136,11 +146,10 @@ class Dashboard : Fragment() {
             monthlyBudget.text = "₹${totalGoal.toInt()}"
             myexpense.text = "₹${totalExpense.toInt()}"
             val indicator = requireActivity().findViewById<ImageView>(R.id.indicator)
-            if(totalExpense > totalGoal){
+            if (totalExpense > totalGoal) {
                 indicator.setImageResource(R.drawable.ic_negative_transaction)
-                myexpense.setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
-            }
-            else{
+                myexpense.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            } else {
                 indicator.setImageResource(R.drawable.ic_positive_amount)
             }
             showPiChart()
