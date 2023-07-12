@@ -86,7 +86,6 @@
                 android:id="@+id/signuppassword_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableEnd="@drawable/baseline_mail_outline_24"
                 android:inputType="textPassword"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
