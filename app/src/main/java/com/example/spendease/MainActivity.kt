@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.spendease.navigation.NavigationDrawer
-import com.example.spendease.userAuthentication.Login
+import com.example.spendease.userAuthentication.Signin
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
         }
         else{
-            val i = Intent(this,Login::class.java)
+            val i = Intent(this,Signin::class.java)
             startActivity(i)
         }
     }

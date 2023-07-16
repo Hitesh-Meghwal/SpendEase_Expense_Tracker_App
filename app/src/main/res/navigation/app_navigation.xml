@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
     app:startDestination="@id/dashboard">
+
     <fragment
         android:id="@+id/dashboard"
         android:name="com.example.spendease.fragments.Dashboard"
@@ -12,19 +13,12 @@
         <action
             android:id="@+id/action_dashboard_to_addTransactions"
             app:destination="@id/addTransactions" />
-        <action
-            android:id="@+id/action_dashboard_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
     </fragment>
     <fragment
         android:id="@+id/allTransactions"
         android:name="com.example.spendease.fragments.AllTransactions"
         android:label="fragment_all_transactions"
-        tools:layout="@layout/fragment_all_transactions" >
-        <action
-            android:id="@+id/action_allTransactions_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
-    </fragment>
+        tools:layout="@layout/fragment_all_transactions" />
     <fragment
         android:id="@+id/profile"
         android:name="com.example.spendease.fragments.Profile"
@@ -35,23 +29,13 @@
             app:destination="@id/updateUserDetailsDialog" />
     </fragment>
     <fragment
-        android:id="@+id/addTransactions"
-        android:name="com.example.spendease.fragments.AddTransactions"
-        android:label="fragment_add_transactions"
-        tools:layout="@layout/fragment_add_transactions" >
+        android:id="@+id/transactionDetails"
+        android:name="com.example.spendease.fragments.TransactionDetails"
+        android:label="fragment_transaction__details"
+        tools:layout="@layout/fragment_transaction__details" >
         <action
-            android:id="@+id/action_addTransactions_to_dashboard"
-            app:destination="@id/dashboard" />
-        <argument
-            android:name="data"
-            app:argType="com.example.spendease.TransactionData"
-            />
-        <argument
-            android:name="from"
-            app:argType="boolean" />
-        <action
-            android:id="@+id/action_addTransactions_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
+            android:id="@+id/action_transactionDetails_to_addTransactions"
+            app:destination="@id/addTransactions" />
     </fragment>
     <dialog
         android:id="@+id/updateUserDetailsDialog"
@@ -59,8 +43,12 @@
         android:label="fragment_update_user_details_dialog"
         tools:layout="@layout/fragment_update_user_details_dialog" />
     <fragment
-        android:id="@+id/transactionDetails"
-        android:name="com.example.spendease.fragments.TransactionDetails"
-        android:label="fragment_transaction__details"
-        tools:layout="@layout/fragment_transaction__details" />
+        android:id="@+id/addTransactions"
+        android:name="com.example.spendease.fragments.AddTransactions"
+        android:label="fragment_add_transactions"
+        tools:layout="@layout/fragment_add_transactions" >
+        <action
+            android:id="@+id/action_addTransactions_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
 </navigation>

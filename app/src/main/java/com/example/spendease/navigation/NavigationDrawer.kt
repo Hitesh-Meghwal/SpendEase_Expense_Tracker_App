@@ -5,21 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.spendease.R
-import com.example.spendease.fragments.Dashboard
-import com.example.spendease.userAuthentication.Login
+import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 
 class NavigationDrawer : AppCompatActivity(){
     lateinit var drawerLayout: DrawerLayout
@@ -42,9 +37,8 @@ class NavigationDrawer : AppCompatActivity(){
         val actionBarDrawerToggle = ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation_drawer,R.string.close_navigation_drawer)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-//        navController = findNavController(R.id.fragment)
         bottomnav.setupWithNavController(navController)
         navigationView.setupWithNavController(navController)
 
@@ -63,7 +57,7 @@ class NavigationDrawer : AppCompatActivity(){
                 val editor = userDetails.edit()
                 editor.apply()
 //                FirebaseAuth.getInstance().signOut()
-                val i = Intent(this,Login::class.java)
+                val i = Intent(this,Signin::class.java)
                 startActivity(i)
             }
         }

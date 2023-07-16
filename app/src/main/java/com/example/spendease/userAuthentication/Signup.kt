@@ -34,7 +34,7 @@ class Signup : AppCompatActivity() {
 
         logintv = findViewById(R.id.logintv_id)
         logintv.setOnClickListener {
-            val loginintent = Intent(this,Login::class.java)
+            val loginintent = Intent(this,Signin::class.java)
             startActivity(loginintent)
         }
 
@@ -83,13 +83,13 @@ class Signup : AppCompatActivity() {
                                     .set(UserModal(getusername,getemail,hashpassword))
                                     .addOnCompleteListener {
                                         if (task.isSuccessful){
-                                            val switchtologin = Intent(this, Login::class.java)
+                                            val switchtologin = Intent(this, Signin::class.java)
                                             startActivity(switchtologin)
-                                            Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()
+                                            notifyUser("Sign Up Successfully")
                                             progressDialog.cancel()
                                         }
                                         else{
-                                            println("Failed to retrieve token!!")
+                                            notifyUser("Something went wrong!!")
                                         }
                                     }
                             }
@@ -99,7 +99,7 @@ class Signup : AppCompatActivity() {
                         }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this,"Something went wrong!\n"+e.message, Toast.LENGTH_SHORT).show()
+                    notifyUser("Something went wrong!!"+e.message)
                     progressDialog.cancel()
                 }
             progressDialog.setMessage("Signing ...")
@@ -107,4 +107,8 @@ class Signup : AppCompatActivity() {
             progressDialog.show()
         }
     }
+    private fun notifyUser(msg : String){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
 }

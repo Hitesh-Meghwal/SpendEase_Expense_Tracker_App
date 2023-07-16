@@ -13,21 +13,27 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.Adapter.TransactionAdapter
 import com.example.spendease.R
-import com.example.spendease.TransactionData
+import com.example.spendease.Model.TransactionData
+import com.example.spendease.databinding.FragmentDashboardBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class Dashboard : Fragment() {
+    private lateinit var binding: FragmentDashboardBinding
     lateinit var pieChart: PieChart
     private var totalExpense = 0.0
     private var totalGoal = 5000.0f
@@ -42,20 +48,21 @@ class Dashboard : Fragment() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var userDetails: SharedPreferences
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
-
+        binding = FragmentDashboardBinding.inflate(inflater,container,false)
 //        Switch to AddTransaction Fragment
-        fab = view.findViewById(R.id.addnewtransactions)
 //        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
-        val args = DashboardDirections.actionDashboardToAddTransactions(TransactionData(null,"","","",0.0,"",0,0,0,""),false)
-        fab.setOnClickListener {
-            Navigation.findNavController(view).navigate(args)
+//        val args = DashboardDirections.actionDashboardToAddTransactions(TransactionData(null,"","","",0.0,"",0,0,0,""),false)
+        binding.addnewtransactions.setOnClickListener {
+            val action = DashboardDirections.actionDashboardToAddTransactions()
+            findNavController().navigate(action)
+//            Navigation.findNavController(view).navigate(args)
         }
-//        getdata()
-        return view
+        getdata()
+        return binding.root
 
     }
 
@@ -63,7 +70,6 @@ class Dashboard : Fragment() {
     private fun getdata(){
         val recenttransactiontxt = requireActivity().findViewById<TextView>(R.id.text1)
         val noTransationtext = requireActivity().findViewById<TextView>(R.id.noTransactionsDoneText)
-        val transrecyclerview = requireActivity().findViewById<RecyclerView>(R.id.transactionrecyclerview)
 
         userDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
         val getname = userDetails.getString("Name","")
@@ -88,68 +94,77 @@ class Dashboard : Fragment() {
         totalShopping = 0.0f
         totalTransport = 0.0f
 
-//        viewModal.getMonthlyTransaction(currentMonth.toInt(),currentYear.toInt()).observe(viewLifecycleOwner) { transactionList ->
-//            if (transactionList.isEmpty()) {
-//                noTransationtext.text =
-//                    "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transactions"
-//                noTransationtext.visibility = View.VISIBLE
-//                noTransationtext.visibility = View.GONE
-//                recenttransactiontxt.visibility = View.GONE
-//            } else {
-//                recenttransactiontxt.visibility = View.VISIBLE
-//                noTransationtext.visibility = View.GONE
-//                transrecyclerview.visibility = View.VISIBLE
-//            }
-//            transrecyclerview.layoutManager = LinearLayoutManager(requireContext())
-//            transrecyclerview.adapter = TransactionAdapter(
-//                requireContext(),
-//                requireActivity(),
-//                "Dashboard",
-//                transactionList.reversed()
-//            )
-//
-//            for (i in transactionList) {
-//                totalExpense += i.amount
-//                when (i.category) {
-//                    "Food" -> {
-//                        totalFood += (i.amount.toFloat())
-//                    }
-//
-//                    "Shopping" -> {
-//                        totalShopping += (i.amount.toFloat())
-//                    }
-//
-//                    "Education" -> {
-//                        totalEducation += (i.amount.toFloat())
-//                    }
-//
-//                    "Others" -> {
-//                        totalOthers += (i.amount.toFloat())
-//                    }
-//
-//                    "Health" -> {
-//                        totalHealth += (i.amount.toFloat())
-//                    }
-//
-//                    "Transport" -> {
-//                        totalTransport += (i.amount.toFloat())
-//                    }
-//                }
-//            }
-//
-//            val monthlyBudget = requireActivity().findViewById<TextView>(R.id.budgettv)
-//            val myexpense = requireActivity().findViewById<TextView>(R.id.expensetv)
-//            monthlyBudget.text = "₹${totalGoal.toInt()}"
-//            myexpense.text = "₹${totalExpense.toInt()}"
-//            val indicator = requireActivity().findViewById<ImageView>(R.id.indicator)
-//            if (totalExpense > totalGoal) {
-//                indicator.setImageResource(R.drawable.ic_negative_transaction)
-//                myexpense.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-//            } else {
-//                indicator.setImageResource(R.drawable.ic_positive_amount)
-//            }
-//            showPiChart()
-//        }
+        firestore.collection("Transactions")
+            .whereEqualTo("month",currentMonth.toInt())
+            .whereEqualTo("year",currentYear.toInt())
+            .get()
+            .addOnSuccessListener { querysnapshot->
+                val transactionlist = mutableListOf<TransactionData>()
+                for (document in querysnapshot){
+                    val transaction = document.toObject(TransactionData::class.java)
+                    transactionlist.add(transaction)
+            }
+
+                if(transactionlist.isEmpty()){
+                    binding.noTransactionsDoneText.text = "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transaction"
+                    binding.noTransactionsDoneText.visibility = View.VISIBLE
+                    binding.recenttransaction.visibility = View.GONE
+                }
+                else{
+                    binding.noTransactionsDoneText.visibility = View.GONE
+                    binding.recenttransaction.visibility = View.VISIBLE
+                    binding.transactionRecyclerView.visibility = View.VISIBLE
+                }
+                binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.transactionRecyclerView.adapter = TransactionAdapter(
+                requireContext(),
+                requireActivity(),
+                "Dashboard",
+                transactionlist.reversed()
+            )
+
+            for (i in transactionlist) {
+                totalExpense += i.amount
+                when (i.category) {
+                    "Food" -> {
+                        totalFood += (i.amount.toFloat())
+                    }
+
+                    "Shopping" -> {
+                        totalShopping += (i.amount.toFloat())
+                    }
+
+                    "Education" -> {
+                        totalEducation += (i.amount.toFloat())
+                    }
+
+                    "Others" -> {
+                        totalOthers += (i.amount.toFloat())
+                    }
+
+                    "Health" -> {
+                        totalHealth += (i.amount.toFloat())
+                    }
+
+                    "Transport" -> {
+                        totalTransport += (i.amount.toFloat())
+                    }
+                }
+            }
+
+            val monthlyBudget = requireActivity().findViewById<TextView>(R.id.budgettv)
+            val myexpense = requireActivity().findViewById<TextView>(R.id.expensetv)
+            monthlyBudget.text = "₹${totalGoal.toInt()}"
+            myexpense.text = "₹${totalExpense.toInt()}"
+            val indicator = requireActivity().findViewById<ImageView>(R.id.indicator)
+            if (totalExpense > totalGoal) {
+                indicator.setImageResource(R.drawable.ic_negative_transaction)
+                myexpense.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            } else {
+                indicator.setImageResource(R.drawable.ic_positive_amount)
+            }
+            showPiChart()
+        }
 
 
     }

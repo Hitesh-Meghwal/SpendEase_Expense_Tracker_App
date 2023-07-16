@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 @Suppress("DEPRECATION")
-class Login : AppCompatActivity() {
+class Signin : AppCompatActivity() {
     lateinit var email: TextInputEditText
     lateinit var password: TextInputEditText
     lateinit var signuptv: TextView
@@ -83,11 +83,11 @@ class Login : AppCompatActivity() {
                 .addOnSuccessListener {
                     val gettinginfointent = Intent(this,GettingInfo::class.java)
                     startActivity(gettinginfointent)
-                    Toast.makeText(this, "Logging Successfully!", Toast.LENGTH_SHORT).show()
+                    notifyUser("Logging Successfully!")
                     progressDialog.cancel()
                 }
                 .addOnFailureListener { e->
-                    notifyUser("Email does not found \nPlease Sign Up!"+e.message)
+                    notifyUser("Email does not found!!\n"+e.message)
                     progressDialog.cancel()
                 }
             progressDialog.setMessage("Logging ...")
@@ -106,7 +106,7 @@ class Login : AppCompatActivity() {
         else{
             firebaseAuth.sendPasswordResetEmail(getemail)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()
+                    notifyUser("Check Email box!!")
                     progressDialog.cancel()
                 }
                 .addOnFailureListener {e->
@@ -183,7 +183,7 @@ class Login : AppCompatActivity() {
         progressDialog.show()
     }
 
-    private fun notifyUser(message:String){
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    private fun notifyUser(msg:String){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }

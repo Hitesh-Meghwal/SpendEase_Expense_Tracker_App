@@ -24,7 +24,7 @@
             android:name=".userAuthentication.Signup"
             android:exported="false" />
         <activity
-            android:name=".userAuthentication.Login"
+            android:name=".userAuthentication.Signin"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
