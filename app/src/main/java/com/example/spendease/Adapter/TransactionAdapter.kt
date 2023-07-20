@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
 
-class TransactionAdapter(val context: Context, val activity: Activity, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
+class TransactionAdapter(val context: Context, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
     class  transactionViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
 
         val title = itemView.findViewById<TextView>(R.id.titletv_id)

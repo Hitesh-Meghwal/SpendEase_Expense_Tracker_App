@@ -4,17 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -61,6 +61,7 @@ class Dashboard : Fragment() {
             findNavController().navigate(action)
 //            Navigation.findNavController(view).navigate(args)
         }
+
         getdata()
         return binding.root
 
@@ -68,8 +69,6 @@ class Dashboard : Fragment() {
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     private fun getdata(){
-        val recenttransactiontxt = requireActivity().findViewById<TextView>(R.id.text1)
-        val noTransationtext = requireActivity().findViewById<TextView>(R.id.noTransactionsDoneText)
 
         userDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
         val getname = userDetails.getString("Name","")
@@ -94,16 +93,18 @@ class Dashboard : Fragment() {
         totalShopping = 0.0f
         totalTransport = 0.0f
 
+        val transactionlist = mutableListOf<TransactionData>()
         firestore.collection("Transactions")
             .whereEqualTo("month",currentMonth.toInt())
             .whereEqualTo("year",currentYear.toInt())
             .get()
-            .addOnSuccessListener { querysnapshot->
-                val transactionlist = mutableListOf<TransactionData>()
-                for (document in querysnapshot){
-                    val transaction = document.toObject(TransactionData::class.java)
-                    transactionlist.add(transaction)
-            }
+            .addOnSuccessListener {
+                if(!it.isEmpty){
+                    for(data in it.documents){
+                        val transaction = data.toObject(TransactionData::class.java)
+                        transactionlist.add(transaction!!)
+                    }
+                }
 
                 if(transactionlist.isEmpty()){
                     binding.noTransactionsDoneText.text = "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transaction"
@@ -115,13 +116,11 @@ class Dashboard : Fragment() {
                     binding.recenttransaction.visibility = View.VISIBLE
                     binding.transactionRecyclerView.visibility = View.VISIBLE
                 }
+                val adapter = TransactionAdapter(requireContext(),"Dashboard", mutableListOf())
                 binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.transactionRecyclerView.adapter = TransactionAdapter(
-                requireContext(),
-                requireActivity(),
-                "Dashboard",
-                transactionlist.reversed()
-            )
+                binding.transactionRecyclerView.adapter = adapter
+                adapter.notifyDataSetChanged()
+
 
             for (i in transactionlist) {
                 totalExpense += i.amount
@@ -165,6 +164,9 @@ class Dashboard : Fragment() {
             }
             showPiChart()
         }
+            .addOnFailureListener {e->
+                Toast.makeText(requireContext(), ""+e.message, Toast.LENGTH_SHORT).show()
+            }
 
 
     }

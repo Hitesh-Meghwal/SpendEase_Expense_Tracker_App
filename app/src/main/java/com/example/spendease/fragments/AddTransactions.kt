@@ -112,7 +112,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
         }
         else{
             val firestore = FirebaseFirestore.getInstance()
-            val newTransactions = TransactionData(0,"Expense",category,title,amount.toDouble(),date,day,month,year,note)
+            val newTransactions = TransactionData("Expense",category,title,amount.toDouble(),date,day,month,year,note)
             firestore.collection("Transactions")
                 .document(FirebaseAuth.getInstance().uid.toString())
                 .collection("TransactionList")
