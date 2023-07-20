@@ -25,6 +25,7 @@ import com.example.spendease.databinding.FragmentDashboardBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import org.eazegraph.lib.charts.PieChart
@@ -79,10 +80,16 @@ class Dashboard : Fragment() {
         val formatyear = SimpleDateFormat("YYYY")
         val currentYear = formatyear.format(Calendar.getInstance().time)
         val format = SimpleDateFormat("MMMM")
-        val datatv = view?.findViewById<TextView>(R.id.datetv)
-        datatv?.text = "${format.format(Calendar.getInstance().time)} $currentYear"
-        val nametv = view?.findViewById<TextView>(R.id.textView7)
-        nametv?.text = "Hi $getname !!"
+        binding.datetv.text = "${format.format(Calendar.getInstance().time)} $currentYear"
+//        Greeting to user
+        val calendar = Calendar.getInstance()
+        val hourrofday = calendar.get(Calendar.HOUR_OF_DAY)
+        val greeting = when(hourrofday){
+            in 0..11 -> "Good Morning"
+            in 12..16 ->"Good Afternoon"
+            else -> "Good evening"
+        }
+        binding.nametv.text = "$greeting $getname !!"
 
         totalExpense = 0.0
         totalGoal = getMonthlyBudget?.toFloat()!!
@@ -95,19 +102,20 @@ class Dashboard : Fragment() {
 
         val transactionlist = mutableListOf<TransactionData>()
         firestore.collection("Transactions")
+            .document(FirebaseAuth.getInstance().uid.toString())
+            .collection("TransactionList")
             .whereEqualTo("month",currentMonth.toInt())
-            .whereEqualTo("year",currentYear.toInt())
             .get()
             .addOnSuccessListener {
                 if(!it.isEmpty){
                     for(data in it.documents){
                         val transaction = data.toObject(TransactionData::class.java)
-                        transactionlist.add(transaction!!)
+                        transaction?.let { transactionlist.add(it) }
                     }
                 }
 
                 if(transactionlist.isEmpty()){
-                    binding.noTransactionsDoneText.text = "Add Your First Transaction of ${formatmonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transaction"
+                    binding.noTransactionsDoneText.text = "Add Your First Transaction of ${currentMonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transaction"
                     binding.noTransactionsDoneText.visibility = View.VISIBLE
                     binding.recenttransaction.visibility = View.GONE
                 }
@@ -116,7 +124,7 @@ class Dashboard : Fragment() {
                     binding.recenttransaction.visibility = View.VISIBLE
                     binding.transactionRecyclerView.visibility = View.VISIBLE
                 }
-                val adapter = TransactionAdapter(requireContext(),"Dashboard", mutableListOf())
+                val adapter = TransactionAdapter(requireContext(),"Dashboard", transactionlist.reversed())
                 binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
                 binding.transactionRecyclerView.adapter = adapter
                 adapter.notifyDataSetChanged()

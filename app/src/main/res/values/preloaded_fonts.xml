@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aclonica</item>
+        <item>@font/amaranth</item>
         <item>@font/cabin_sketch</item>
         <item>@font/cantora_one</item>
     </array>
