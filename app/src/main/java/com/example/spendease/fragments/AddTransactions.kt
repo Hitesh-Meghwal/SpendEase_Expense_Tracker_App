@@ -105,7 +105,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
     private fun addTransaction(){
         val title = binding.title.text.toString()
         val date = binding.date.text.toString()
-        val amount = binding.amount.text.toString()
+        val amount = binding.amount.text.toString().trim()
         val note = binding.note.text.toString()
         if (title.isEmpty() || date.isEmpty() || amount.isEmpty() || note.isEmpty() || category == ""){
             notifyUser("Enter all required details")

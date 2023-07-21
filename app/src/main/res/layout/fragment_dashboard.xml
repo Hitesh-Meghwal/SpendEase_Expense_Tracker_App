@@ -178,13 +178,12 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="90dp"
                 android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/transaction_itemlist"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recenttransaction"
-                app:layout_constraintVertical_bias="0.0"
-                tools:listitem="@layout/transaction_itemlist" />
+                app:layout_constraintTop_toBottomOf="@+id/recenttransaction" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

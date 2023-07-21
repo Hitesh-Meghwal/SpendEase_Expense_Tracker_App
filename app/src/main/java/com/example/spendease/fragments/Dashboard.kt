@@ -17,7 +17,6 @@ import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.Adapter.TransactionAdapter
 import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
@@ -85,7 +84,8 @@ class Dashboard : Fragment() {
         val calendar = Calendar.getInstance()
         val hourrofday = calendar.get(Calendar.HOUR_OF_DAY)
         val greeting = when(hourrofday){
-            in 0..11 -> "Good Morning"
+            in 0..4 -> "Good Night"
+            in 5..11 -> "Good Morning"
             in 12..16 ->"Good Afternoon"
             else -> "Good evening"
         }
@@ -110,7 +110,8 @@ class Dashboard : Fragment() {
                 if(!it.isEmpty){
                     for(data in it.documents){
                         val transaction = data.toObject(TransactionData::class.java)
-                        transaction?.let { transactionlist.add(it) }
+                        transaction?.let {
+                            transactionlist.add(it) }
                     }
                 }
 
@@ -123,11 +124,12 @@ class Dashboard : Fragment() {
                     binding.noTransactionsDoneText.visibility = View.GONE
                     binding.recenttransaction.visibility = View.VISIBLE
                     binding.transactionRecyclerView.visibility = View.VISIBLE
+                    val adapter = TransactionAdapter(requireContext(),"Dashboard", transactionlist.reversed())
+                    binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                    binding.transactionRecyclerView.adapter = adapter
+                    adapter.notifyDataSetChanged()
                 }
-                val adapter = TransactionAdapter(requireContext(),"Dashboard", transactionlist.reversed())
-                binding.transactionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                binding.transactionRecyclerView.adapter = adapter
-                adapter.notifyDataSetChanged()
+
 
 
             for (i in transactionlist) {
