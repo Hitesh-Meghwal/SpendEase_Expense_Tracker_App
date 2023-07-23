@@ -1,6 +1,7 @@
 package com.example.spendease.Model
 
 import com.google.firebase.firestore.PropertyName
+import java.io.Serializable
 
 
 data class TransactionData(
@@ -31,4 +32,4 @@ data class TransactionData(
 
     @PropertyName("note")
     var note: String = ""
-)
+): Serializable

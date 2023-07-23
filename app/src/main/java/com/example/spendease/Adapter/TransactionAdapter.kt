@@ -72,7 +72,7 @@ class TransactionAdapter(val context: Context, val fragment: String, private val
                 holder.category.setTextColor(ContextCompat.getColor(context, R.color.green))
                 holder.cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
             }
-            "Others"->{
+            "Other"->{
                 holder.cardicon.setImageResource(R.drawable.ic_baseline_category_24)
                 holder.cardicon.setColorFilter(ContextCompat.getColor(context, R.color.red))
                 holder.category.setTextColor(ContextCompat.getColor(context, R.color.red))

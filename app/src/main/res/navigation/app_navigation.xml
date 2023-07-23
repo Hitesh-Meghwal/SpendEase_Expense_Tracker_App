@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_dashboard_to_addTransactions"
             app:destination="@id/addTransactions" />
+        <action
+            android:id="@+id/action_dashboard_to_transactionDetails"
+            app:destination="@id/transactionDetails" />
     </fragment>
     <fragment
         android:id="@+id/allTransactions"
@@ -36,6 +39,9 @@
         <action
             android:id="@+id/action_transactionDetails_to_addTransactions"
             app:destination="@id/addTransactions" />
+        <argument
+            android:name="data"
+            app:argType="com.example.spendease.Model.TransactionData" />
     </fragment>
     <dialog
         android:id="@+id/updateUserDetailsDialog"
@@ -50,5 +56,14 @@
         <action
             android:id="@+id/action_addTransactions_to_dashboard"
             app:destination="@id/dashboard" />
+        <argument
+            android:name="data"
+            app:argType="com.example.spendease.Model.TransactionData" />
+        <argument
+            android:name="from"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_addTransactions_to_transactionDetails"
+            app:destination="@id/transactionDetails" />
     </fragment>
 </navigation>

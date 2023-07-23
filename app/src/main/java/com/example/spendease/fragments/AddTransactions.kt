@@ -33,6 +33,7 @@ import kotlin.math.log
 @Suppress("DEPRECATION")
 class AddTransactions : Fragment(),View.OnClickListener {
     private lateinit var binding : FragmentAddTransactionsBinding
+    val transactions by navArgs<AddTransactionsArgs>()
     private var category = ""
     lateinit var bottomnav : BottomNavigationView
     lateinit var toolbar: MaterialToolbar
@@ -53,11 +54,15 @@ class AddTransactions : Fragment(),View.OnClickListener {
         setListener(binding)
         datePicker(binding)
         userDetails = requireActivity().getSharedPreferences("UserDetails",AppCompatActivity.MODE_PRIVATE)
-//        if(transactions.from){
-//            setDatas()
-//            binding.addtransaction.text = "Save Transaction"
-//            binding.newtranstoolbarId.title = "Edit Transaction"
-//        }
+        if(transactions.from){
+            setDatas()
+            binding.addtransaction.text = "Save Transaction"
+            binding.newtranstoolbarId.title = "Edit Transaction"
+            binding.newtranstoolbarId.setNavigationOnClickListener {
+                val action = AddTransactionsDirections.
+                findNavController().navigate(action)
+            }
+        }
         binding.addtransaction.setOnClickListener {
             addTransaction()
         }
