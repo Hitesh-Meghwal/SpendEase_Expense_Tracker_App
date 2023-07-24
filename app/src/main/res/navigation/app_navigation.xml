@@ -21,7 +21,11 @@
         android:id="@+id/allTransactions"
         android:name="com.example.spendease.fragments.AllTransactions"
         android:label="fragment_all_transactions"
-        tools:layout="@layout/fragment_all_transactions" />
+        tools:layout="@layout/fragment_all_transactions" >
+        <action
+            android:id="@+id/action_allTransactions_to_transactionDetails"
+            app:destination="@id/transactionDetails" />
+    </fragment>
     <fragment
         android:id="@+id/profile"
         android:name="com.example.spendease.fragments.Profile"
@@ -42,6 +46,15 @@
         <argument
             android:name="data"
             app:argType="com.example.spendease.Model.TransactionData" />
+        <argument
+            android:name="fragment"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_transactionDetails_to_allTransactions"
+            app:destination="@id/allTransactions" />
+        <action
+            android:id="@+id/action_transactionDetails_to_dashboard"
+            app:destination="@id/dashboard" />
     </fragment>
     <dialog
         android:id="@+id/updateUserDetailsDialog"

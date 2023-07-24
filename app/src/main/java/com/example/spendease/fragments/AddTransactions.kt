@@ -5,16 +5,15 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.spendease.Model.TransactionData
@@ -28,7 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import kotlin.math.log
 
 @Suppress("DEPRECATION")
 class AddTransactions : Fragment(),View.OnClickListener {
@@ -59,8 +57,16 @@ class AddTransactions : Fragment(),View.OnClickListener {
             binding.addtransaction.text = "Save Transaction"
             binding.newtranstoolbarId.title = "Edit Transaction"
             binding.newtranstoolbarId.setNavigationOnClickListener {
-                val action = AddTransactionsDirections.
-                findNavController().navigate(action)
+                val args = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransactions")
+                Navigation.findNavController(binding.root)
+                    .navigate(args)
+            }
+        }
+        else{
+            binding.newtranstoolbarId.setNavigationOnClickListener {
+                val action = AddTransactionsDirections.actionAddTransactionsToDashboard()
+                Navigation.findNavController(binding.root)
+                    .navigate(action)
             }
         }
         binding.addtransaction.setOnClickListener {
