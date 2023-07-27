@@ -24,6 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -58,15 +60,13 @@ class AddTransactions : Fragment(),View.OnClickListener {
             binding.newtranstoolbarId.title = "Edit Transaction"
             binding.newtranstoolbarId.setNavigationOnClickListener {
                 val args = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransactions")
-                Navigation.findNavController(binding.root)
-                    .navigate(args)
+                Navigation.findNavController(binding.root).navigate(args)
             }
         }
         else{
             binding.newtranstoolbarId.setNavigationOnClickListener {
                 val action = AddTransactionsDirections.actionAddTransactionsToDashboard()
-                Navigation.findNavController(binding.root)
-                    .navigate(action)
+                Navigation.findNavController(binding.root).navigate(action)
             }
         }
         binding.addtransaction.setOnClickListener {
@@ -86,12 +86,11 @@ class AddTransactions : Fragment(),View.OnClickListener {
     }
 
     private fun setDatas(){
-        val transactiondata = TransactionData()
-        binding.title.setText(transactiondata.title)
-        binding.date.setText(transactiondata.date)
-        binding.amount.setText(transactiondata.amount.toString())
-        binding.note.setText(transactiondata.note)
-        category = transactiondata.category
+        binding.title.setText(transactions.data.title)
+        binding.date.setText(transactions.data.date)
+        binding.amount.setText(transactions.data.amount.toString())
+        binding.note.setText(transactions.data.note)
+        category = transactions.data.category
         when(category){
             "Food"->{
                 setCategory(binding.foodbtn,binding.foodbtn)
@@ -114,6 +113,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
         }
     }
     private fun addTransaction(){
+        val firestore = FirebaseFirestore.getInstance()
         val title = binding.title.text.toString()
         val date = binding.date.text.toString()
         val amount = binding.amount.text.toString().trim()
@@ -121,22 +121,58 @@ class AddTransactions : Fragment(),View.OnClickListener {
         if (title.isEmpty() || date.isEmpty() || amount.isEmpty() || note.isEmpty() || category == ""){
             notifyUser("Enter all required details")
         }
-        else{
-            val firestore = FirebaseFirestore.getInstance()
-            val newTransactions = TransactionData("Expense",category,title,amount.toDouble(),date,day,month,year,note)
-            firestore.collection("Transactions")
-                .document(FirebaseAuth.getInstance().uid.toString())
-                .collection("TransactionList")
-                .add(newTransactions)
-                .addOnSuccessListener {
-                    notifyUser("Transaction Added Successfully")
-                    val action = AddTransactionsDirections.actionAddTransactionsToDashboard()
-                    findNavController().navigate(action)
-                }
-                .addOnFailureListener { e->
-                    notifyUser("Something went wrong"+e.message)
-                }
+        else {
+            if (transactions.from) {
+                val updates = hashMapOf<String, Any>(
+                    "categroy" to category,
+                    "title" to title,
+                    "amount" to amount.toDouble(),
+                    "date" to date,
+                    "day" to day,
+                    "month" to month,
+                    "year" to year,
+                    "note" to note
+                )
+                firestore.collection("Transactions")
+                    .document(FirebaseAuth.getInstance().uid.toString())
+                    .collection("TransactionList")
+                    .document()
+                    .update(updates)
+                    .addOnCompleteListener {
+                        notifyUser("Transaction Updated Successfully")
+                        val action = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransaction")
+                        Navigation.findNavController(binding.root)
+                            .navigate(action)
+                    }
+                    .addOnFailureListener {
+                        notifyUser("Something went wrong" + it.message)
+                    }
+            } else {
+                val newTransactions = TransactionData(
+                    "Expense",
+                    category,
+                    title,
+                    amount.toDouble(),
+                    date,
+                    day,
+                    month,
+                    year,
+                    note
+                )
+                firestore.collection("Transactions")
+                    .document(FirebaseAuth.getInstance().uid.toString())
+                    .collection("TransactionList")
+                    .add(newTransactions)
+                    .addOnSuccessListener {
+                        notifyUser("Transaction Added Successfully")
+                        val action = AddTransactionsDirections.actionAddTransactionsToDashboard()
+                        findNavController().navigate(action)
+                    }
+                    .addOnFailureListener { e ->
+                        notifyUser("Something went wrong" + e.message)
+                    }
 
+            }
         }
     }
 

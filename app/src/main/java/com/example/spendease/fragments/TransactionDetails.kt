@@ -40,24 +40,21 @@ class TransactionDetails : Fragment() {
         binding.toolbarId.setNavigationOnClickListener {
             if(transaction.fragment == "Dashboard"){
                 val action = TransactionDetailsDirections.actionTransactionDetailsToDashboard()
-                Navigation.findNavController(binding.root)
-                    .navigate(action)
+                Navigation.findNavController(binding.root).navigate(action)
             }
             else if(transaction.fragment == "AllTransaction"){
                 val action = TransactionDetailsDirections.actionTransactionDetailsToAllTransactions()
-                Navigation.findNavController(binding.root)
-                    .navigate(action)
+                Navigation.findNavController(binding.root).navigate(action)
             }
             else{
                 val action = TransactionDetailsDirections.actionTransactionDetailsToDashboard()
-                Navigation.findNavController(binding.root)
-                    .navigate(action)            }
+                Navigation.findNavController(binding.root).navigate(action)
+            }
         }
 
         binding.edit.setOnClickListener {
             val arg = TransactionDetailsDirections.actionTransactionDetailsToAddTransactions(transaction.data,true)
-            Navigation.findNavController(binding.root)
-                .navigate(arg)
+            Navigation.findNavController(binding.root).navigate(arg)
         }
         return binding.root
     }

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spendease.Adapter.TransactionAdapter
@@ -55,7 +56,7 @@ class Dashboard : Fragment() {
 //        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
         val args = DashboardDirections.actionDashboardToAddTransactions(TransactionData("","","",0.0,"",0,0,0,""),false)
         binding.addnewtransactions.setOnClickListener {
-            findNavController().navigate(args)
+            Navigation.findNavController(binding.root).navigate(args)
         }
 
         getdata()
