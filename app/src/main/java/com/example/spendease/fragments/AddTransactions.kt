@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.toObject
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -39,6 +40,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
     lateinit var toolbar: MaterialToolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var userDetails : SharedPreferences
+    lateinit var documentSnapshot: QueryDocumentSnapshot
     var day = 0
     var month = 0
     var year = 0
@@ -133,19 +135,37 @@ class AddTransactions : Fragment(),View.OnClickListener {
                     "year" to year,
                     "note" to note
                 )
+                val transactionData = documentSnapshot.toObject(TransactionData::class.java)
+                transactionData.id = documentSnapshot.id
                 firestore.collection("Transactions")
                     .document(FirebaseAuth.getInstance().uid.toString())
                     .collection("TransactionList")
-                    .document()
-                    .update(updates)
+                    .get()
                     .addOnCompleteListener {
-                        notifyUser("Transaction Updated Successfully")
-                        val action = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransaction")
-                        Navigation.findNavController(binding.root)
-                            .navigate(action)
+                        if(it.isSuccessful){
+                            for(document in it.result!!){
+                                val documentId = document.id
+
+                                firestore.collection("Transactions")
+                                    .document(FirebaseAuth.getInstance().uid.toString())
+                                    .collection("TransactionList")
+                                    .document(documentId)
+                                    .update(updates)
+                                    .addOnSuccessListener {
+                                        notifyUser("Transaction Updated Successfully")
+                                        val action = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransaction")
+                                        Navigation.findNavController(binding.root)
+                                            .navigate(action)
+                                    }
+                                    .addOnFailureListener {
+                                        notifyUser("Something went wrong" + it.message)
+
+                                    }
+                            }
+                        }
                     }
                     .addOnFailureListener {
-                        notifyUser("Something went wrong" + it.message)
+                        notifyUser("Query Failed" + it.message)
                     }
             } else {
                 val newTransactions = TransactionData(

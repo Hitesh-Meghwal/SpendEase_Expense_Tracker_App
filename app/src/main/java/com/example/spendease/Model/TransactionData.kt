@@ -6,6 +6,8 @@ import java.io.Serializable
 
 data class TransactionData(
 
+    var id:String="",
+
     @PropertyName("type")
     var type: String = "",
 
