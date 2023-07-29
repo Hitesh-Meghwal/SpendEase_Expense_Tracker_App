@@ -72,7 +72,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
             }
         }
         binding.addtransaction.setOnClickListener {
-            addTransaction()
+            addUpdateTransaction()
         }
         return binding.root
     }
@@ -114,7 +114,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
             }
         }
     }
-    private fun addTransaction(){
+    private fun addUpdateTransaction(){
         val firestore = FirebaseFirestore.getInstance()
         val title = binding.title.text.toString()
         val date = binding.date.text.toString()
@@ -126,7 +126,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
         else {
             if (transactions.from) {
                 val updates = hashMapOf<String, Any>(
-                    "categroy" to category,
+                    "category" to category,
                     "title" to title,
                     "amount" to amount.toDouble(),
                     "date" to date,
@@ -144,7 +144,8 @@ class AddTransactions : Fragment(),View.OnClickListener {
                     .update(updates)
                     .addOnSuccessListener {
                         notifyUser("Transaction Updated Successfully")
-                        val action = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransaction")
+//                        val action = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransaction")
+                        val action = AddTransactionsDirections.actionAddTransactionsToDashboard()
                         Navigation.findNavController(binding.root).navigate(action)
                     }
                     .addOnFailureListener {
