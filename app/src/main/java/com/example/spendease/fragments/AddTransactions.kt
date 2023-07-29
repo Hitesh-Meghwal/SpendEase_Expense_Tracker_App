@@ -23,6 +23,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -40,7 +41,6 @@ class AddTransactions : Fragment(),View.OnClickListener {
     lateinit var toolbar: MaterialToolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var userDetails : SharedPreferences
-    lateinit var documentSnapshot: QueryDocumentSnapshot
     var day = 0
     var month = 0
     var year = 0
@@ -135,40 +135,25 @@ class AddTransactions : Fragment(),View.OnClickListener {
                     "year" to year,
                     "note" to note
                 )
-                val transactionData = documentSnapshot.toObject(TransactionData::class.java)
-                transactionData.id = documentSnapshot.id
+
+                val documentId = transactions.data.id ?:""
                 firestore.collection("Transactions")
                     .document(FirebaseAuth.getInstance().uid.toString())
                     .collection("TransactionList")
-                    .get()
-                    .addOnCompleteListener {
-                        if(it.isSuccessful){
-                            for(document in it.result!!){
-                                val documentId = document.id
-
-                                firestore.collection("Transactions")
-                                    .document(FirebaseAuth.getInstance().uid.toString())
-                                    .collection("TransactionList")
-                                    .document(documentId)
-                                    .update(updates)
-                                    .addOnSuccessListener {
-                                        notifyUser("Transaction Updated Successfully")
-                                        val action = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransaction")
-                                        Navigation.findNavController(binding.root)
-                                            .navigate(action)
-                                    }
-                                    .addOnFailureListener {
-                                        notifyUser("Something went wrong" + it.message)
-
-                                    }
-                            }
-                        }
+                    .document(documentId)
+                    .update(updates)
+                    .addOnSuccessListener {
+                        notifyUser("Transaction Updated Successfully")
+                        val action = AddTransactionsDirections.actionAddTransactionsToTransactionDetails(transactions.data,"AddTransaction")
+                        Navigation.findNavController(binding.root).navigate(action)
                     }
                     .addOnFailureListener {
-                        notifyUser("Query Failed" + it.message)
+                        notifyUser("Something went wrong" + it.message)
                     }
-            } else {
+            }
+            else {
                 val newTransactions = TransactionData(
+                    null,
                     "Expense",
                     category,
                     title,
@@ -183,7 +168,9 @@ class AddTransactions : Fragment(),View.OnClickListener {
                     .document(FirebaseAuth.getInstance().uid.toString())
                     .collection("TransactionList")
                     .add(newTransactions)
-                    .addOnSuccessListener {
+                    .addOnSuccessListener {documentref->
+                        val newdocumentid = documentref.id
+                        newTransactions.id = newdocumentid
                         notifyUser("Transaction Added Successfully")
                         val action = AddTransactionsDirections.actionAddTransactionsToDashboard()
                         findNavController().navigate(action)
@@ -191,7 +178,6 @@ class AddTransactions : Fragment(),View.OnClickListener {
                     .addOnFailureListener { e ->
                         notifyUser("Something went wrong" + e.message)
                     }
-
             }
         }
     }

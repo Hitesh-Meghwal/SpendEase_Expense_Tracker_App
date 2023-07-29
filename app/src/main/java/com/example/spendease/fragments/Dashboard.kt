@@ -25,6 +25,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.FirebaseFirestore
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
@@ -54,7 +55,7 @@ class Dashboard : Fragment() {
         binding = FragmentDashboardBinding.inflate(inflater,container,false)
 //        Switch to AddTransaction Fragment
 //        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
-        val args = DashboardDirections.actionDashboardToAddTransactions(TransactionData("","","",0.0,"",0,0,0,""),false)
+        val args = DashboardDirections.actionDashboardToAddTransactions(TransactionData(null,"","","",0.0,"",0,0,0,""),false)
         binding.addnewtransactions.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(args)
         }

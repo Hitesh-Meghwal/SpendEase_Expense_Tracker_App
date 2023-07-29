@@ -17,6 +17,8 @@ import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.fragments.AllTransactionsDirections
 import com.example.spendease.fragments.DashboardDirections
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TransactionAdapter(val context: Context, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
     class  transactionViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
@@ -27,6 +29,7 @@ class TransactionAdapter(val context: Context, val fragment: String, private val
         val date = itemView.findViewById<TextView>(R.id.datetv_id)
         val cardicon = itemView.findViewById<ImageView>(R.id.card_icon)
         val cardview = itemView.findViewById<CardView>(R.id.cardimage_id)
+
     }
 
     lateinit var userDetails: SharedPreferences
@@ -84,6 +87,7 @@ class TransactionAdapter(val context: Context, val fragment: String, private val
         }
 
         holder.itemView.setOnClickListener {
+
             if (fragment =="Dashboard"){
                val argument = DashboardDirections.actionDashboardToTransactionDetails(data,fragment)
                 Navigation.findNavController(it).navigate(argument)
