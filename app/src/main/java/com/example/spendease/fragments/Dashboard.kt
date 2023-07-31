@@ -54,7 +54,6 @@ class Dashboard : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentDashboardBinding.inflate(inflater,container,false)
 //        Switch to AddTransaction Fragment
-//        navigationView = requireActivity().findViewById(R.id.navigation_drawer)
         val args = DashboardDirections.actionDashboardToAddTransactions(TransactionData(null,"","","",0.0,"",0,0,0,""),false)
         binding.addnewtransactions.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(args)

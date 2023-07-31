@@ -37,6 +37,7 @@ class TransactionDetails : Fragment() {
 
 
         binding.toolbarId.navigationIcon = ContextCompat.getDrawable(requireContext(),R.drawable.baseline_arrow_back_24)
+        // Navigate back to the appropriate destination based on the "fragment" argument
         binding.toolbarId.setNavigationOnClickListener {
             if(transaction.fragment == "Dashboard"){
                 val action = TransactionDetailsDirections.actionTransactionDetailsToDashboard()
