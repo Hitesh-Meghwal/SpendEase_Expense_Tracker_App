@@ -358,8 +358,7 @@
                 android:id="@+id/transactionrecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_70sdp"
+                android:layout_marginTop="6dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
                 tools:listitem="@layout/transaction_itemlist" />
