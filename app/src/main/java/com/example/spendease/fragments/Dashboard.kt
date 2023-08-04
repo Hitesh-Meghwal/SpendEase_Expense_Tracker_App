@@ -16,7 +16,9 @@ import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.Adapter.TransactionAdapter
 import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
@@ -24,9 +26,11 @@ import com.example.spendease.databinding.FragmentDashboardBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.persistentCacheSettings
 import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import java.text.SimpleDateFormat
@@ -50,6 +54,7 @@ class Dashboard : Fragment() {
     lateinit var userDetails: SharedPreferences
     private val firestore = FirebaseFirestore.getInstance()
 
+    val transactionlist = mutableListOf<TransactionData>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentDashboardBinding.inflate(inflater,container,false)
@@ -58,6 +63,9 @@ class Dashboard : Fragment() {
         binding.addnewtransactions.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(args)
         }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.transactionRecyclerView)
 
         getdata()
         return binding.root
@@ -97,7 +105,7 @@ class Dashboard : Fragment() {
         totalShopping = 0.0f
         totalTransport = 0.0f
 
-        val transactionlist = mutableListOf<TransactionData>()
+
         firestore.collection("Transactions")
             .document(FirebaseAuth.getInstance().uid.toString())
             .collection("TransactionList")
@@ -203,6 +211,46 @@ class Dashboard : Fragment() {
         pieChart.addPieSlice(PieModel("Left",totalGoal-(totalExpense.toFloat()), ContextCompat.getColor(requireContext(), R.color.background_deep)))
     }
     pieChart.startAnimation()
+    }
+
+
+    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val pos = viewHolder.adapterPosition  //taking positions of views
+
+            if (pos >= 0 && pos < transactionlist.size) {
+                val deleteItem = transactionlist.removeAt(pos)
+                binding.transactionRecyclerView.adapter?.notifyItemRemoved(pos)
+
+                val transactionId = deleteItem.id  //after removing from recyclerview it takes id and delete that item from firebase!
+                if (transactionId != null) {
+                    deleteTransactions(transactionId) //function of firebase to remove item
+                }
+            }
+        }
+    }
+
+    private fun deleteTransactions(transactionId : String){
+        firestore.collection("Transactions")
+            .document(FirebaseAuth.getInstance().uid.toString())
+            .collection("TransactionList")
+            .document(transactionId)
+            .delete()
+            .addOnSuccessListener {
+                val snackbar = Snackbar.make(binding.root,"Transaction Deleted!",Snackbar.LENGTH_SHORT)
+                snackbar.show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), ""+it.message, Toast.LENGTH_SHORT).show()
+            }
     }
 
 

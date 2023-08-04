@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
@@ -102,6 +103,4 @@ class TransactionAdapter(val context: Context, val fragment: String, private val
     override fun getItemCount(): Int {
         return transList.size
     }
-
-
 }

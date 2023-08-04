@@ -120,7 +120,7 @@ class AllTransactions : Fragment() {
     }
 
     private fun showMonthlyTransactions() {
-        TODO("Not yet implemented")
+
     }
 
     private fun shoeYearlyTransactions() {
