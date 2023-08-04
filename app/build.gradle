@@ -81,5 +81,7 @@ dependencies {
 
 //    hashing of password
     implementation 'org.mindrot:jbcrypt:0.4'
+//    SwipedeleteDecorator
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
 
 }
