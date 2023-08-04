@@ -201,37 +201,29 @@ class Dashboard : Fragment() {
 
     //    To show PiChart in cardview to users
     private fun showPiChart(){
-
-    pieChart = requireView().findViewById(R.id.piechart)
-    pieChart.addPieSlice(PieModel("Food",totalFood, ContextCompat.getColor(requireContext(),R.color.lightblue)))
-    pieChart.addPieSlice(PieModel("Shopping", totalShopping, ContextCompat.getColor(requireContext(), R.color.blue)))
-    pieChart.addPieSlice(PieModel("Transport", totalTransport, ContextCompat.getColor(requireContext(), R.color.yellow)))
-    pieChart.addPieSlice(PieModel("Education", totalEducation, ContextCompat.getColor(requireContext(), R.color.lightBrown)))
-    pieChart.addPieSlice(PieModel("Health", totalHealth, ContextCompat.getColor(requireContext(), R.color.green)))
-    pieChart.addPieSlice(PieModel("Others", totalOthers, ContextCompat.getColor(requireContext(), R.color.red)))
+        pieChart = requireView().findViewById(R.id.piechart)
+        pieChart.addPieSlice(PieModel("Food",totalFood, ContextCompat.getColor(requireContext(),R.color.lightblue)))
+        pieChart.addPieSlice(PieModel("Shopping", totalShopping, ContextCompat.getColor(requireContext(), R.color.blue)))
+        pieChart.addPieSlice(PieModel("Transport", totalTransport, ContextCompat.getColor(requireContext(), R.color.yellow)))
+        pieChart.addPieSlice(PieModel("Education", totalEducation, ContextCompat.getColor(requireContext(), R.color.lightBrown)))
+        pieChart.addPieSlice(PieModel("Health", totalHealth, ContextCompat.getColor(requireContext(), R.color.green)))
+        pieChart.addPieSlice(PieModel("Others", totalOthers, ContextCompat.getColor(requireContext(), R.color.red)))
 
     if(totalGoal>totalExpense){
         pieChart.addPieSlice(PieModel("Left",totalGoal-(totalExpense.toFloat()), ContextCompat.getColor(requireContext(), R.color.background_deep)))
     }
-    pieChart.startAnimation()
+        pieChart.startAnimation()
     }
 
     private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             return false
         }
-
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val pos = viewHolder.adapterPosition  //taking positions of views
-
             if(direction == ItemTouchHelper.RIGHT && pos >= 0 && pos < transactionlist.size){
                 val recentlyDeletedTransaction = transactionlist.removeAt(pos)
                 adapter.notifyItemRemoved(pos)
-
                 //after removing from recyclerview it takes id and delete that item from firebase!
                 val transactionId = recentlyDeletedTransaction.id
                 if (transactionId!=null){
@@ -240,15 +232,8 @@ class Dashboard : Fragment() {
                 val snackbar = Snackbar.make(binding.root,"Transaction Deleted!",Snackbar.LENGTH_SHORT)
                 snackbar.setAction("Undo"){
                     //Restore the deleted data
-                    transactionlist.add(pos, recentlyDeletedTransaction)
-                    adapter.notifyDataSetChanged()
+                    handleUndoAction(recentlyDeletedTransaction,pos)
                 }
-//                snackbar.addCallback(object : Snackbar.Callback(){
-//                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-//                        if(event == DISMISS_EVENT_ACTION || event == DISMISS_EVENT_SWIPE || event == DISMISS_EVENT_MANUAL)
-//                            deleteTransactions(transactionId!!)
-//                    }
-//                })
                 snackbar.show()
             }
         }
@@ -263,6 +248,28 @@ class Dashboard : Fragment() {
         }
     }
 
+    private fun handleUndoAction(recentlyDeletedTransaction : TransactionData?,pos : Int){
+        if(recentlyDeletedTransaction!=null) {
+            transactionlist.add(pos, recentlyDeletedTransaction)
+            adapter.notifyItemInserted(pos)
+            val transactionId = recentlyDeletedTransaction.id
+
+            if (transactionId != null) {
+                firestore.collection("Transactions")
+                    .document(FirebaseAuth.getInstance().uid.toString())
+                    .collection("TransactionList")
+                    .document(transactionId)
+                    .set(recentlyDeletedTransaction)
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to Restored Transaction ${it.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+        }
+    }
     private fun deleteTransactions(transactionId : String){
         firestore.collection("Transactions")
             .document(FirebaseAuth.getInstance().uid.toString())
@@ -273,6 +280,4 @@ class Dashboard : Fragment() {
                 Toast.makeText(requireContext(), "Failed to Delete Transaction ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
-
 }
