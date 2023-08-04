@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -186,10 +187,7 @@ class Dashboard : Fragment() {
             .addOnFailureListener {e->
                 Toast.makeText(requireContext(), ""+e.message, Toast.LENGTH_SHORT).show()
             }
-
-
     }
-
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar?.show()
@@ -198,16 +196,14 @@ class Dashboard : Fragment() {
         bottomnav.visibility = View.VISIBLE
     }
 
-
     //    To show PiChart in cardview to users
     private fun showPiChart(){
-        pieChart = requireView().findViewById(R.id.piechart)
-        pieChart.addPieSlice(PieModel("Food",totalFood, ContextCompat.getColor(requireContext(),R.color.lightblue)))
-        pieChart.addPieSlice(PieModel("Shopping", totalShopping, ContextCompat.getColor(requireContext(), R.color.blue)))
-        pieChart.addPieSlice(PieModel("Transport", totalTransport, ContextCompat.getColor(requireContext(), R.color.yellow)))
-        pieChart.addPieSlice(PieModel("Education", totalEducation, ContextCompat.getColor(requireContext(), R.color.lightBrown)))
-        pieChart.addPieSlice(PieModel("Health", totalHealth, ContextCompat.getColor(requireContext(), R.color.green)))
-        pieChart.addPieSlice(PieModel("Others", totalOthers, ContextCompat.getColor(requireContext(), R.color.red)))
+        binding.piechart.addPieSlice(PieModel("Food",totalFood, ContextCompat.getColor(requireContext(),R.color.lightblue)))
+        binding.piechart.addPieSlice(PieModel("Shopping", totalShopping, ContextCompat.getColor(requireContext(), R.color.blue)))
+        binding.piechart.addPieSlice(PieModel("Transport", totalTransport, ContextCompat.getColor(requireContext(), R.color.yellow)))
+        binding.piechart.addPieSlice(PieModel("Education", totalEducation, ContextCompat.getColor(requireContext(), R.color.lightBrown)))
+        binding.piechart.addPieSlice(PieModel("Health", totalHealth, ContextCompat.getColor(requireContext(), R.color.green)))
+        binding.piechart.addPieSlice(PieModel("Others", totalOthers, ContextCompat.getColor(requireContext(), R.color.red)))
 
     if(totalGoal>totalExpense){
         pieChart.addPieSlice(PieModel("Left",totalGoal-(totalExpense.toFloat()), ContextCompat.getColor(requireContext(), R.color.background_deep)))
@@ -260,12 +256,11 @@ class Dashboard : Fragment() {
                     .collection("TransactionList")
                     .document(transactionId)
                     .set(recentlyDeletedTransaction)
+                    .addOnSuccessListener {
+                        getdata()
+                    }
                     .addOnFailureListener {
-                        Toast.makeText(
-                            requireContext(),
-                            "Failed to Restored Transaction ${it.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(requireContext(), "Failed to Restored Transaction ${it.message}", Toast.LENGTH_SHORT).show()
                     }
             }
         }
@@ -276,6 +271,9 @@ class Dashboard : Fragment() {
             .collection("TransactionList")
             .document(transactionId)
             .delete()
+            .addOnSuccessListener {
+                getdata()
+            }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to Delete Transaction ${it.message}", Toast.LENGTH_SHORT).show()
             }
