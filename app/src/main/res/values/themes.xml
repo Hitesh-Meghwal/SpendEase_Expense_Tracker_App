@@ -7,7 +7,6 @@
 
     <style name="Theme.SpendEase" parent="Base.Theme.SpendEase" />
 
-
 <!--    profile image with circularimage-->
     <style name="roundImageView" parent="">
         <item name="cornerSize">50%</item>

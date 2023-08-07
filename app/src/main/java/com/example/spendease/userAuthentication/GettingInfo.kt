@@ -6,7 +6,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telecom.Call.Details
+import android.view.View
 import android.widget.Adapter
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
@@ -56,7 +58,7 @@ class GettingInfo : AppCompatActivity() {
         val usereyearlybudget = binding.enteryearlybId.text.toString().trim()
         val currency = binding.currencyspinnerId.selectedItem.toString()
 
-        if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty()){
+        if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty() || currency.isEmpty()){
             Toast.makeText(this, "Enter all details to continue...", Toast.LENGTH_SHORT).show()
         }
         else{

@@ -5,9 +5,9 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,33 +17,30 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.Adapter.TransactionAdapter
-import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
+import com.example.spendease.R
 import com.example.spendease.databinding.FragmentDashboardBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.persistentCacheSettings
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
-import org.eazegraph.lib.charts.PieChart
 import org.eazegraph.lib.models.PieModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
+
 @Suppress("DEPRECATION")
 class Dashboard : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
-    lateinit var pieChart: PieChart
     private var totalExpense = 0.0
     private var totalGoal = 5000.0f
     private var totalFood = 0.0f
@@ -82,6 +79,7 @@ class Dashboard : Fragment() {
         userDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
         val getname = userDetails.getString("Name","")
         val getMonthlyBudget = userDetails.getString("MonthlyBudget","")
+        val getCurrency = userDetails.getString("Currency","")
 
         val formatmonth = SimpleDateFormat("MM")
         val currentMonth = formatmonth.format(Calendar.getInstance().time)
@@ -173,8 +171,8 @@ class Dashboard : Fragment() {
 
             val monthlyBudget = requireActivity().findViewById<TextView>(R.id.budgettv)
             val myexpense = requireActivity().findViewById<TextView>(R.id.expensetv)
-            monthlyBudget.text = "₹${totalGoal.toInt()}"
-            myexpense.text = "₹${totalExpense.toInt()}"
+            monthlyBudget.text = "$getCurrency ${totalGoal.toInt()}"
+            myexpense.text = "$getCurrency ${totalExpense.toInt()}"
             val indicator = requireActivity().findViewById<ImageView>(R.id.indicator)
             if (totalExpense > totalGoal) {
                 indicator.setImageResource(R.drawable.ic_negative_transaction)
@@ -198,6 +196,7 @@ class Dashboard : Fragment() {
 
     //    To show PiChart in cardview to users
     private fun showPiChart(){
+        binding.piechart.clearChart()
         binding.piechart.addPieSlice(PieModel("Food",totalFood, ContextCompat.getColor(requireContext(),R.color.lightblue)))
         binding.piechart.addPieSlice(PieModel("Shopping", totalShopping, ContextCompat.getColor(requireContext(), R.color.blue)))
         binding.piechart.addPieSlice(PieModel("Transport", totalTransport, ContextCompat.getColor(requireContext(), R.color.yellow)))
@@ -206,9 +205,9 @@ class Dashboard : Fragment() {
         binding.piechart.addPieSlice(PieModel("Others", totalOthers, ContextCompat.getColor(requireContext(), R.color.red)))
 
     if(totalGoal>totalExpense){
-        pieChart.addPieSlice(PieModel("Left",totalGoal-(totalExpense.toFloat()), ContextCompat.getColor(requireContext(), R.color.background_deep)))
+        binding.piechart.addPieSlice(PieModel("Left",totalGoal-(totalExpense.toFloat()), ContextCompat.getColor(requireContext(), R.color.background_deep)))
     }
-        pieChart.startAnimation()
+        binding.piechart.startAnimation()
     }
 
     private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
@@ -236,8 +235,11 @@ class Dashboard : Fragment() {
 
         override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
             RecyclerViewSwipeDecorator.Builder(c,recyclerView,viewHolder,dX,dY,actionState,isCurrentlyActive)
-                .addSwipeRightBackgroundColor(Color.GRAY)
-                .addActionIcon(R.drawable.baseline_delete_24)
+                .addSwipeRightBackgroundColor(Color.RED)
+                .addSwipeRightActionIcon(R.drawable.baseline_delete_24)
+                .addSwipeRightLabel("Delete")
+                .setSwipeRightLabelTextSize(1,18f)
+                .setSwipeRightLabelColor(Color.BLACK)
                 .create()
                 .decorate()
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
