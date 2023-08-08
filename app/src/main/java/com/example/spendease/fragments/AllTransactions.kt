@@ -1,5 +1,6 @@
 package com.example.spendease.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -20,9 +21,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import org.eazegraph.lib.charts.PieChart
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class AllTransactions : Fragment() {
     private lateinit var binding: FragmentAllTransactionsBinding
+    private var month = " "
+    private var year = 0
     lateinit var pieChart: PieChart
     private var totalexpense = 0.0f
     private var totalGoal = 5000.0f
@@ -66,10 +71,7 @@ class AllTransactions : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        (activity as AppCompatActivity).supportActionBar?.hide()
-    }
+
 
     private fun yearSelector() {
         val yearslist = ArrayList<Int>()
@@ -106,7 +108,7 @@ class AllTransactions : Fragment() {
                 if (transactionList.isEmpty()) {
                     binding.transactionrecyclerview.visibility = View.GONE
                     binding.noTransactionsDoneText.text = "No Transaction Done Yet!"
-                    binding.noTransactionsDoneText.visibility = View.GONE
+                    binding.noTransactionsDoneText.visibility = View.VISIBLE
                 } else {
                     val adapter = TransactionAdapter(requireContext(), "AllTransactions", transactionList)
                     binding.transactionrecyclerview.layoutManager = LinearLayoutManager(requireContext())
@@ -119,8 +121,15 @@ class AllTransactions : Fragment() {
             }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun showMonthlyTransactions() {
-
+//        Taking year format
+        year = SimpleDateFormat("YYYY").format(Calendar.getInstance().time).toInt()
+        val list = mutableListOf(2023)
+        list.clear()
+        for(i in year downTo 2023){
+            
+        }
     }
 
     private fun shoeYearlyTransactions() {
@@ -133,4 +142,8 @@ class AllTransactions : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.hide()
+    }
 }

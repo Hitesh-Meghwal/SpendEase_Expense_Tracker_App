@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -49,8 +50,6 @@ class Dashboard : Fragment() {
     private var totalHealth = 0.0f
     private var totalEducation = 0.0f
     private var totalOthers = 0.0f
-    lateinit var fab : FloatingActionButton
-    lateinit var toolbar: MaterialToolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var userDetails: SharedPreferences
@@ -125,7 +124,7 @@ class Dashboard : Fragment() {
                 }
 
                 if(transactionlist.isEmpty()){
-                    binding.noTransactionsDoneText.text = "Add Your First Transaction of ${currentMonth.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transaction"
+                    binding.noTransactionsDoneText.text = "Add Your First Transaction of ${format.format(Calendar.getInstance().time)} $currentYear \n Click On + to add Transaction"
                     binding.noTransactionsDoneText.visibility = View.VISIBLE
                     binding.recenttransaction.visibility = View.GONE
                 }
