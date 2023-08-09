@@ -9,18 +9,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spendease.Adapter.TransactionAdapter
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.databinding.FragmentAllTransactionsBinding
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import org.eazegraph.lib.charts.PieChart
+import org.eazegraph.lib.models.PieModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -63,7 +67,7 @@ class AllTransactions : Fragment() {
 //                when(checkId){
 //                    R.id.all -> showAllTransactions()
 //                    R.id.monthly -> showMonthlyTransactions()
-//                    R.id.yearly -> shoeYearlyTransactions()
+//                    R.id.yearly -> showYearlyTransactions()
 //                }
 //            }
 //        }
@@ -125,15 +129,15 @@ class AllTransactions : Fragment() {
     private fun showMonthlyTransactions() {
 //        Taking year format
         year = SimpleDateFormat("YYYY").format(Calendar.getInstance().time).toInt()
-        val list = mutableListOf(2023)
+        val list = mutableListOf<Int>()
         list.clear()
-        for(i in year downTo 2023){
-            
+        for(i in year downTo 2022){
+            list += i
         }
     }
 
-    private fun shoeYearlyTransactions() {
-        TODO("Not yet implemented")
+    private fun showYearlyTransactions() {
+
     }
 
     private fun getData(){
@@ -141,6 +145,200 @@ class AllTransactions : Fragment() {
         binding.budgettv.text = UserDetails.getString("MonthlyBudget","")
 
     }
+
+    private fun showPiChart(){
+        binding.piechart.clearChart()
+        binding.piechart.addPieSlice(PieModel("Food",totalFood, ContextCompat.getColor(requireContext(),R.color.lightblue)))
+        binding.piechart.addPieSlice(PieModel("Shopping", totalShopping, ContextCompat.getColor(requireContext(), R.color.blue)))
+        binding.piechart.addPieSlice(PieModel("Transport", totalTransport, ContextCompat.getColor(requireContext(), R.color.yellow)))
+        binding.piechart.addPieSlice(PieModel("Education", totalEducation, ContextCompat.getColor(requireContext(), R.color.lightBrown)))
+        binding.piechart.addPieSlice(PieModel("Health", totalHealth, ContextCompat.getColor(requireContext(), R.color.green)))
+        binding.piechart.addPieSlice(PieModel("Others", totalOthers, ContextCompat.getColor(requireContext(), R.color.red)))
+
+        if(totalGoal>totalexpense){
+            binding.piechart.addPieSlice(PieModel("Left",totalGoal-(totalexpense), ContextCompat.getColor(requireContext(), R.color.background_deep)))
+        }
+        binding.piechart.startAnimation()
+    }
+
+//    when user click one of the button then the button color
+//    and all design is set by this function
+    private fun setMonth(v:View,button: MaterialButton){
+        month = button.text.toString()
+        button.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.purple_200))
+        button.setStrokeColorResource(R.color.purple_200)
+        button.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+
+        when(v){
+            binding.january -> {
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.february -> {
+                removeBackground(binding.january)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.march -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.april -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.may -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.june -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.july -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.august -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.september ->{
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.october -> {
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.january)
+                removeBackground(binding.november)
+                removeBackground(binding.december)
+            }
+            binding.november -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.december)
+            }
+            binding.december -> {
+                removeBackground(binding.january)
+                removeBackground(binding.february)
+                removeBackground(binding.march)
+                removeBackground(binding.april)
+                removeBackground(binding.may)
+                removeBackground(binding.june)
+                removeBackground(binding.july)
+                removeBackground(binding.august)
+                removeBackground(binding.september)
+                removeBackground(binding.october)
+                removeBackground(binding.november)
+            }
+        }
+    }
+
+    //    From multiple button , when you click a button
+    //    than the button that are not click then background of
+    //    that button is set by using this function
+    private fun removeBackground(button: MaterialButton) {
+        button.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.transparent))
+        button.setIconTintResource(R.color.textSecondary)
+        button.setStrokeColorResource(R.color.textSecondary)
+        button.setTextColor(ContextCompat.getColor(requireContext(),R.color.textSecondary))
+    }
+
 
     override fun onResume() {
         super.onResume()
