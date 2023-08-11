@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -28,10 +27,11 @@ import org.eazegraph.lib.models.PieModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-class AllTransactions : Fragment() {
+class AllTransactions : Fragment(),View.OnClickListener {
     private lateinit var binding: FragmentAllTransactionsBinding
     private var month = " "
     private var year = 0
+    private var monthInt = 1
     lateinit var pieChart: PieChart
     private var totalexpense = 0.0f
     private var totalGoal = 5000.0f
@@ -51,7 +51,6 @@ class AllTransactions : Fragment() {
 
         // Inflate the layout for this fragment
         binding = FragmentAllTransactionsBinding.inflate(inflater, container, false)
-        yearSelector()
         getData()
         showAllTransactions()
 
@@ -77,16 +76,7 @@ class AllTransactions : Fragment() {
 
 
 
-    private fun yearSelector() {
-        val yearslist = ArrayList<Int>()
-        val startyear = 2020
-        val endyear = 2030
-        for (i in startyear..endyear) {
-            yearslist.add(i)
-        }
-        val yearspinneradapter = ArrayAdapter(requireContext(), com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item, yearslist)
-        binding.yearlyspinner.adapter = yearspinneradapter
-    }
+
 
     private fun showAllTransactions() {
         binding.transactionrecyclerview.visibility = View.VISIBLE
@@ -127,13 +117,38 @@ class AllTransactions : Fragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun showMonthlyTransactions() {
-//        Taking year format
+//        Taking current year
         year = SimpleDateFormat("YYYY").format(Calendar.getInstance().time).toInt()
         val list = mutableListOf<Int>()
         list.clear()
         for(i in year downTo 2022){
             list += i
+        } // [2023,2020]
+        val yearAdapter  = ArrayAdapter(requireContext(), com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item,list)
+        binding.yearlyspinner.adapter = yearAdapter
+        setMonth(binding.january,binding.january)
+        showMonthsTransaction()
+        binding.transactionrecyclerview.visibility = View.VISIBLE
+        binding.mainCard.visibility = View.VISIBLE
+        binding.yearlyspinner.visibility = View.VISIBLE
+        binding.textView4.visibility = View.VISIBLE
+        binding.montlyselector.visibility = View.VISIBLE
+        binding.title.text = "Monthly Transaction"
+        binding.yearlyspinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                year = binding.yearlyspinner.selectedItem.toString().toInt()
+                showMonthsTransaction()
+            }
+            //to close the onItemSelected
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                year = binding.yearlyspinner.selectedItem.toString().toInt()
+                showMonthsTransaction()
+            }
+
         }
+    }
+    private fun showMonthsTransaction(){
+
     }
 
     private fun showYearlyTransactions() {
@@ -161,8 +176,90 @@ class AllTransactions : Fragment() {
         binding.piechart.startAnimation()
     }
 
-//    when user click one of the button then the button color
-//    and all design is set by this function
+    private fun setListener(binding: FragmentAllTransactionsBinding){
+        binding.january.setOnClickListener(this)
+        binding.february.setOnClickListener(this)
+        binding.march.setOnClickListener(this)
+        binding.april.setOnClickListener(this)
+        binding.may.setOnClickListener(this)
+        binding.june.setOnClickListener(this)
+        binding.july.setOnClickListener(this)
+        binding.august.setOnClickListener(this)
+        binding.september.setOnClickListener(this)
+        binding.october.setOnClickListener(this)
+        binding.november.setOnClickListener(this)
+        binding.december.setOnClickListener(this)
+    }
+
+//    handling click events of the month buttons.
+//    it check which button was clicked and perform events accordingly
+    override  fun onClick(v:View){
+        when(v){
+            binding.january->{
+                setMonth(v,binding.january)
+                monthInt = 1
+                showMonthsTransaction()
+            }
+            binding.february->{
+                setMonth(v,binding.february)
+                monthInt = 2
+                showMonthsTransaction()
+            }
+            binding.march->{
+                setMonth(v,binding.march)
+                monthInt = 3
+                showMonthsTransaction()
+            }
+            binding.april->{
+                setMonth(v,binding.april)
+                monthInt = 4
+                showMonthsTransaction()
+            }
+            binding.may->{
+                setMonth(v,binding.may)
+                monthInt = 5
+                showMonthsTransaction()
+            }
+            binding.june->{
+                setMonth(v,binding.june)
+                monthInt = 6
+                showMonthsTransaction()
+            }
+            binding.july->{
+                setMonth(v,binding.july)
+                monthInt = 7
+                showMonthsTransaction()
+            }
+            binding.august->{
+                setMonth(v,binding.august)
+                monthInt = 8
+                showMonthsTransaction()
+            }
+            binding.september->{
+                setMonth(v,binding.september)
+                monthInt = 9
+                showMonthsTransaction()
+            }
+            binding.october->{
+                setMonth(v,binding.october)
+                monthInt = 10
+                showMonthsTransaction()
+            }
+            binding.november->{
+                setMonth(v,binding.november)
+                monthInt = 11
+                showMonthsTransaction()
+            }
+            binding.december->{
+                setMonth(v,binding.december)
+                monthInt = 12
+                showMonthsTransaction()
+            }
+
+
+        }
+    }
+//    this function updates the UI when a button is clicked
     private fun setMonth(v:View,button: MaterialButton){
         month = button.text.toString()
         button.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.purple_200))

@@ -87,7 +87,7 @@ class Signin : AppCompatActivity() {
                     progressDialog.cancel()
                 }
                 .addOnFailureListener { e->
-                    notifyUser("Email or Password is Invalid \n Check again!!\n"+e.message)
+                    notifyUser("Email or Password is Invalid\n"+e.message)
                     progressDialog.cancel()
                 }
             progressDialog.setMessage("Logging ...")
