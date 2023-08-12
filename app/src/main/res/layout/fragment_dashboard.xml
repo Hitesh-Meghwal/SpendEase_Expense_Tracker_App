@@ -56,7 +56,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/text"
+                        android:id="@+id/monthtext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -77,10 +77,10 @@
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text" />
+                        app:layout_constraintTop_toBottomOf="@+id/monthtext" />
 
                     <TextView
-                        android:id="@+id/text2"
+                        android:id="@+id/expensetext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_16sdp"
@@ -100,7 +100,7 @@
                         android:textSize="@dimen/_20ssp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text2" />
+                        app:layout_constraintTop_toBottomOf="@+id/expensetext" />
 
                     <ImageView
                         android:id="@+id/indicator"
@@ -109,9 +109,9 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:contentDescription="@string/icon"
                         android:src="@drawable/ic_positive_amount"
-                        app:layout_constraintBottom_toBottomOf="@id/text2"
-                        app:layout_constraintStart_toEndOf="@id/text2"
-                        app:layout_constraintTop_toTopOf="@id/text2" />
+                        app:layout_constraintBottom_toBottomOf="@id/expensetext"
+                        app:layout_constraintStart_toEndOf="@id/expensetext"
+                        app:layout_constraintTop_toTopOf="@id/expensetext" />
 
                     <TextView
                         android:id="@+id/datetv"

@@ -169,7 +169,8 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textPersonName"
+                android:inputType="text"
+                android:maxLength="14"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

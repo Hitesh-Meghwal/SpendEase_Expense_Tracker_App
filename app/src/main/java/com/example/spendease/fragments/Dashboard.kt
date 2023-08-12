@@ -106,7 +106,6 @@ class Dashboard : Fragment() {
         totalShopping = 0.0f
         totalTransport = 0.0f
 
-
         firestore.collection("Transactions")
             .document(FirebaseAuth.getInstance().uid.toString())
             .collection("TransactionList")
@@ -117,6 +116,9 @@ class Dashboard : Fragment() {
                     for(data in it.documents){
                         val transaction = data.toObject(TransactionData::class.java)
                         transaction?.let {
+//                            checks if the current TransactionData object (it) is already present in the transactionlist.
+//                            If the transactionlist doesn't contain the current TransactionData object,
+//                            the object is added to the transactionlist using transactionlist.add(it).
                             if(!transactionlist.contains(it)){
                                 transactionlist.add(it) }
                         }
