@@ -58,7 +58,7 @@
             android:layout_marginTop="@dimen/_115sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:hint="@string/enter_password"
-            app:passwordToggleEnabled="true">
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_id"

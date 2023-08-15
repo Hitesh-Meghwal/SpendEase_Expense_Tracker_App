@@ -16,74 +16,65 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
+import com.example.spendease.databinding.TransactionItemlistBinding
 import com.example.spendease.fragments.AllTransactionsDirections
 import com.example.spendease.fragments.DashboardDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TransactionAdapter(val context: Context, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
-    class  transactionViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-
-        val title = itemView.findViewById<TextView>(R.id.titletv_id)
-        val category = itemView.findViewById<TextView>(R.id.categorytv_id)
-        val money = itemView.findViewById<TextView>(R.id.expensemoneytv_id)
-        val date = itemView.findViewById<TextView>(R.id.datetv_id)
-        val cardicon = itemView.findViewById<ImageView>(R.id.card_icon)
-        val cardview = itemView.findViewById<CardView>(R.id.cardimage_id)
-
-    }
+    class  transactionViewHolder(val binding : TransactionItemlistBinding):RecyclerView.ViewHolder(binding.root)
 
     lateinit var userDetails: SharedPreferences
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): transactionViewHolder {
-       val itemView = LayoutInflater.from(parent.context).inflate(R.layout.transaction_itemlist, parent, false)
-        return transactionViewHolder(itemView)
+        return transactionViewHolder(TransactionItemlistBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: transactionViewHolder, position: Int) {
         val data = transList[position]
-        holder.title.text = data.title
-        holder.money.text = "₹"+data.amount.toInt().toString()
-        holder.category.text = data.category
-        holder.date.text = data.date
+        holder.binding.titletvId.text = data.title
+        holder.binding.expensemoneytvId.text = "₹"+data.amount.toInt().toString()
+        holder.binding.categorytvId.text = data.category
+        holder.binding.datetvId.text = data.date
 
         when(data.category){
             "Food" ->{
-                holder.cardicon.setImageResource(R.drawable.ic_baseline_fastfood_24)
-                holder.cardicon.setColorFilter(ContextCompat.getColor(context,R.color.lightblue))
-                holder.category.setTextColor(ContextCompat.getColor(context, R.color.lightblue))
-                holder.cardview.setBackgroundColor(ContextCompat.getColor(context,R.color.cardBackground))
+                holder.binding.cardIcon.setImageResource(R.drawable.ic_baseline_fastfood_24)
+                holder.binding.cardIcon.setColorFilter(ContextCompat.getColor(context,R.color.lightblue))
+                holder.binding.categorytvId.setTextColor(ContextCompat.getColor(context, R.color.lightblue))
+                holder.binding.cardimageId.setBackgroundColor(ContextCompat.getColor(context,R.color.cardBackground))
             }
             "Shopping"->{
-                holder.cardicon.setImageResource(R.drawable.ic_baseline_shopping_cart_24)
-                holder.cardicon.setColorFilter(ContextCompat.getColor(context, R.color.blue))
-                holder.category.setTextColor(ContextCompat.getColor(context, R.color.blue))
-                holder.cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
+                holder.binding.cardIcon.setImageResource(R.drawable.ic_baseline_shopping_cart_24)
+                holder.binding.cardIcon.setColorFilter(ContextCompat.getColor(context, R.color.blue))
+                holder.binding.categorytvId.setTextColor(ContextCompat.getColor(context, R.color.blue))
+                holder.binding.cardimageId.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
             }
             "Education"->{
-                holder.cardicon.setImageResource(R.drawable.ic_baseline_education_24)
-                holder.cardicon.setColorFilter(ContextCompat.getColor(context, R.color.lightBrown))
-                holder.category.setTextColor(ContextCompat.getColor(context, R.color.lightBrown))
-                holder.cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
+                holder.binding.cardIcon.setImageResource(R.drawable.ic_baseline_education_24)
+                holder.binding.cardIcon.setColorFilter(ContextCompat.getColor(context, R.color.lightBrown))
+                holder.binding.categorytvId.setTextColor(ContextCompat.getColor(context, R.color.lightBrown))
+                holder.binding.cardimageId.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
             }
             "Transport"->{
-                holder.cardicon.setImageResource(R.drawable.ic_baseline_directions_transport_24)
-                holder.cardicon.setColorFilter(ContextCompat.getColor(context, R.color.yellow))
-                holder.category.setTextColor(ContextCompat.getColor(context, R.color.yellow))
-                holder.cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
+                holder.binding.cardIcon.setImageResource(R.drawable.ic_baseline_directions_transport_24)
+                holder.binding.cardIcon.setColorFilter(ContextCompat.getColor(context, R.color.yellow))
+                holder.binding.categorytvId.setTextColor(ContextCompat.getColor(context, R.color.yellow))
+                holder.binding.cardimageId.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
             }
             "Health"->{
-                holder.cardicon.setImageResource(R.drawable.ic_baseline_health_24)
-                holder.cardicon.setColorFilter(ContextCompat.getColor(context, R.color.green))
-                holder.category.setTextColor(ContextCompat.getColor(context, R.color.green))
-                holder.cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
+                holder.binding.cardIcon.setImageResource(R.drawable.ic_baseline_health_24)
+                holder.binding.cardIcon.setColorFilter(ContextCompat.getColor(context, R.color.green))
+                holder.binding.categorytvId.setTextColor(ContextCompat.getColor(context, R.color.green))
+                holder.binding.cardimageId.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
             }
             "Other"->{
-                holder.cardicon.setImageResource(R.drawable.ic_baseline_category_24)
-                holder.cardicon.setColorFilter(ContextCompat.getColor(context, R.color.red))
-                holder.category.setTextColor(ContextCompat.getColor(context, R.color.red))
-                holder.cardview.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
+                holder.binding.cardIcon.setImageResource(R.drawable.ic_baseline_category_24)
+                holder.binding.cardIcon.setColorFilter(ContextCompat.getColor(context, R.color.red))
+                holder.binding.categorytvId.setTextColor(ContextCompat.getColor(context, R.color.red))
+                holder.binding.cardimageId.setBackgroundColor(ContextCompat.getColor(context, R.color.cardBackground))
             }
         }
 

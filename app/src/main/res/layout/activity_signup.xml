@@ -47,7 +47,6 @@
                 android:id="@+id/signupusername_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableEnd="@drawable/baseline_mail_outline_24"
                 android:inputType="textEmailAddress"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
@@ -80,7 +79,7 @@
             android:layout_marginTop="@dimen/_170sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:hint="@string/enter_password_signup"
-            app:passwordToggleEnabled="true">
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signuppassword_id"
