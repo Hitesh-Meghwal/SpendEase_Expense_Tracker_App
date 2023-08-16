@@ -80,7 +80,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
         when(currentToggleSelection){
             R.id.all -> showAllTransactions()
             R.id.monthly -> showMonthlyTransactions()
-            R.id.all -> showYearlyTransactions()
+            R.id.yearly -> showYearlyTransactions()
         }
 
     }
@@ -138,7 +138,6 @@ class AllTransactions : Fragment(),View.OnClickListener {
     }
 
     private fun showMonthlyTransactions() {
-        transactionList.clear()
         binding.monthtext.text = "Monthly Budget"
         yearSpinner()
         setMonthByValue(monthInt)
@@ -180,6 +179,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
     }
     @SuppressLint("SetTextI18n")
     private fun showMonthsTransaction(){
+        transactionList.clear()
         pieChart = binding.piechart
         pieChart.clearChart()
         totalexpense = 0.0
@@ -270,7 +270,6 @@ class AllTransactions : Fragment(),View.OnClickListener {
     }
 
     private fun showYearlyTransactions() {
-        transactionList.clear()
         binding.title.text = "Yearly Transactions"
         binding.monthtext.text = "Yearly Budget"
         yearSpinner()
@@ -279,14 +278,14 @@ class AllTransactions : Fragment(),View.OnClickListener {
         binding.yearlyspinner.visibility = View.VISIBLE
         binding.yourtransactiontv.visibility = View.VISIBLE
         binding.montlyselector.visibility = View.GONE
-        showYearlyTransactions()
+        showYearlyTransaction()
         binding.yearlyspinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                val selectedyear = binding.yearlyspinner.selectedItem.toString().toInt()
                 if(year != selectedyear){
                     year = selectedyear
                     if (currentToggleSelection == R.id.yearly)
-                        showYearlyTransactions()
+                        showYearlyTransaction()
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -294,6 +293,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
     }
     @SuppressLint("SetTextI18n")
     private fun showYearlyTransaction(){
+        transactionList.clear()
         pieChart = binding.piechart
         pieChart.clearChart()
         totalexpense = 0.0
