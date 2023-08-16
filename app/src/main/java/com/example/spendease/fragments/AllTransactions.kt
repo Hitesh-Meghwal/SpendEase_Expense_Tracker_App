@@ -1,11 +1,9 @@
 package com.example.spendease.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +11,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spendease.Adapter.TransactionAdapter
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
+import com.example.spendease.SwipetoDelete.SwipeToDelete
 import com.example.spendease.databinding.FragmentAllTransactionsBinding
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -35,6 +34,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
     private var month = " "
     private var year = 0
     private var monthInt = 1
+    lateinit var adapter: TransactionAdapter
     lateinit var pieChart: PieChart
     private var totalexpense = 0.0
     private var totalGoal = 5000.0f
@@ -44,42 +44,55 @@ class AllTransactions : Fragment(),View.OnClickListener {
     private var totalOthers = 0.0f
     private var totalTransport = 0.0f
     private var totalHealth = 0.0f
-    lateinit var firebase: FirebaseFirestore
+    private val firebase = FirebaseFirestore.getInstance()
     lateinit var UserDetails: SharedPreferences
     private var currentToggleSelection = R.id.all
+    var transactionList = mutableListOf<TransactionData>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = FragmentAllTransactionsBinding.inflate(inflater, container, false)
         UserDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
-        firebase = FirebaseFirestore.getInstance()
         setListener(binding)
 
-        when(binding.toggleselector.checkedButtonId){
+        when (binding.toggleselector.checkedButtonId) {
             R.id.all -> showAllTransactions()
             R.id.monthly -> showMonthlyTransactions()
-            R.id.yearly -> showYearlyTransaction()
+            R.id.yearly -> showYearlyTransactions()
         }
-        binding.toggleselector.addOnButtonCheckedListener{toggleselector, checkId, isCheck->
-            if(isCheck && currentToggleSelection != checkId){
+        binding.toggleselector.addOnButtonCheckedListener { toggleselector, checkId, isCheck ->
+            if (isCheck && currentToggleSelection != checkId) {
                 currentToggleSelection = checkId
-                when(checkId){
+                when (checkId) {
                     R.id.all -> showAllTransactions()
                     R.id.monthly -> showMonthlyTransactions()
-                    R.id.yearly -> showYearlyTransaction()
+                    R.id.yearly -> showYearlyTransactions()
                 }
             }
         }
+        adapter = TransactionAdapter(requireContext(), "AllTransactions", transactionList)
+        val swipeToDelete = SwipeToDelete(firebase,adapter,binding.root,transactionList,{refresh()})
+        val itemTouchHelper = ItemTouchHelper(swipeToDelete)
+        itemTouchHelper.attachToRecyclerView(binding.transactionrecyclerview)
+
         return binding.root
+    }
+    private fun refresh(){
+        when(currentToggleSelection){
+            R.id.all -> showAllTransactions()
+            R.id.monthly -> showMonthlyTransactions()
+            R.id.all -> showYearlyTransactions()
+        }
+
     }
 
     private fun showAllTransactions() {
+        transactionList.clear()
         binding.transactionrecyclerview.visibility = View.VISIBLE
         binding.title.text = "All Transactions"
         binding.yearlyspinner.visibility = View.GONE
         binding.montlyselector.visibility = View.GONE
         binding.mainCard.visibility = View.GONE
         binding.yourtransactiontv.visibility = View.GONE
-        val transactionList = mutableListOf<TransactionData>()
         firebase.collection("Transactions")
             .document(FirebaseAuth.getInstance().uid.toString())
             .collection("TransactionList")
@@ -95,12 +108,12 @@ class AllTransactions : Fragment(),View.OnClickListener {
                 }
                 if (transactionList.isEmpty()) {
                     binding.transactionrecyclerview.visibility = View.GONE
-                    binding.noTransactionsDoneText.text = "No Transactions Done Yet!"
                     binding.noTransactionsDoneText.visibility = View.VISIBLE
+                    binding.noTransactionsDoneText.text = "No Transactions Done Yet!"
                 } else {
                     binding.noTransactionsDoneText.visibility = View.GONE
                     binding.transactionrecyclerview.visibility = View.VISIBLE
-                    val adapter = TransactionAdapter(requireContext(), "AllTransactions", transactionList)
+                    adapter = TransactionAdapter(requireContext(), "AllTransactions", transactionList)
                     binding.transactionrecyclerview.layoutManager = LinearLayoutManager(requireContext())
                     binding.transactionrecyclerview.adapter = adapter
                     adapter.notifyDataSetChanged()
@@ -125,6 +138,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
     }
 
     private fun showMonthlyTransactions() {
+        transactionList.clear()
         binding.monthtext.text = "Monthly Budget"
         yearSpinner()
         setMonthByValue(monthInt)
@@ -177,8 +191,6 @@ class AllTransactions : Fragment(),View.OnClickListener {
         totalShopping = 0.0f
         totalTransport = 0.0f
         val currency  = UserDetails.getString("Currency","")
-
-        val transactionList = mutableListOf<TransactionData>()
         firebase.collection("Transactions")
             .document(FirebaseAuth.getInstance().uid.toString())
             .collection("TransactionList")
@@ -207,10 +219,10 @@ class AllTransactions : Fragment(),View.OnClickListener {
                     binding.transactionrecyclerview.visibility = View.VISIBLE
                     binding.yourtransactiontv.visibility = View.VISIBLE
                     binding.mainCard.visibility = View.VISIBLE
-                    val transactionAdapter = TransactionAdapter(requireContext(), "AllTransaction", transactionList)
+                    adapter = TransactionAdapter(requireContext(), "AllTransaction", transactionList)
                     binding.transactionrecyclerview.layoutManager = LinearLayoutManager(requireContext())
-                    binding.transactionrecyclerview.adapter = transactionAdapter
-                    transactionAdapter.notifyDataSetChanged()
+                    binding.transactionrecyclerview.adapter = adapter
+                    adapter.notifyDataSetChanged()
 
                     for (i in transactionList) {
                         totalexpense += i.amount
@@ -257,7 +269,8 @@ class AllTransactions : Fragment(),View.OnClickListener {
             }
     }
 
-    private fun showYearlyTransaction() {
+    private fun showYearlyTransactions() {
+        transactionList.clear()
         binding.title.text = "Yearly Transactions"
         binding.monthtext.text = "Yearly Budget"
         yearSpinner()
@@ -280,7 +293,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
         }
     }
     @SuppressLint("SetTextI18n")
-    private fun showYearlyTransactions(){
+    private fun showYearlyTransaction(){
         pieChart = binding.piechart
         pieChart.clearChart()
         totalexpense = 0.0
@@ -292,7 +305,6 @@ class AllTransactions : Fragment(),View.OnClickListener {
         totalShopping = 0.0f
         totalTransport = 0.0f
         val currency  = UserDetails.getString("Currency","")
-        val transactionList = mutableListOf<TransactionData>()
         firebase.collection("Transactions")
             .document(FirebaseAuth.getInstance().uid.toString())
             .collection("TransactionList")
@@ -320,10 +332,10 @@ class AllTransactions : Fragment(),View.OnClickListener {
                     binding.yourtransactiontv.visibility = View.VISIBLE
                     binding.mainCard.visibility = View.VISIBLE
                     binding.transactionrecyclerview.visibility = View.VISIBLE
-                    val transactionAdapter = TransactionAdapter(requireContext(), "AllTransactions", transactionList)
+                    adapter = TransactionAdapter(requireContext(), "AllTransactions", transactionList)
                     binding.transactionrecyclerview.layoutManager = LinearLayoutManager(requireContext())
-                    binding.transactionrecyclerview.adapter = transactionAdapter
-                    transactionAdapter.notifyDataSetChanged()
+                    binding.transactionrecyclerview.adapter = adapter
+                    adapter.notifyDataSetChanged()
 
                     for (i in transactionList) {
                         totalexpense += i.amount
