@@ -15,8 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 @Suppress("DEPRECATION")
-class SwipeToDelete(private val firestore: FirebaseFirestore, private val adapter: TransactionAdapter,
-                    private val rootView: View, private val transactionlist: MutableList<TransactionData>,
+class SwipeToDelete(private val firestore: FirebaseFirestore,
+                    private val adapter: TransactionAdapter,
+                    private val rootView: View,
+                    private val transactionlist: MutableList<TransactionData>,
                     private val getdata:()-> Unit) : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
     override fun onMove(
         recyclerView: RecyclerView,
