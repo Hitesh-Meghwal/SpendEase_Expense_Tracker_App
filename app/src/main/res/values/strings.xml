@@ -2,8 +2,7 @@
     <string name="app_name">SpendEase</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
-    <string name="log_in">Log In</string>
-    <string name="log_in_btn">Log in</string>
+    <string name="log_in">Sign In</string>
     <string name="haven_t_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
     <string name="or">OR</string>
@@ -14,7 +13,6 @@
     <string name="enter_password_signup">Enter Password</string>
     <string name="sign_up_button">Sign Up</string>
     <string name="have_an_account">have an account?</string>
-    <string name="log_in_in_sign_up">Log in</string>
     <string name="sign_up_tv">Sign Up</string>
     <string name="enter_name">Enter Name</string>
     <string name="enter_monthly_budget">Enter Monthly Budget</string>
@@ -84,4 +82,18 @@
     <string name="update">Update</string>
     <string name="communicate">Communicate</string>
     <string name="rate_us">Rate Us</string>
+    <string-array name="Currency">
+        <item>₹ Indian Rupee</item>
+        <item>$ Dollar</item>
+        <item>£ United Kingdom Pound</item>
+        <item>$ Argentina Peso</item>
+        <item>ƒ Aruba Guilder</item>
+        <item>₼ Azerbaijan Manat</item>
+        <item>Br Belarus Ruble</item>
+        <item>лв Bulgaria Lev</item>
+        <item>R$ Brazil Real</item>
+        <item>៛ Cambodia Riel</item>
+        <item>¥ China Yuan Renminbi</item>
+        <item>৳ Bangladeshi taka</item>
+    </string-array>
 </resources>

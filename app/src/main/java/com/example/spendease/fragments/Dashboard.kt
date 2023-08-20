@@ -144,6 +144,7 @@ class Dashboard : Fragment() {
                     for (i in transactionlist) {
                         totalExpense += i.amount
                         when (i.category) {
+
                             "Food" -> {
                                 totalFood += (i.amount.toFloat())
                             }

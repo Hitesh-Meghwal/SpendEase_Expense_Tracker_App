@@ -83,8 +83,12 @@ class Signup : AppCompatActivity() {
                                     .set(UserModal(getusername,getemail,hashpassword))
                                     .addOnCompleteListener {
                                         if (task.isSuccessful){
-                                            val switchtologin = Intent(this, Signin::class.java)
-                                            startActivity(switchtologin)
+                                            val userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
+                                            val editor = userDetails.edit()
+                                            editor.putBoolean("isFirstTime",true)
+                                            editor.apply()
+                                            val gettingInfo = Intent(this, GettingInfo::class.java)
+                                            startActivity(gettingInfo)
                                             notifyUser("Sign Up Successfully")
                                             progressDialog.cancel()
                                         }
@@ -102,7 +106,7 @@ class Signup : AppCompatActivity() {
                     notifyUser("Something went wrong!!"+e.message)
                     progressDialog.cancel()
                 }
-            progressDialog.setMessage("Signing ...")
+            progressDialog.setMessage("Signup ...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
         }

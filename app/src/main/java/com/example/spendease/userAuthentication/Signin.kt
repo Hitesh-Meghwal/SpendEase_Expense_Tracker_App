@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spendease.R
+import com.example.spendease.databinding.ActivitySignupBinding
+import com.example.spendease.navigation.NavigationDrawer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -73,16 +75,20 @@ class Signin : AppCompatActivity() {
         val getpassword = password.text.toString()
         firebaseAuth = FirebaseAuth.getInstance()
         if (getemail.isEmpty()){
-            email.setError("Email cannot be empty!")
+            email.error = "Email cannot be empty!"
         }
         else if(getpassword.isEmpty()){
-            password.setError("Password cannot be empty!")
+            password.error = "Password cannot be empty!"
         }
         else{
             firebaseAuth.signInWithEmailAndPassword(getemail, getpassword)
                 .addOnSuccessListener {
-                    val gettinginfointent = Intent(this,GettingInfo::class.java)
-                    startActivity(gettinginfointent)
+                    val userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
+                    val editor = userDetails.edit()
+                    editor.putBoolean("isFirstTime",true)
+                    editor.apply()
+                    val mainActivity = Intent(this,NavigationDrawer::class.java)
+                    startActivity(mainActivity)
                     notifyUser("Logging Successfully!")
                     progressDialog.cancel()
                 }
@@ -90,7 +96,7 @@ class Signin : AppCompatActivity() {
                     notifyUser("Email or Password is Invalid\n"+e.message)
                     progressDialog.cancel()
                 }
-            progressDialog.setMessage("Logging ...")
+            progressDialog.setMessage("Signing ...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
         }
@@ -101,7 +107,7 @@ class Signin : AppCompatActivity() {
         val getemail = email.text.toString()
         firebaseAuth = FirebaseAuth.getInstance()
         if (getemail.isEmpty()){
-            email.setError("Please enter email for reset!")
+            email.error = "Please enter email for reset!"
         }
         else{
             firebaseAuth.sendPasswordResetEmail(getemail)

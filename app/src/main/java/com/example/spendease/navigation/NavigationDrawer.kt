@@ -54,7 +54,9 @@ class NavigationDrawer : AppCompatActivity(){
         when(item.itemId){
             R.id.logout_id->{
                 val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
+//                userDetails.getBoolean("hasCompletedSetup",true)
                 val editor = userDetails.edit()
+                editor.putBoolean("isFirstTime",false)
                 editor.apply()
 //                FirebaseAuth.getInstance().signOut()
                 val i = Intent(this,Signin::class.java)

@@ -111,7 +111,8 @@
             android:layout_height="55dp"
             android:background="@drawable/spinner_ui"
             android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_180sdp"
+            android:layout_marginTop="@dimen/_185sdp"
+            android:color ="@color/white"
             android:layout_marginEnd="@dimen/_15sdp" />
 
         <Button
@@ -119,7 +120,7 @@
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_230sdp"
+            android:layout_marginTop="@dimen/_240sdp"
             android:background="@drawable/login_button"
             android:text="@string/let_s_go"
             android:textSize="@dimen/_13sdp" />

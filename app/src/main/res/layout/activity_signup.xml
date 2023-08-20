@@ -10,7 +10,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="446dp"
+        android:layout_height="430dp"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_130sdp"
         android:layout_marginEnd="@dimen/_20sdp"
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_296sdp"
-            android:text="@string/log_in_in_sign_up"
+            android:text="@string/log_in"
             android:textAlignment="center"
             android:textColor="@color/blue"
             android:textSize="@dimen/_15ssp"

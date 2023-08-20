@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.spendease.navigation.NavigationDrawer
+import com.example.spendease.userAuthentication.GettingInfo
 import com.example.spendease.userAuthentication.Signin
+import com.example.spendease.userAuthentication.Signup
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         btn.setOnClickListener {
             checkingUserExistence()
         }
-
     }
 
     private fun checkingUserExistence(){
@@ -27,13 +28,12 @@ class MainActivity : AppCompatActivity() {
         // if user is already login then he/she redirect to next activity if user is login with email and password
         val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
         val check = userDetails.getBoolean("isFirstTime",false)
-
-        if(check || account != null) {
+        if(check) {
             val i = Intent(this,NavigationDrawer::class.java)
             startActivity(i)
         }
         else{
-            val i = Intent(this,Signin::class.java)
+            val i = Intent(this,Signup::class.java)
             startActivity(i)
         }
     }
