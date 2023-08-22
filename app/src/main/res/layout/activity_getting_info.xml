@@ -105,15 +105,24 @@
                 android:textSize="@dimen/_13sdp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/currencyspinner_id"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/spinner_ui"
+            android:layout_height="60dp"
+            android:hint="@string/select_currency"
             android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_185sdp"
-            android:color ="@color/white"
-            android:layout_marginEnd="@dimen/_15sdp" />
+            android:layout_marginTop="@dimen/_182sdp"
+            android:layout_marginEnd="@dimen/_15sdp">
+
+            <AutoCompleteTextView
+                android:id="@+id/currencyselector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:inputType="none"
+                android:layout_weight="1"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/letsgo_id"

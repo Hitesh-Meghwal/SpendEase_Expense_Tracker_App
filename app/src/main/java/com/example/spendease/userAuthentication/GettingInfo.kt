@@ -25,7 +25,7 @@ class GettingInfo : AppCompatActivity() {
     private fun currencySpinner(){
         val currency = resources.getStringArray(R.array.Currency)
         val currencyadapter = ArrayAdapter(this, R.layout.currency_item,currency)
-        binding.currencyspinnerId.adapter = currencyadapter
+        binding.currencyselector.setAdapter(currencyadapter)
     }
     private fun setData(){
         userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
@@ -38,9 +38,9 @@ class GettingInfo : AppCompatActivity() {
         val username = binding.enternameId.text.toString()
         val usermonthlybudget =binding.entermonthlybId.text.toString().trim()
         val usereyearlybudget = binding.enteryearlybId.text.toString().trim()
-        val currencyspinner = binding.currencyspinnerId.selectedItem.toString()
+        val selectedCurrency  = binding.currencyselector.text.toString()
 
-        if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty() || currencyspinner.isEmpty()){
+        if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty()){
             Toast.makeText(this, "Enter all details to continue...", Toast.LENGTH_SHORT).show()
         }
         else{
@@ -49,8 +49,8 @@ class GettingInfo : AppCompatActivity() {
             editor.putString("Name",username)
             editor.putString("MonthlyBudget",usermonthlybudget)
             editor.putString("YearlyBudget",usereyearlybudget)
-            editor.putString("Currency_name",currencyspinner.trim())
-            editor.putString("Currency",currencyspinner.split(" ")[0].trim())
+            editor.putString("Currency_name",selectedCurrency.trim())
+            editor.putString("Currency",selectedCurrency.split(" ")[0].trim())
             editor.apply()
             goToNextScreen()
         }
