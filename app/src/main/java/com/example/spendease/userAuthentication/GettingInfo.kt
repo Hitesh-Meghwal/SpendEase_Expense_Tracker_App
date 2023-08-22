@@ -46,7 +46,6 @@ class GettingInfo : AppCompatActivity() {
         else{
             val editor = userDetails.edit()
             editor.putBoolean("isFirstTime",true)
-//            editor.putBoolean("hasCompletedSetup",true)
             editor.putString("Name",username)
             editor.putString("MonthlyBudget",usermonthlybudget)
             editor.putString("YearlyBudget",usereyearlybudget)
@@ -60,5 +59,6 @@ class GettingInfo : AppCompatActivity() {
     private fun goToNextScreen() {
         val intent = Intent(this, NavigationDrawer::class.java)
         startActivity(intent)
+        finish()
     }
 }

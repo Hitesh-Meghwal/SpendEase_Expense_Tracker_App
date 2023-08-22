@@ -89,6 +89,7 @@ class Signin : AppCompatActivity() {
                     editor.apply()
                     val mainActivity = Intent(this,NavigationDrawer::class.java)
                     startActivity(mainActivity)
+                    finish()
                     notifyUser("Logging Successfully!")
                     progressDialog.cancel()
                 }
@@ -96,7 +97,7 @@ class Signin : AppCompatActivity() {
                     notifyUser("Email or Password is Invalid\n"+e.message)
                     progressDialog.cancel()
                 }
-            progressDialog.setMessage("Signing ...")
+            progressDialog.setMessage("Signing...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
         }

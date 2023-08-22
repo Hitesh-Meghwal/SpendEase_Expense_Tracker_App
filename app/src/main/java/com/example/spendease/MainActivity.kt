@@ -31,10 +31,12 @@ class MainActivity : AppCompatActivity() {
         if(check) {
             val i = Intent(this,NavigationDrawer::class.java)
             startActivity(i)
+            finish()
         }
         else{
             val i = Intent(this,Signup::class.java)
             startActivity(i)
+            finish()
         }
     }
 }

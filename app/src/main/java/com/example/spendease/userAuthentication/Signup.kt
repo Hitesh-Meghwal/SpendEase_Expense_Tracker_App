@@ -77,7 +77,6 @@ class Signup : AppCompatActivity() {
                         ?.addOnCompleteListener{ task->
                             if(task.isSuccessful){
                                 val token = task.result?.token
-                                Log.d("Tag",token.toString())
                                 firestore.collection("User")
                                     .document(FirebaseAuth.getInstance().uid.toString())
                                     .set(UserModal(getusername,getemail,hashpassword))
@@ -89,6 +88,7 @@ class Signup : AppCompatActivity() {
                                             editor.apply()
                                             val gettingInfo = Intent(this, GettingInfo::class.java)
                                             startActivity(gettingInfo)
+                                            finish()
                                             notifyUser("Sign Up Successfully")
                                             progressDialog.cancel()
                                         }
@@ -97,16 +97,13 @@ class Signup : AppCompatActivity() {
                                         }
                                     }
                             }
-                            else{
-                                println("Failed to retrieve token!!")
-                            }
                         }
                 }
                 .addOnFailureListener { e ->
                     notifyUser("Something went wrong!!"+e.message)
                     progressDialog.cancel()
                 }
-            progressDialog.setMessage("Signup ...")
+            progressDialog.setMessage("Signup...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
         }

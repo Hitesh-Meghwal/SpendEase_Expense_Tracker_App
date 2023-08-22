@@ -61,6 +61,7 @@ class NavigationDrawer : AppCompatActivity(){
 //                FirebaseAuth.getInstance().signOut()
                 val i = Intent(this,Signin::class.java)
                 startActivity(i)
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
