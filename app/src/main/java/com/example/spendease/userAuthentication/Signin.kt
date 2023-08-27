@@ -176,6 +176,10 @@ class Signin : AppCompatActivity() {
             .document(user.uid)
             .set(Usermap)
             .addOnSuccessListener {
+                val userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
+                val editor = userDetails.edit()
+                editor.putBoolean("isFirstTime",true)
+                editor.apply()
                 val gettingInfointent = Intent(this,GettingInfo::class.java)
                 startActivity(gettingInfointent)
                 notifyUser("Logging Successfully")

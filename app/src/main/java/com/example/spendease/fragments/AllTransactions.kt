@@ -20,6 +20,7 @@ import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.SwipetoDelete.SwipeToDelete
 import com.example.spendease.databinding.FragmentAllTransactionsBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -197,7 +198,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
             .whereEqualTo("month",monthInt)
             .whereEqualTo("year",year)
             .get()
-            .addOnSuccessListener {
+            .addOnSuccessListener { it ->
                 if (!it.isEmpty) {
                     for (data in it.documents) {
                         val transaction = data.toObject<TransactionData>()
@@ -219,7 +220,7 @@ class AllTransactions : Fragment(),View.OnClickListener {
                     binding.transactionrecyclerview.visibility = View.VISIBLE
                     binding.yourtransactiontv.visibility = View.VISIBLE
                     binding.mainCard.visibility = View.VISIBLE
-                    adapter = TransactionAdapter(requireContext(), "AllTransaction", transactionList)
+                    adapter = TransactionAdapter(requireContext(), "AllTransactions", transactionList)
                     binding.transactionrecyclerview.layoutManager = LinearLayoutManager(requireContext())
                     binding.transactionrecyclerview.adapter = adapter
                     adapter.notifyDataSetChanged()
@@ -659,6 +660,8 @@ class AllTransactions : Fragment(),View.OnClickListener {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar?.hide()
+        val bottomnav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
+        bottomnav.visibility = View.VISIBLE
     }
 
     private fun notifyUser(msg : String){

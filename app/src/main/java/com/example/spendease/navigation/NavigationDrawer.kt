@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,6 +17,7 @@ import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class NavigationDrawer : AppCompatActivity(){
     lateinit var drawerLayout: DrawerLayout
@@ -42,7 +44,6 @@ class NavigationDrawer : AppCompatActivity(){
         bottomnav.setupWithNavController(navController)
         navigationView.setupWithNavController(navController)
 
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -54,11 +55,10 @@ class NavigationDrawer : AppCompatActivity(){
         when(item.itemId){
             R.id.logout_id->{
                 val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
-//                userDetails.getBoolean("hasCompletedSetup",true)
                 val editor = userDetails.edit()
                 editor.putBoolean("isFirstTime",false)
                 editor.apply()
-//                FirebaseAuth.getInstance().signOut()
+                FirebaseAuth.getInstance().signOut()
                 val i = Intent(this,Signin::class.java)
                 startActivity(i)
                 finish()
@@ -66,6 +66,7 @@ class NavigationDrawer : AppCompatActivity(){
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 
 }

@@ -27,29 +27,23 @@ class TransactionDetails : Fragment() {
         val bottomnav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomnavigation_id)
         bottomnav.visibility = View.GONE
 
-
-
         binding.title.text = transaction.data.title
         binding.amount.text = "₹${transaction.data.amount}"
         binding.category.text = transaction.data.category
         binding.date.text = transaction.data.date
         binding.note.text = transaction.data.note
 
-
         binding.toolbarId.navigationIcon = ContextCompat.getDrawable(requireContext(),R.drawable.baseline_arrow_back_24)
         // Navigate back to the appropriate destination based on the "fragment" argument
         binding.toolbarId.setNavigationOnClickListener {
             if(transaction.fragment == "Dashboard"){
-                val action = TransactionDetailsDirections.actionTransactionDetailsToDashboard()
-                Navigation.findNavController(binding.root).navigate(action)
+                Navigation.findNavController(binding.root).navigate(R.id.action_transactionDetails_to_dashboard)
             }
-            else if(transaction.fragment == "AllTransaction"){
-                val action = TransactionDetailsDirections.actionTransactionDetailsToAllTransactions()
-                Navigation.findNavController(binding.root).navigate(action)
+            else if(transaction.fragment == "AllTransactions"){
+                Navigation.findNavController(binding.root).navigate(R.id.action_transactionDetails_to_allTransactions)
             }
             else{
-                val action = TransactionDetailsDirections.actionTransactionDetailsToDashboard()
-                Navigation.findNavController(binding.root).navigate(action)
+                Navigation.findNavController(binding.root).navigate(R.id.action_transactionDetails_to_dashboard)
             }
         }
 

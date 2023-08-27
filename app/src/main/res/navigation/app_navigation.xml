@@ -68,7 +68,9 @@
         tools:layout="@layout/fragment_add_transactions" >
         <action
             android:id="@+id/action_addTransactions_to_dashboard"
-            app:destination="@id/dashboard" />
+            app:destination="@id/dashboard"
+            app:popUpTo="@id/dashboard"
+            app:popUpToInclusive="true" />
         <argument
             android:name="data"
             app:argType="com.example.spendease.Model.TransactionData" />

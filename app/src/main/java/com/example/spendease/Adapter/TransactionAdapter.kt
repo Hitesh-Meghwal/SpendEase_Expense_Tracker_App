@@ -79,7 +79,6 @@ class TransactionAdapter(val context: Context, val fragment: String, private val
         }
 
         holder.itemView.setOnClickListener {
-
             if (fragment =="Dashboard"){
                val argument = DashboardDirections.actionDashboardToTransactionDetails(data,fragment)
                 Navigation.findNavController(it).navigate(argument)

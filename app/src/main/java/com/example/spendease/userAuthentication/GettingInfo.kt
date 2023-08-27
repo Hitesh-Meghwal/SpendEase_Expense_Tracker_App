@@ -40,7 +40,7 @@ class GettingInfo : AppCompatActivity() {
         val usereyearlybudget = binding.enteryearlybId.text.toString().trim()
         val selectedCurrency  = binding.currencyselector.text.toString()
 
-        if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty()){
+        if (username.isEmpty() || usermonthlybudget.isEmpty() || usereyearlybudget.isEmpty() || selectedCurrency.isEmpty()){
             Toast.makeText(this, "Enter all details to continue...", Toast.LENGTH_SHORT).show()
         }
         else{
