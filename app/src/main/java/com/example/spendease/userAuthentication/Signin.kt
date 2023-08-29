@@ -86,11 +86,12 @@ class Signin : AppCompatActivity() {
                     val userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
                     val editor = userDetails.edit()
                     editor.putBoolean("isFirstTime",true)
+                    editor.putString("email",getemail)
                     editor.apply()
                     val mainActivity = Intent(this,NavigationDrawer::class.java)
                     startActivity(mainActivity)
                     finish()
-                    notifyUser("Logging Successfully!")
+                    notifyUser("Signing Successfully!")
                     progressDialog.cancel()
                 }
                 .addOnFailureListener { e->
@@ -179,17 +180,18 @@ class Signin : AppCompatActivity() {
                 val userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
                 val editor = userDetails.edit()
                 editor.putBoolean("isFirstTime",true)
+                editor.putString("email",user.email)
                 editor.apply()
                 val gettingInfointent = Intent(this,GettingInfo::class.java)
                 startActivity(gettingInfointent)
-                notifyUser("Logging Successfully")
+                notifyUser("Signing Successfully")
                 progressDialog.cancel()
             }
             .addOnFailureListener {e->
                 notifyUser("Check Internet Connectivity!"+e.message)
                 progressDialog.cancel()
             }
-        progressDialog.setMessage("Logging...")
+        progressDialog.setMessage("Signing...")
         progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
     }

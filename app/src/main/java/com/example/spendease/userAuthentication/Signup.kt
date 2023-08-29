@@ -85,6 +85,7 @@ class Signup : AppCompatActivity() {
                                             val userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
                                             val editor = userDetails.edit()
                                             editor.putBoolean("isFirstTime",true)
+                                            editor.putString("email",getemail)
                                             editor.apply()
                                             val gettingInfo = Intent(this, GettingInfo::class.java)
                                             startActivity(gettingInfo)

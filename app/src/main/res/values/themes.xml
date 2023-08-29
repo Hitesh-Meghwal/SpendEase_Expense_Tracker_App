@@ -39,6 +39,13 @@
 
     <style name="editFAB">
         <item name="android:radius">@dimen/_50sdp</item>
+    </style>
 
+    <style name="bottom_dialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/modal</item>
+    </style>
+
+    <style name="modal" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/dialog_rounded_corners</item>
     </style>
 </resources>

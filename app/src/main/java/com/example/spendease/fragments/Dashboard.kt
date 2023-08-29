@@ -144,27 +144,21 @@ class Dashboard : Fragment() {
                     for (i in transactionlist) {
                         totalExpense += i.amount
                         when (i.category) {
-
                             "Food" -> {
                                 totalFood += (i.amount.toFloat())
                             }
-
                             "Shopping" -> {
                                 totalShopping += (i.amount.toFloat())
                             }
-
                             "Education" -> {
                                 totalEducation += (i.amount.toFloat())
                             }
-
                             "Others" -> {
                                 totalOthers += (i.amount.toFloat())
                             }
-
                             "Health" -> {
                                 totalHealth += (i.amount.toFloat())
                             }
-
                             "Transport" -> {
                                 totalTransport += (i.amount.toFloat())
                             }

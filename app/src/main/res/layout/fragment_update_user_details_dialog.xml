@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/dialog_rounded_corners"
-    tools:context=".fragments.UpdateUserDetailsDialog">
+    android:layout_height="wrap_content">
 
     <View
         android:id="@+id/view"
@@ -44,13 +42,14 @@
         android:hint="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:startIconDrawable="@drawable/baseline_person_24"
         app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatename"
             android:layout_width="match_parent"
+            android:textColor="@color/textPrimary"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/baseline_person_24"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,13 +64,14 @@
         android:hint="@string/monthly_budget"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:startIconDrawable="@drawable/ic_baseline_currency_rupee_24"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatemonthlybudget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
+            android:textColor="@color/textPrimary"
             android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,6 +85,7 @@
         android:layout_marginEnd="25dp"
         android:hint="@string/yearly_budget_profile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:startIconDrawable="@drawable/ic_baseline_currency_rupee_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
@@ -92,7 +93,7 @@
             android:id="@+id/updateyearlybudget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
+            android:textColor="@color/textPrimary"
             android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
