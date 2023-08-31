@@ -1,26 +1,30 @@
 package com.example.spendease.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.spendease.R
 import com.example.spendease.databinding.FragmentProfileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 
 class Profile : Fragment() {
     private lateinit var binding : FragmentProfileBinding
+    private final val CAPTURE_REQ_CODE = 100
+    private final val GALLERY_REQ_CODE = 200
     lateinit var userDetails: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,9 +32,45 @@ class Profile : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater,container,false)
-
+        binding.progileimg.setOnClickListener {
+            profileUpload()
+        }
         monthYearBudget()
         return binding.root
+    }
+
+    private fun profileUpload(){
+        val profiledialog = BottomSheetDialog(requireContext(),R.style.bottom_dialog)
+        profiledialog.setContentView(R.layout.dialog_update_user_profile)
+        profiledialog.show()
+        val capturebtn = profiledialog.findViewById<ImageView>(R.id.captureimg)
+        val gallerybtn = profiledialog.findViewById<ImageView>(R.id.galleryimg)
+
+        capturebtn?.setOnClickListener {
+            val icapture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(icapture,CAPTURE_REQ_CODE)
+        }
+
+        gallerybtn?.setOnClickListener {
+            val igallery = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(igallery,GALLERY_REQ_CODE)
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK){
+            when(requestCode){
+                CAPTURE_REQ_CODE ->{
+                    val bitimg = data?.extras?.get("data") as Bitmap
+                    binding.progileimg.setImageBitmap(bitimg)
+                }
+                GALLERY_REQ_CODE ->{
+                    binding.progileimg.setImageURI(data?.data)
+                }
+            }
+        }
     }
 
     private fun monthYearBudget() {
