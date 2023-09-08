@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,13 +22,11 @@ import com.example.spendease.R
 import com.example.spendease.databinding.FragmentAddTransactionsBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.toObject
+import net.objecthunter.exp4j.ExpressionBuilder
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -41,6 +40,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
     lateinit var toolbar: MaterialToolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var userDetails : SharedPreferences
+    lateinit var bottomCal : BottomSheetDialog
     var day = 0
     var month = 0
     var year = 0
@@ -73,6 +73,12 @@ class AddTransactions : Fragment(),View.OnClickListener {
         }
         binding.addtransaction.setOnClickListener {
             addUpdateTransaction()
+        }
+        binding.calculator.setOnClickListener {
+            bottomCal = BottomSheetDialog(requireActivity(),R.style.bottom_dialog)
+            bottomCal.setContentView(R.layout.calculator)
+            bottomCal.show()
+            calculator()
         }
         return binding.root
     }
@@ -118,7 +124,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
         val firestore = FirebaseFirestore.getInstance()
         val title = binding.title.text.toString()
         val date = binding.date.text.toString()
-        val amount = binding.amount.text.toString().trim()
+        var amount = binding.amount.text.toString().trim()
         val note = binding.note.text.toString()
         if (title.isEmpty() || date.isEmpty() || amount.isEmpty() || note.isEmpty() || category == ""){
             notifyUser("Enter all required details")
@@ -306,8 +312,126 @@ class AddTransactions : Fragment(),View.OnClickListener {
         (activity as AppCompatActivity).supportActionBar?.hide()
         bottomnav.visibility = View.GONE
     }
+    private fun calculator(){
+        var number : String
+        var input = bottomCal.findViewById<TextView>(R.id.input)
+        var result = bottomCal.findViewById<TextView>(R.id.result)
+        val one = bottomCal.findViewById<MaterialButton>(R.id.one)
+        val two = bottomCal.findViewById<MaterialButton>(R.id.two)
+        val three = bottomCal.findViewById<MaterialButton>(R.id.three)
+        val four = bottomCal.findViewById<MaterialButton>(R.id.four)
+        val five = bottomCal.findViewById<MaterialButton>(R.id.five)
+        val six = bottomCal.findViewById<MaterialButton>(R.id.six)
+        val seven = bottomCal.findViewById<MaterialButton>(R.id.seven)
+        val eight = bottomCal.findViewById<MaterialButton>(R.id.eight)
+        val nine = bottomCal.findViewById<MaterialButton>(R.id.nine)
+        val zero = bottomCal.findViewById<MaterialButton>(R.id.zero)
+        val doubleZero = bottomCal.findViewById<MaterialButton>(R.id.doublezero)
+        val equalsto = bottomCal.findViewById<MaterialButton>(R.id.equal)
+        val plus = bottomCal.findViewById<MaterialButton>(R.id.plus)
+        val minus = bottomCal.findViewById<MaterialButton>(R.id.minus)
+        val mul = bottomCal.findViewById<MaterialButton>(R.id.mul)
+        val divide = bottomCal.findViewById<MaterialButton>(R.id.divide)
+        val mod = bottomCal.findViewById<MaterialButton>(R.id.mod)
+        val clear = bottomCal.findViewById<MaterialButton>(R.id.clear)
+        val delete = bottomCal.findViewById<MaterialButton>(R.id.delete)
+        val dot = bottomCal.findViewById<MaterialButton>(R.id.dot)
 
+        val donebtn = bottomCal.findViewById<MaterialButton>(R.id.donebtn)
+        donebtn?.setOnClickListener {
+            number = result?.text.toString()
+            binding.amount.setText(number)
+            bottomCal.dismiss()
+        }
+        one?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "1"
+        }
+        two?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "2"
+        }
+        three?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "3"
+        }
+        four?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "4"
+        }
+        five?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "5"
+        }
+        six?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "6"
+        }
+        seven?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "7"
+        }
+        eight?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "8"
+        }
+        nine?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "9"
+        }
+        zero?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "0"
+        }
+        doubleZero?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "00"
+        }
+        minus?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "-"
+        }
+        plus?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "+"
+        }
+        divide?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "/"
+        }
+        mul?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "*"
+        }
+        mod?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "%"
+        }
+        dot?.setOnClickListener {
+            number = input?.text.toString()
+            input?.text = number + "."
+        }
+        clear?.setOnClickListener {
+            number = ""
+            input?.text = number
+            result?.text = number
+        }
+        delete?.setOnClickListener {
+            number = input?.text.toString()
+            if (number.isNotEmpty()){
+                val newInput = number.substring(0,number.length - 1)
+                input?.text = newInput
+            }
+        }
+        equalsto?.setOnClickListener {
+            val expression = ExpressionBuilder(input?.text.toString()).build()
+            val output = expression.evaluate()
+            result?.text = output.toString()
+
+        }
+    }
     private fun notifyUser(msg: String){
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
+
 }

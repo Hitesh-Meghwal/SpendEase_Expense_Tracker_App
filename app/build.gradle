@@ -83,5 +83,9 @@ dependencies {
     implementation 'org.mindrot:jbcrypt:0.4'
 //    SwipedeleteDecorator
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
+//  ImageLoading
+    implementation 'com.squareup.picasso:picasso:2.8'
+
+    implementation 'net.objecthunter:exp4j:0.4.5'
 
 }

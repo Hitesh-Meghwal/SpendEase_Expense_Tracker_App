@@ -13,13 +13,18 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.spendease.R
+import com.example.spendease.databinding.ActivityNavigationDrawerBinding
 import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 
 class NavigationDrawer : AppCompatActivity(){
+    private lateinit var binding: ActivityNavigationDrawerBinding
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var toolbar: MaterialToolbar
@@ -27,10 +32,12 @@ class NavigationDrawer : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_navigation_drawer)
+        binding = ActivityNavigationDrawerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         drawerLayout =findViewById(R.id.drawerlayout)
         navigationView = findViewById(R.id.navigation_drawer)
+        val headerView = navigationView.getHeaderView(0)
         toolbar = findViewById(R.id.toolbar_id)
         setSupportActionBar(toolbar)
 
@@ -44,7 +51,19 @@ class NavigationDrawer : AppCompatActivity(){
         bottomnav.setupWithNavController(navController)
         navigationView.setupWithNavController(navController)
 
+        val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
+        val imgid = userDetails.getString("UserImageid","")
+        val navHeaderImg = headerView.findViewById<ShapeableImageView>(R.id.userImage)
+        if (!imgid.isNullOrEmpty() && navHeaderImg != null){
+            val imgurl = userDetails.getString("UserImage","")
+
+            Picasso.get().load(imgurl).into(navHeaderImg)
+        }
+        else{
+
+        }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu,menu)
@@ -66,7 +85,4 @@ class NavigationDrawer : AppCompatActivity(){
         }
         return super.onOptionsItemSelected(item)
     }
-
-
-
 }

@@ -5,6 +5,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,16 +17,24 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.spendease.R
 import com.example.spendease.databinding.FragmentProfileBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 
+@Suppress("DEPRECATION")
 class Profile : Fragment() {
     private lateinit var binding : FragmentProfileBinding
     private final val CAPTURE_REQ_CODE = 100
     private final val GALLERY_REQ_CODE = 200
+    lateinit var firebase: FirebaseFirestore
     lateinit var userDetails: SharedPreferences
+    lateinit var profiledialog : BottomSheetDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,25 +44,35 @@ class Profile : Fragment() {
         binding.progileimg.setOnClickListener {
             profileUpload()
         }
+        firebase = FirebaseFirestore.getInstance()
+        userDetails = requireActivity().getSharedPreferences("UserDetails", MODE_PRIVATE)
         monthYearBudget()
         return binding.root
     }
 
     private fun profileUpload(){
-        val profiledialog = BottomSheetDialog(requireContext(),R.style.bottom_dialog)
+        profiledialog = BottomSheetDialog(requireContext(),R.style.bottom_dialog)
         profiledialog.setContentView(R.layout.dialog_update_user_profile)
         profiledialog.show()
         val capturebtn = profiledialog.findViewById<ImageView>(R.id.captureimg)
         val gallerybtn = profiledialog.findViewById<ImageView>(R.id.galleryimg)
 
         capturebtn?.setOnClickListener {
-            val icapture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(icapture,CAPTURE_REQ_CODE)
+            //taking permission for camera access
+            if(ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA),CAPTURE_REQ_CODE)
+            }
+            else{
+                val icapture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(icapture,CAPTURE_REQ_CODE)
+                profiledialog.dismiss()
+            }
         }
 
         gallerybtn?.setOnClickListener {
             val igallery = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(igallery,GALLERY_REQ_CODE)
+            profiledialog.dismiss()
         }
     }
 
@@ -62,19 +81,67 @@ class Profile : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK){
             when(requestCode){
-                CAPTURE_REQ_CODE ->{
+                CAPTURE_REQ_CODE -> {
                     val bitimg = data?.extras?.get("data") as Bitmap
-                    binding.progileimg.setImageBitmap(bitimg)
+//                    if (bitimg != null) {
+//                        val byteArrayOutputStream = ByteArrayOutputStream()
+//                        bitimg.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+//                        val imagedata = byteArrayOutputStream.toByteArray()
+//
+//                        firebase = FirebaseFirestore.getInstance()
+//                        firebase.collection("Profile")
+//                            .document(FirebaseAuth.getInstance().uid.toString())
+//                            .collection("userProfile")
+//                            .document()
+//                            .set(mapOf("imageData" to imagedata))
+//                            .addOnSuccessListener {
+//                                binding.progileimg.setImageBitmap(bitimg)
+//                                Toast.makeText(
+//                                    requireContext(),
+//                                    "Profile Set Successfully",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                            .addOnFailureListener {
+//                                Toast.makeText(
+//                                    requireContext(),
+//                                    "${it.message}",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                    }
                 }
                 GALLERY_REQ_CODE ->{
-                    binding.progileimg.setImageURI(data?.data)
+                    val selectedImg = data?.data
+                    if (selectedImg != null){
+                        val userProfile = hashMapOf<String, Any>("UserImage" to selectedImg.toString())
+                        firebase.collection("Profile")
+                            .document(FirebaseAuth.getInstance().uid.toString())
+                            .collection("userProfile")
+                            .add(userProfile)
+                            .addOnSuccessListener {it->
+                                val newImgId = it.id
+                                val editor = userDetails.edit()
+                                editor.putString("UserImageid",newImgId)
+                                editor.putString("UserImage", selectedImg.toString())
+                                editor.apply()
+                                binding.progileimg.setImageURI(selectedImg)
+                                Toast.makeText(requireContext(), "Image Uploaded", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(requireContext(), "Failed to Upload", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                    else{
+                        Toast.makeText(requireContext(), "Failed to Load...", Toast.LENGTH_SHORT).show()
+                    }
+                    profiledialog.dismiss()
                 }
             }
         }
     }
 
     private fun monthYearBudget() {
-        userDetails = requireActivity().getSharedPreferences("UserDetails", MODE_PRIVATE)
         val email = userDetails.getString("email","").toString()
         val name = userDetails.getString("Name","").toString()
         val monthlybudget = userDetails.getString("MonthlyBudget", "").toString()
@@ -135,5 +202,6 @@ class Profile : Fragment() {
         bottomDialog.show()
     }
 
-
 }
+
+
