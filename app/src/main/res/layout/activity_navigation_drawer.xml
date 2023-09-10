@@ -45,7 +45,7 @@
                 android:id="@+id/bottomnavigation_id"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:itemIconSize="@dimen/_13sdp"
+                app:itemIconSize="@dimen/_12sdp"
                 app:itemIconTint="@drawable/bottomitem_selector"
                 app:itemRippleColor="@android:color/transparent"
                 app:labelVisibilityMode="selected"

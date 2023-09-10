@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_dashboard_to_transactionDetails"
             app:destination="@id/transactionDetails" />
+        <action
+            android:id="@+id/action_dashboard_to_currencyConverter"
+            app:destination="@id/currencyconvertor_id" />
+        <action
+            android:id="@+id/action_dashboard_to_currencyconvertor_id"
+            app:destination="@id/currencyconvertor_id" />
     </fragment>
     <fragment
         android:id="@+id/allTransactions"
@@ -73,4 +79,9 @@
             android:id="@+id/action_addTransactions_to_transactionDetails"
             app:destination="@id/transactionDetails" />
     </fragment>
+    <fragment
+        android:id="@+id/currencyconvertor_id"
+        android:name="com.example.spendease.navigation.CurrencyConverter"
+        android:label="fragment_currency_converter"
+        tools:layout="@layout/fragment_currency_converter" />
 </navigation>
