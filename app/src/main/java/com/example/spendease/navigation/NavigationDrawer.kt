@@ -3,10 +3,12 @@ package com.example.spendease.navigation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -67,6 +69,7 @@ class NavigationDrawer : AppCompatActivity(){
 
             Picasso.get().load(imgurl).into(navHeaderImg)
         }
+
         else{
 
         }
@@ -77,17 +80,22 @@ class NavigationDrawer : AppCompatActivity(){
         navigationView.setNavigationItemSelectedListener { menuItem ->
             val id = menuItem.itemId
             when (id) {
-                R.id.dashboard -> {
-                    Toast.makeText(this, "Home Fragment ", Toast.LENGTH_SHORT).show()
+                R.id.nav_home -> {
+                    val navController = findNavController(R.id.fragmentContainerView)
+                    navController.navigate(R.id.dashboard)
 //                    val i = Intent(this, Dashboard::class.java)
 //                    startActivity(i)
-                                    true
+                    closeDrawer()
+                    true
                 }
 
                 R.id.currencyconvertor_id -> {
-                    val action = DashboardDirections.actionDashboardToCurrencyConverter()
-                    Navigation.findNavController(binding.root).navigate(action)
-                true
+                    val navController = findNavController(R.id.fragmentContainerView)
+                    navController.navigate(R.id.currencyconvertor_id)
+                    closeDrawer()
+//                    val action = DashboardDirections.actionDashboardToCurrencyConverter()
+//                    Navigation.findNavController(binding.root).navigate(action)
+                    true
                 }
 
                 else -> {
@@ -105,6 +113,9 @@ class NavigationDrawer : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
+            R.id.reports_id ->{
+                showPopupMenu(toolbar)
+            }
             R.id.logout_id->{
                 val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
                 val editor = userDetails.edit()
@@ -121,15 +132,30 @@ class NavigationDrawer : AppCompatActivity(){
     private fun closeDrawer(){
         drawerLayout.closeDrawer(GravityCompat.START)
     }
-    private fun openDrawer(){
-        drawerLayout.openDrawer(GravityCompat.START)
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(this, view,Gravity.END)
+        popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.monthlypdf -> {
+                    // Handle generating monthly PDF
+                    Toast.makeText(this, "Generating Monthly PDF", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.yearlypdf -> {
+                    // Handle generating yearly PDF
+                    Toast.makeText(this, "Generating Yearly PDF", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
     }
 
-//    override fun onBackPressed() {
-//        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
-//            closeDrawer()
-//        }
-//        else
-//            super.onBackPressed()
-//    }
+
+
+
 }

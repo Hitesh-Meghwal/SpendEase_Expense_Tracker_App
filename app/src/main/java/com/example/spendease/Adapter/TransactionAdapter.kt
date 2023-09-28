@@ -1,26 +1,18 @@
 package com.example.spendease.Adapter
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.databinding.TransactionItemlistBinding
 import com.example.spendease.fragments.AllTransactionsDirections
 import com.example.spendease.fragments.DashboardDirections
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class TransactionAdapter(val context: Context, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
     class  transactionViewHolder(val binding : TransactionItemlistBinding):RecyclerView.ViewHolder(binding.root)

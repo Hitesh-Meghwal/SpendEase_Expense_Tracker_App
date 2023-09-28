@@ -13,12 +13,6 @@
         android:icon="@drawable/c"
         />
 
-    <item
-        android:id="@+id/reports_id"
-        android:title="@string/report"
-        android:icon="@drawable/report"
-        />
-
         <item
             android:title="@string/settings">
             <menu>

@@ -9,16 +9,6 @@
     android:id="@+id/drawerlayout"
     tools:context=".navigation.NavigationDrawer">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/_220sdp"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/header_layout"
-        app:menu="@menu/navi_menu"
-        />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -67,4 +57,14 @@
                 app:navGraph="@navigation/app_navigation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_drawer"
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/navi_menu"
+        />
 </androidx.drawerlayout.widget.DrawerLayout>

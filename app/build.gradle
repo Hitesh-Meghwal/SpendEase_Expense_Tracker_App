@@ -85,7 +85,13 @@ dependencies {
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
 //  ImageLoading
     implementation 'com.squareup.picasso:picasso:2.8'
-
     implementation 'net.objecthunter:exp4j:0.4.5'
 
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // GSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    // coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
 }

@@ -5,6 +5,12 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:id="@+id/reports_id"
+            android:title="@string/report"
+            android:icon="@drawable/report"
+            app:showAsAction="always" />
+
+        <item
             android:id="@+id/darklightmode"
             android:title="@string/darklightmode"
             android:icon="@drawable/night"
