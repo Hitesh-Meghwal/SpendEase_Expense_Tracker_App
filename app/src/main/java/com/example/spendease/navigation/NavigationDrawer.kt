@@ -1,9 +1,12 @@
 package com.example.spendease.navigation
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ContextMenu
+import android.os.Environment
+import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -11,18 +14,14 @@ import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.databinding.ActivityNavigationDrawerBinding
-import com.example.spendease.fragments.Dashboard
-import com.example.spendease.fragments.DashboardDirections
 import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,7 +29,17 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Transaction
+import com.google.firebase.firestore.ktx.toObject
+import com.itextpdf.text.Document
+import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.PdfWriter
 import com.squareup.picasso.Picasso
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import kotlin.math.exp
 
 class NavigationDrawer : AppCompatActivity(){
     private lateinit var binding: ActivityNavigationDrawerBinding
@@ -140,7 +149,29 @@ class NavigationDrawer : AppCompatActivity(){
             when (menuItem.itemId) {
                 R.id.monthlypdf -> {
                     // Handle generating monthly PDF
-                    Toast.makeText(this, "Generating Monthly PDF", Toast.LENGTH_SHORT).show()
+                    val firebase = FirebaseFirestore.getInstance()
+                        .collection("Transactions")
+                        .document(FirebaseAuth.getInstance().uid.toString())
+                        .collection("TransactionList")
+                        .get()
+                        .addOnSuccessListener {
+                            val expenseData = mutableListOf<TransactionData>()
+                            if (!it.isEmpty){
+                                for (data in it.documents){
+                                    val transaction = data.toObject(TransactionData::class.java)
+                                    transaction?.let {
+                                        if (!expenseData.contains(it)){
+                                            expenseData.add(it)
+                                        }
+                                    }
+                                }
+                            }
+                            generatePdf(expenseData)
+                            Toast.makeText(this, "Generating Monthly PDF", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener{e->
+                            Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                     true
                 }
                 R.id.yearlypdf -> {
@@ -155,7 +186,34 @@ class NavigationDrawer : AppCompatActivity(){
         popupMenu.show()
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private fun generatePdf(expenseData : List<TransactionData>){
+        try{
+            val document = Document()
+            // Get the current date and time for the PDF file name
+            val pdfFileName = "ExpenseReport_${SimpleDateFormat("yyyMMdd").format(Date())}.pdf"
+//            val pdfFile = File(Environment.getExternalStorageDirectory(),pdfFileName
+            val storageDir = this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+            val pdfFile = File(storageDir,pdfFileName)
+            val pdfWriter = PdfWriter.getInstance(document,FileOutputStream(pdfFile))
 
+            document.open()
 
+            for(expense in expenseData){
+                val expensInfo = "Title: ${expense.title}\nAmount: ${expense.amount}\nDate: ${expense.date}\nNote: ${expense.note}"
+                document.add(Paragraph(expensInfo))
+            }
 
+            document.close()
+            Log.d("PDFGenerator", "PDF File saved as: ${pdfFile.absolutePath}")
+
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setDataAndType(Uri.fromFile(pdfFile),"application/pdf")
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            this.startActivity(intent)
+        }
+        catch (e:Exception){
+            Log.d("Pdf Failed to Generate","${e.message}")
+        }
+    }
 }

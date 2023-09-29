@@ -86,7 +86,8 @@ dependencies {
 //  ImageLoading
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'net.objecthunter:exp4j:0.4.5'
-
+    //pdf
+    implementation 'com.itextpdf:itextpdf:5.5.13'
     // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // GSON
