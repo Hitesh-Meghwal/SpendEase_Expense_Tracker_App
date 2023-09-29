@@ -1,6 +1,7 @@
 package com.example.spendease.navigation
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,9 +12,13 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.widget.AdapterView
 import android.widget.PopupMenu
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -25,6 +30,7 @@ import com.example.spendease.databinding.ActivityNavigationDrawerBinding
 import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -35,9 +41,14 @@ import com.itextpdf.text.Document
 import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import kotlin.math.exp
 
@@ -46,6 +57,8 @@ class NavigationDrawer : AppCompatActivity(){
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var toolbar: MaterialToolbar
+    lateinit var firebase : FirebaseFirestore
+    private var selectdSpinnerpos = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +83,7 @@ class NavigationDrawer : AppCompatActivity(){
         bottomnav.setupWithNavController(navController)
         navigationView.setupWithNavController(navController)
 
+        firebase = FirebaseFirestore.getInstance()
         val userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
         val imgid = userDetails.getString("UserImageid","")
         val navHeaderImg = headerView.findViewById<ShapeableImageView>(R.id.userImage)
@@ -141,6 +155,7 @@ class NavigationDrawer : AppCompatActivity(){
     private fun closeDrawer(){
         drawerLayout.closeDrawer(GravityCompat.START)
     }
+    @SuppressLint("SimpleDateFormat")
     private fun showPopupMenu(view: View) {
         val popupMenu = PopupMenu(this, view,Gravity.END)
         popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
@@ -148,16 +163,55 @@ class NavigationDrawer : AppCompatActivity(){
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.monthlypdf -> {
-                    // Handle generating monthly PDF
-                    val firebase = FirebaseFirestore.getInstance()
-                        .collection("Transactions")
+                    val dialog = Dialog(this)
+                    dialog.setContentView(R.layout.dialog_pdf)
+                    dialog.show()
+
+                    val monthSpinner = dialog.findViewById<Spinner>(R.id.spinner)
+                    val generatebtn = dialog.findViewById<MaterialButton>(R.id.generatebtn)
+
+                    generatebtn.setOnClickListener {
+                        // Handle generating monthly PDF
+                        firebase.collection("Transactions")
+                            .document(FirebaseAuth.getInstance().uid.toString())
+                            .collection("TransactionList")
+                            .whereEqualTo("month",9)
+                            .get()
+                            .addOnSuccessListener {
+                                val expenseData = mutableListOf<TransactionData>()
+                                if (!it.isEmpty){
+                                    for (data in it.documents){
+                                        val transaction = data.toObject(TransactionData::class.java)
+                                        transaction?.let {
+                                            if (!expenseData.contains(it)){
+                                                expenseData.add(it)
+                                            }
+                                        }
+                                    }
+                                }
+                                generatePdf(expenseData)
+                                Toast.makeText(this, "Generating Monthly PDF", Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                            }
+                            .addOnFailureListener{e->
+                                Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                    true
+                }
+                R.id.yearlypdf -> {
+                    // Handle generating yearly PDF
+                    val formatyear = SimpleDateFormat("YYYY")
+                    val currentYear = formatyear.format(Calendar.getInstance().time)
+                    firebase.collection("Transactions")
                         .document(FirebaseAuth.getInstance().uid.toString())
                         .collection("TransactionList")
+                        .whereEqualTo("year",currentYear.toInt())
                         .get()
                         .addOnSuccessListener {
                             val expenseData = mutableListOf<TransactionData>()
                             if (!it.isEmpty){
-                                for (data in it.documents){
+                                for(data in it.documents){
                                     val transaction = data.toObject(TransactionData::class.java)
                                     transaction?.let {
                                         if (!expenseData.contains(it)){
@@ -167,53 +221,44 @@ class NavigationDrawer : AppCompatActivity(){
                                 }
                             }
                             generatePdf(expenseData)
-                            Toast.makeText(this, "Generating Monthly PDF", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Generating Yearly PDF", Toast.LENGTH_SHORT).show()
                         }
-                        .addOnFailureListener{e->
+                        .addOnFailureListener {e->
                             Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
                         }
-                    true
-                }
-                R.id.yearlypdf -> {
-                    // Handle generating yearly PDF
-                    Toast.makeText(this, "Generating Yearly PDF", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false
             }
         }
-
         popupMenu.show()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("SimpleDateFormat")
-    private fun generatePdf(expenseData : List<TransactionData>){
-        try{
-            val document = Document()
-            // Get the current date and time for the PDF file name
-            val pdfFileName = "ExpenseReport_${SimpleDateFormat("yyyMMdd").format(Date())}.pdf"
-//            val pdfFile = File(Environment.getExternalStorageDirectory(),pdfFileName
-            val storageDir = this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
-            val pdfFile = File(storageDir,pdfFileName)
-            val pdfWriter = PdfWriter.getInstance(document,FileOutputStream(pdfFile))
+    private fun generatePdf(expenseData : List<TransactionData>) {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val document = Document()
+                // Get the current date and time for the PDF file name
+                val pdfFileName = "ExpenseReport_${SimpleDateFormat("yyyMMdd_HHmmss").format(Date())}.pdf"
+                val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+                val pdfFile = File(storageDir, pdfFileName)
+                val pdfWriter = PdfWriter.getInstance(document, FileOutputStream(pdfFile))
 
-            document.open()
+                document.open()
 
-            for(expense in expenseData){
-                val expensInfo = "Title: ${expense.title}\nAmount: ${expense.amount}\nDate: ${expense.date}\nNote: ${expense.note}"
-                document.add(Paragraph(expensInfo))
+                for (expense in expenseData) {
+                    val expensInfo = "Title: ${expense.title}\nAmount: ${expense.amount}\nDate: ${expense.date}\nNote: ${expense.note}"
+                    document.add(Paragraph(expensInfo))
+                }
+
+                document.close()
+                Log.d("PDFGenerator", "PDF File saved as: ${pdfFile.absolutePath}")
+
+            } catch (e: Exception) {
+                Log.d("Pdf Failed to Generate", "${e.message}")
             }
-
-            document.close()
-            Log.d("PDFGenerator", "PDF File saved as: ${pdfFile.absolutePath}")
-
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setDataAndType(Uri.fromFile(pdfFile),"application/pdf")
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            this.startActivity(intent)
-        }
-        catch (e:Exception){
-            Log.d("Pdf Failed to Generate","${e.message}")
         }
     }
 }
