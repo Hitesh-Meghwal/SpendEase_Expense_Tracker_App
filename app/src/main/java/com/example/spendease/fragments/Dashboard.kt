@@ -80,6 +80,7 @@ class Dashboard : Fragment() {
         val getMonthlyBudget = userDetails.getString("MonthlyBudget","")
         val getCurrency = userDetails.getString("Currency","")
 
+
         val formatmonth = SimpleDateFormat("MM")
         val currentMonth = formatmonth.format(Calendar.getInstance().time)
         val formatyear = SimpleDateFormat("YYYY")
