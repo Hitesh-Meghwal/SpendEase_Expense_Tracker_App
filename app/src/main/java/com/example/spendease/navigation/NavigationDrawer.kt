@@ -52,6 +52,7 @@ import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Picasso.Priority
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -112,7 +113,6 @@ class NavigationDrawer : AppCompatActivity(){
 
         }
         navigationItemEvent()
-        createNotificationChannel()
     }
 
     private fun navigationItemEvent() {
@@ -134,6 +134,17 @@ class NavigationDrawer : AppCompatActivity(){
                     closeDrawer()
 //                    val action = DashboardDirections.actionDashboardToCurrencyConverter()
 //                    Navigation.findNavController(binding.root).navigate(action)
+                    true
+                }
+
+                R.id.share_id->{
+                    val appLink = "\"Hey there! \uD83D\uDC4B I've been using this fantastic Expense Manager app, and it's made managing my finances a breeze. \uD83D\uDCB0 If you're looking for a simple and effective way to manage your money, I highly recommend giving it a try. You can download it here: https://shorturl.at/eEHQ6"
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_SEND
+                    intent.putExtra(Intent.EXTRA_TEXT,appLink)
+                    intent.type = "text/plain"
+                    startActivity(Intent.createChooser(intent,"Share to: "))
+                    closeDrawer()
                     true
                 }
 
@@ -355,18 +366,23 @@ class NavigationDrawer : AppCompatActivity(){
 
     @SuppressLint("MissingPermission")
     private fun sendPdfNotification(pdfFile: File){
-
+        createNotificationChannel()
+        // Create an intent to open the PDF file using an external PDF viewer app
         val openIntent = Intent(Intent.ACTION_VIEW)
+        // Get a URI for the PDF file using FileProvider, ensuring permissions are granted
         val uri = FileProvider.getUriForFile(this,"${this.packageName}.provider",pdfFile)
+        // Add flags to grant read permission to the receiving app.
         openIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         openIntent.setDataAndType(uri,"application/pdf")
-//
+        // Create a PendingIntent to open the PDF file when the notification is tapped
         val pendingIntent = PendingIntent.getActivity(this,0,openIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+
         val notification = NotificationCompat.Builder(this,CHANNEL_ID)
             .setSmallIcon(R.drawable.baseline_picture_as_pdf_24)
             .setContentTitle("PDF Generated")
-            .setContentText("Your PDF has been generated successfully.")
+            .setContentText("Your PDF has been generated successfully")
             .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)  // Automatically removes the notification when tapped
             .build()
 
