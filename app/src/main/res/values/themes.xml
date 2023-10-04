@@ -48,4 +48,11 @@
     <style name="modal" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/dialog_rounded_corners</item>
     </style>
+    
+    <style name="MyRatingStar" parent="Widget.AppCompat.RatingBar">
+        <!--non selected star-->
+        <item name="colorControlNormal">@color/black</item>
+        <!-- selected star-->
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
 </resources>

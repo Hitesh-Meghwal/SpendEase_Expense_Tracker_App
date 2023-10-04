@@ -91,6 +91,10 @@
     <string name="monthly_pdf">Monthly PDF</string>
     <string name="yearly_pdf">Yearly PDF</string>
     <string name="generate">Generate</string>
+    <string name="rate_our_app">Rate Our App</string>
+    <string name="if_you_are_enjoy_using_our_app_would_you_mind_rating_us_on_the_play_store">If you think this app is really helpfull and need any improvement in this app. Would you mind rating us on below Box.</string>
+    <string name="submit">Submit</string>
+    <string name="feedback">FeedBack</string>
     <string-array name="Currency">
         <item>₹ Indian Rupee</item>
         <item>$ Dollar</item>

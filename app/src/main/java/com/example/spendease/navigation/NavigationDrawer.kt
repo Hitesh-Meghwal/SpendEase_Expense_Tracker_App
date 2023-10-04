@@ -20,8 +20,13 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.RatingBar
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -39,9 +44,11 @@ import com.example.spendease.databinding.ActivityNavigationDrawerBinding
 import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.itextpdf.text.BaseColor
@@ -75,6 +82,7 @@ class NavigationDrawer : AppCompatActivity(){
     private var selectedYear:Int = 0
     private val CHANNEL_ID = "PDF_GENERATION_CHANNEL"
     private val NOTIFICATION_ID = 100
+    private var userRate = 0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,24 +135,53 @@ class NavigationDrawer : AppCompatActivity(){
                     closeDrawer()
                     true
                 }
-
                 R.id.currencyconvertor_id -> {
                     val navController = findNavController(R.id.fragmentContainerView)
                     navController.navigate(R.id.currencyconvertor_id)
                     closeDrawer()
-//                    val action = DashboardDirections.actionDashboardToCurrencyConverter()
-//                    Navigation.findNavController(binding.root).navigate(action)
                     true
                 }
-
                 R.id.share_id->{
                     val appLink = "\"Hey there! \uD83D\uDC4B I've been using this fantastic Expense Manager app, and it's made managing my finances a breeze. \uD83D\uDCB0 If you're looking for a simple and effective way to manage your money, I highly recommend giving it a try. You can download it here: https://shorturl.at/eEHQ6"
-                    val intent = Intent()
+                    val intent = Intent()  // Set the action of the Intent to send
                     intent.action = Intent.ACTION_SEND
                     intent.putExtra(Intent.EXTRA_TEXT,appLink)
-                    intent.type = "text/plain"
-                    startActivity(Intent.createChooser(intent,"Share to: "))
+                    intent.type = "text/plain"  // Set the type of the Intent to "text/plain" since we're sharing plain text
+                    startActivity(Intent.createChooser(intent,"Share to: "))  // Start an activity that allows the user to choose
                     closeDrawer()
+                    true
+                }
+                R.id.rateus_id->{
+                    val dialog = Dialog(this)
+                    dialog.setContentView(R.layout.dialog_rate_us)
+                    dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    dialog.show()
+                    closeDrawer()
+                    val submit = dialog.findViewById<MaterialButton>(R.id.submitbtn)
+                    val feedbacktxt = dialog.findViewById<TextInputEditText>(R.id.feedbacktxt)
+                    val ratingImg = dialog.findViewById<ImageView>(R.id.ratingimage)
+                    val ratingBar = dialog.findViewById<RatingBar>(R.id.ratingBar).setOnRatingBarChangeListener(object : RatingBar.OnRatingBarChangeListener{
+                        override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
+                            if (rating <= 1){
+                                ratingImg.setImageResource(R.drawable.onestar)
+                            }
+                            else if(rating <= 2){
+                                ratingImg.setImageResource(R.drawable.twostart)
+                            }
+                            else if(rating <= 3){
+                                ratingImg.setImageResource(R.drawable.threestar)
+                            }
+                            else if(rating <= 4){
+                                ratingImg.setImageResource(R.drawable.fourstar)
+                            }
+                            else if(rating <= 5){
+                                ratingImg.setImageResource(R.drawable.fivestar)
+                            }
+                            animateImage(ratingImg)
+                            userRate = rating
+                        }
+                    })
                     true
                 }
 
@@ -153,6 +190,15 @@ class NavigationDrawer : AppCompatActivity(){
                 }
             }
         }
+    }
+
+    private fun animateImage(ratingImage: ImageView){
+        val scaleAnimation = ScaleAnimation(
+            0F,1f,
+            0F,1f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f)
+        scaleAnimation.fillAfter = true
+        scaleAnimation.duration = 200
+        ratingImage.startAnimation(scaleAnimation)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
