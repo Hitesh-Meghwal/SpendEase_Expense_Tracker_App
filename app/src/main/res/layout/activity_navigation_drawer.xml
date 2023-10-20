@@ -60,7 +60,7 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/_220sdp"
+        android:layout_width="@dimen/_180sdp"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:layout_gravity="start"

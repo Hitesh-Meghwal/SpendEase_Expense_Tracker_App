@@ -11,6 +11,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.DrawableWrapper
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,6 +42,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.databinding.ActivityNavigationDrawerBinding
+import com.example.spendease.fragments.DashboardDirections
 import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -92,7 +94,6 @@ class NavigationDrawer : AppCompatActivity(){
         drawerLayout =findViewById(R.id.drawerlayout)
         navigationView = findViewById(R.id.navigation_drawer)
 
-        val headerView = navigationView.getHeaderView(0)
         toolbar = findViewById(R.id.toolbar_id)
         setSupportActionBar(toolbar)
 
@@ -109,20 +110,23 @@ class NavigationDrawer : AppCompatActivity(){
 
         firebase = FirebaseFirestore.getInstance()
         userDetails = getSharedPreferences("UserDetails", MODE_PRIVATE)
-        val imgid = userDetails.getString("UserImageid","")
-        val navHeaderImg = headerView.findViewById<ShapeableImageView>(R.id.userImage)
-        if (!imgid.isNullOrEmpty() && navHeaderImg != null){
-            val imgurl = userDetails.getString("UserImage","")
-
-            Picasso.get().load(imgurl).into(navHeaderImg)
-        }
-
-        else{
-
-        }
+        refreshImageOnDrawer()
         navigationItemEvent()
     }
 
+    private fun refreshImageOnDrawer(){
+        drawerLayout.addDrawerListener(object :DrawerLayout.DrawerListener{
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+            override fun onDrawerOpened(drawerView: View) {
+                val headerView = navigationView.getHeaderView(0)
+                val navHeaderImg = headerView.findViewById<ShapeableImageView>(R.id.userImage)
+                val imgurl = userDetails.getString("UserImage","")
+                Picasso.get().load(imgurl).into(navHeaderImg)
+            }
+            override fun onDrawerClosed(drawerView: View) {}
+            override fun onDrawerStateChanged(newState: Int) {}
+        })
+    }
     private fun navigationItemEvent() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             val id = menuItem.itemId
@@ -130,8 +134,6 @@ class NavigationDrawer : AppCompatActivity(){
                 R.id.nav_home -> {
                     val navController = findNavController(R.id.fragmentContainerView)
                     navController.navigate(R.id.dashboard)
-//                    val i = Intent(this, Dashboard::class.java)
-//                    startActivity(i)
                     closeDrawer()
                     true
                 }
@@ -148,6 +150,12 @@ class NavigationDrawer : AppCompatActivity(){
                     intent.putExtra(Intent.EXTRA_TEXT,appLink)
                     intent.type = "text/plain"  // Set the type of the Intent to "text/plain" since we're sharing plain text
                     startActivity(Intent.createChooser(intent,"Share to: "))  // Start an activity that allows the user to choose
+                    closeDrawer()
+                    true
+                }
+                R.id.about_id->{
+                    val navController = findNavController(R.id.fragmentContainerView)
+                    navController.navigate(R.id.about_id)
                     closeDrawer()
                     true
                 }
@@ -451,4 +459,5 @@ class NavigationDrawer : AppCompatActivity(){
             notificationManager.createNotificationChannel(channel)
         }
     }
+
 }

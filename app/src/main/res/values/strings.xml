@@ -92,9 +92,14 @@
     <string name="yearly_pdf">Yearly PDF</string>
     <string name="generate">Generate</string>
     <string name="rate_our_app">Rate Our App</string>
-    <string name="if_you_are_enjoy_using_our_app_would_you_mind_rating_us_on_the_play_store">If you think this app is really helpfull and need any improvement in this app. Would you mind rating us on below Box.</string>
+    <string name="if_you_are_enjoy_using_our_app_would_you_mind_rating_us_on_the_play_store">If you think this app is really helpful and need any improvement in this app. Would you mind rating us on below Box.</string>
     <string name="submit">Submit</string>
     <string name="feedback">FeedBack</string>
+    <string name="version_1_0">Version: 1.0</string>
+    <string name="about_description"> SpendEase is a user-friendly, finance management app which allows you to keep track of your transactions seamlessly and intuitively. It helps you to categorize your spending to create a budget and to stay within the limits set by you, and also provides you a detailed analysis of your spending habits. Moreover, as an expense management app, privacy of your financial data is our topmost concern and we pay utmost importance to its privacy and security. </string>
+    <string name="developer">Developer</string>
+    <string name="hitesh_meghwal">Hitesh Meghwal</string>
+    <string name="description">Android Developer. This is my third year project for computer science.</string>
     <string-array name="Currency">
         <item>₹ Indian Rupee</item>
         <item>$ Dollar</item>

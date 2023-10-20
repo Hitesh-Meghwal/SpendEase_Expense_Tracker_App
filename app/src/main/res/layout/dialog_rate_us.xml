@@ -18,7 +18,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_height="@dimen/_90sdp"
                 android:background="@color/purple_200"/>
 
             <RelativeLayout
@@ -49,10 +49,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rate_our_app"
-                android:textSize="@dimen/_22ssp"
+                android:textSize="@dimen/_18ssp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center"
                 />
 
@@ -60,10 +60,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/if_you_are_enjoy_using_our_app_would_you_mind_rating_us_on_the_play_store"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_12ssp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"/>
 
@@ -72,33 +72,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
                 android:rating="3"
                 android:theme="@style/MyRatingStar"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:padding="@dimen/_8sdp"
+                android:padding="@dimen/_5sdp"
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:hint="@string/feedback"
                     >
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/feedbacktxt"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:inputType="text"
                         android:maxLines="5"
-                        android:layout_height="match_parent"
                         android:textColor="@color/black"
                         />
 
@@ -113,7 +112,6 @@
                     android:layout_marginTop="@dimen/_2sdp"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/_2sdp"
                     />
             </LinearLayout>
         </LinearLayout>

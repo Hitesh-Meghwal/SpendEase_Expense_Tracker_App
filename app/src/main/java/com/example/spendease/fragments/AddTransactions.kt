@@ -44,10 +44,12 @@ class AddTransactions : Fragment(),View.OnClickListener {
     var day = 0
     var month = 0
     var year = 0
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = FragmentAddTransactionsBinding.inflate(inflater,container,false)
         bottomnav = requireActivity().findViewById(R.id.bottomnavigation_id)
+
         binding.newtranstoolbarId.navigationIcon = ContextCompat.getDrawable(requireContext(),R.drawable.baseline_arrow_back_24)
         binding.newtranstoolbarId.setNavigationOnClickListener {
             val action = AddTransactionsDirections.actionAddTransactionsToDashboard()
@@ -123,8 +125,8 @@ class AddTransactions : Fragment(),View.OnClickListener {
     private fun addUpdateTransaction(){
         val firestore = FirebaseFirestore.getInstance()
         val title = binding.title.text.toString()
-        val date = binding.date.text.toString()
-        var amount = binding.amount.text.toString().trim()
+        val date = binding.date.text.toString().trim()
+        val amount = binding.amount.text.toString().trim()
         val note = binding.note.text.toString()
         if (title.isEmpty() || date.isEmpty() || amount.isEmpty() || note.isEmpty() || category == ""){
             notifyUser("Enter all required details")
@@ -312,10 +314,11 @@ class AddTransactions : Fragment(),View.OnClickListener {
         (activity as AppCompatActivity).supportActionBar?.hide()
         bottomnav.visibility = View.GONE
     }
+    @SuppressLint("SetTextI18n")
     private fun calculator(){
         var number : String
-        var input = bottomCal.findViewById<TextView>(R.id.input)
-        var result = bottomCal.findViewById<TextView>(R.id.result)
+        val input = bottomCal.findViewById<TextView>(R.id.input)
+        val result = bottomCal.findViewById<TextView>(R.id.result)
         val one = bottomCal.findViewById<MaterialButton>(R.id.one)
         val two = bottomCal.findViewById<MaterialButton>(R.id.two)
         val three = bottomCal.findViewById<MaterialButton>(R.id.three)

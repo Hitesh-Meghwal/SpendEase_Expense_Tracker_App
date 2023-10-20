@@ -15,13 +15,22 @@
             app:destination="@id/addTransactions" />
         <action
             android:id="@+id/action_dashboard_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
+            app:destination="@id/transactionDetails"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_dashboard_to_currencyConverter"
             app:destination="@id/currencyconvertor_id" />
         <action
             android:id="@+id/action_dashboard_to_currencyconvertor_id"
             app:destination="@id/currencyconvertor_id" />
+        <action
+            android:id="@+id/action_dashboard_to_about"
+            app:destination="@id/about_id" />
+        <action
+            android:id="@+id/action_dashboard_to_allTransactions2"
+            app:destination="@id/allTransactions"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/allTransactions"
@@ -77,11 +86,17 @@
             app:argType="boolean" />
         <action
             android:id="@+id/action_addTransactions_to_transactionDetails"
-            app:destination="@id/transactionDetails" />
+            app:destination="@id/transactionDetails"
+        />
     </fragment>
     <fragment
         android:id="@+id/currencyconvertor_id"
         android:name="com.example.spendease.navigation.CurrencyConverter"
         android:label="fragment_currency_converter"
         tools:layout="@layout/fragment_currency_converter" />
+    <fragment
+        android:id="@+id/about_id"
+        android:name="com.example.spendease.navigation.About"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

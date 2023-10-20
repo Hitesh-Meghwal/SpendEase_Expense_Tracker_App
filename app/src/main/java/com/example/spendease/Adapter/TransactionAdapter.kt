@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +18,6 @@ import com.example.spendease.fragments.DashboardDirections
 
 class TransactionAdapter(val context: Context, val fragment: String, private val transList: List<TransactionData>):RecyclerView.Adapter<TransactionAdapter.transactionViewHolder>() {
     class  transactionViewHolder(val binding : TransactionItemlistBinding):RecyclerView.ViewHolder(binding.root)
-
-    lateinit var userDetails: SharedPreferences
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): transactionViewHolder {
         return transactionViewHolder(TransactionItemlistBinding.inflate(LayoutInflater.from(parent.context),parent,false))
