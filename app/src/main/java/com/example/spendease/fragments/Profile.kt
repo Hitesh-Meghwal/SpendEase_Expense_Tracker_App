@@ -56,8 +56,11 @@ class Profile : Fragment() {
         firebase = FirebaseFirestore.getInstance()
         userDetails = requireActivity().getSharedPreferences("UserDetails", MODE_PRIVATE)
         val setimg = userDetails.getString("UserImage","")
-        if (setimg != null){
+        if (!setimg.isNullOrEmpty()){
             Picasso.get().load(setimg).into(binding.profileimg)
+        }
+        else{
+            Picasso.get().load(R.drawable.user_profile).into(binding.profileimg)
         }
         monthYearBudget()
         return binding.root

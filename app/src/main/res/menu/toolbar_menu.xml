@@ -11,12 +11,6 @@
             app:showAsAction="always" />
 
         <item
-            android:id="@+id/darklightmode"
-            android:title="@string/darklightmode"
-            android:icon="@drawable/night"
-            app:showAsAction="always" />
-
-        <item
             android:id="@+id/logout_id"
             android:title="@string/log_out"
             android:icon="@drawable/logout"

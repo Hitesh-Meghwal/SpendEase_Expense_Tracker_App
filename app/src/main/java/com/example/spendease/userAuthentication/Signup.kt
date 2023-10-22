@@ -60,13 +60,13 @@ class Signup : AppCompatActivity() {
         val firestore = FirebaseFirestore.getInstance()
 
         if(getusername.isEmpty()){
-            username.setError("Username cannot be empty!")
+            username.error = "Username cannot be empty!"
         }
         else if(getemail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(getemail).matches()){
-            email.setError("Email cannot be empty!")
+            email.error = "Email cannot be empty!"
         }
         else if(getpassword.isEmpty() && getpassword.matches(validpassword)){
-            password.setError("Password cannot be empty!")
+            password.error = "Password cannot be empty!"
         }
         else {
             val hashpassword = BCrypt.hashpw(getpassword,BCrypt.gensalt())

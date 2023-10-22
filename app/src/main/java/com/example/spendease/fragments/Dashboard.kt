@@ -79,36 +79,37 @@ class Dashboard : Fragment() {
         val itemTouchHelper = ItemTouchHelper(swipeToDelete)
         itemTouchHelper.attachToRecyclerView(binding.dashboardrecyclerview)
         createNotificationChannel()
-        val shimmerFrame = binding.shimmerView
-        val mainLayout = binding.dashboardrecyclerview
-        mainLayout.visibility = View.GONE
-        shimmerFrame.startShimmer()
-        Handler().postDelayed({
-            shimmerFrame.stopShimmer()
-            shimmerFrame.visibility = View.GONE
-            mainLayout.visibility = View.VISIBLE
-            getdata()
-//            markShimmerAsShown()  //Mark the shimmer as shown
+        if(!isShimmerAlreadyShown()) {
+            val shimmerFrame = binding.shimmerView
+            val mainLayout = binding.dashboardrecyclerview
+            mainLayout.visibility = View.GONE
+            shimmerFrame.startShimmer()
+            Handler().postDelayed({
+                shimmerFrame.stopShimmer()
+                shimmerFrame.visibility = View.GONE
+                mainLayout.visibility = View.VISIBLE
+                getdata()
+                markShimmerAsShown()  //Mark the shimmer as shown
             }, 2000)
+        }
+        else{
+            binding.shimmerView.visibility = View.GONE
+            binding.dashboardrecyclerview.visibility = View.VISIBLE
+            getdata()
+        }
         return binding.root
 
     }
-//    private fun clearShimmerFlag() {
-//        val preferences = requireActivity().getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
-//        val editor = preferences.edit()
-//        editor.remove("shimmerShown")
-//        editor.apply()
-//    }
-//    private fun isShimmerAlreadyShown():Boolean{
-//        val prefrences = requireActivity().getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
-//        return prefrences.getBoolean("shimmerShown",false)
-//    }
-//    private fun markShimmerAsShown(){
-//        val preferences = requireActivity().getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
-//        val editor = preferences.edit()
-//        editor.putBoolean("shimmerShown",true)
-//        editor.apply()
-//    }
+    private fun isShimmerAlreadyShown():Boolean{
+        val prefrences = requireActivity().getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
+        return prefrences.getBoolean("shimmerShown",false)
+    }
+    private fun markShimmerAsShown(){
+        val preferences = requireActivity().getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.putBoolean("shimmerShown",true)
+        editor.apply()
+    }
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n", "MissingPermission")
     private fun getdata(){

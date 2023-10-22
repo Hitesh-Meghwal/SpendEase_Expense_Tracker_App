@@ -121,7 +121,11 @@ class NavigationDrawer : AppCompatActivity(){
                 val headerView = navigationView.getHeaderView(0)
                 val navHeaderImg = headerView.findViewById<ShapeableImageView>(R.id.userImage)
                 val imgurl = userDetails.getString("UserImage","")
-                Picasso.get().load(imgurl).into(navHeaderImg)
+                if (!imgurl.isNullOrEmpty()) {
+                    Picasso.get().load(imgurl).into(navHeaderImg)
+                }else{
+                    Picasso.get().load(R.drawable.user_profile).into(navHeaderImg)
+                }
             }
             override fun onDrawerClosed(drawerView: View) {}
             override fun onDrawerStateChanged(newState: Int) {}
@@ -458,6 +462,14 @@ class NavigationDrawer : AppCompatActivity(){
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val preferences = this.getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.remove("shimmerShown")
+        editor.apply()
     }
 
 }
