@@ -9,6 +9,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.DrawableWrapper
@@ -16,6 +17,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.provider.Telephony.Sms
+import android.telephony.SmsManager
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -31,8 +34,10 @@ import android.widget.RatingBar
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -42,11 +47,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.databinding.ActivityNavigationDrawerBinding
-import com.example.spendease.fragments.DashboardDirections
 import com.example.spendease.userAuthentication.Signin
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.navigation.NavigationView
@@ -194,6 +197,32 @@ class NavigationDrawer : AppCompatActivity(){
                             userRate = rating
                         }
                     })
+                    val permission = android.Manifest.permission.SEND_SMS
+                    val requestCode = 123
+                    if (ContextCompat.checkSelfPermission(this,permission) != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(this, arrayOf(permission),requestCode)
+                    }
+                    else {
+                        val userName = userDetails.getString("Name", "")
+                        submit.setOnClickListener {
+                            val feedbackmsg = feedbacktxt.text.toString().trim()
+                            if (feedbackmsg.isEmpty()) {
+                                feedbacktxt.error = "Please enter feedback"
+                            } else {
+                                try {
+                                    val feedback = "$userName FeedBack: ${feedbackmsg}\nRating: $userRate"
+                                    val myPhoneNum = "8928597751"   //my phone number
+                                    val smsManager = SmsManager.getDefault() as SmsManager
+                                    smsManager.sendTextMessage(myPhoneNum, null, feedback, null, null)
+                                    Toast.makeText(this, "Feedback sent ", Toast.LENGTH_SHORT).show()
+                                } catch (e: Exception) {
+                                    Log.d("SMSError:", "${e.message}")
+                                    Toast.makeText(this, "Failed to sent SMS", Toast.LENGTH_SHORT).show()
+                                }
+                                dialog.dismiss()
+                            }
+                        }
+                    }
                     true
                 }
 

@@ -100,6 +100,7 @@
     <string name="developer">Developer</string>
     <string name="hitesh_meghwal">Hitesh Meghwal</string>
     <string name="description">Android Developer. This is my third year project for computer science.</string>
+    <string name="done">Done</string>
     <string-array name="Currency">
         <item>₹ Indian Rupee</item>
         <item>$ Dollar</item>
