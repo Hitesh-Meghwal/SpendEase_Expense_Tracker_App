@@ -2,16 +2,14 @@ package com.example.spendease.userAuthentication
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.spendease.R
 import com.example.spendease.databinding.ActivityGettingInfoBinding
 import com.example.spendease.navigation.NavigationDrawer
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class GettingInfo : AppCompatActivity() {
     private lateinit var binding : ActivityGettingInfoBinding

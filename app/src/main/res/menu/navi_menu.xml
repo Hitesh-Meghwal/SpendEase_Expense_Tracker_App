@@ -6,13 +6,6 @@
         android:title="@string/home"
         android:icon="@drawable/baseline_home_24"
         />
-
-    <item
-        android:id="@+id/currencyconvertor_id"
-        android:title="@string/currency_convertor"
-        android:icon="@drawable/c"
-        />
-
         <item
             android:title="@string/settings">
             <menu>

@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spendease.R
-import com.example.spendease.databinding.ActivitySignupBinding
 import com.example.spendease.navigation.NavigationDrawer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -57,6 +56,7 @@ class Signin : AppCompatActivity() {
         signuptv.setOnClickListener {
             val signupintent = Intent(this, Signup::class.java)
             startActivity(signupintent)
+
         }
         forgetpassword.setOnClickListener {
             resetPassword()
@@ -128,7 +128,7 @@ class Signin : AppCompatActivity() {
     }
     private fun googleSignIn(){
         GsignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.defaulf_web_client_id))
             .requestEmail()
             .build()
 

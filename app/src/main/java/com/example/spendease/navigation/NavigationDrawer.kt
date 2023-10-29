@@ -2,7 +2,6 @@ package com.example.spendease.navigation
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -12,12 +11,9 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.DrawableWrapper
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.provider.Telephony.Sms
 import android.telephony.SmsManager
 import android.util.Log
 import android.view.Gravity
@@ -34,6 +30,7 @@ import android.widget.RatingBar
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -58,13 +55,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.itextpdf.text.BaseColor
 import com.itextpdf.text.Document
-import com.itextpdf.text.PageSize
 import com.itextpdf.text.Phrase
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Picasso.Priority
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -74,7 +69,6 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import kotlin.math.exp
 
 class NavigationDrawer : AppCompatActivity(){
     private lateinit var binding: ActivityNavigationDrawerBinding
@@ -141,12 +135,6 @@ class NavigationDrawer : AppCompatActivity(){
                 R.id.nav_home -> {
                     val navController = findNavController(R.id.fragmentContainerView)
                     navController.navigate(R.id.dashboard)
-                    closeDrawer()
-                    true
-                }
-                R.id.currencyconvertor_id -> {
-                    val navController = findNavController(R.id.fragmentContainerView)
-                    navController.navigate(R.id.currencyconvertor_id)
                     closeDrawer()
                     true
                 }
