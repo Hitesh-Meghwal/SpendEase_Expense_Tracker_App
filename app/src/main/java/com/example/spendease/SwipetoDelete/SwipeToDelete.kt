@@ -58,7 +58,7 @@ class SwipeToDelete(private val firestore: FirebaseFirestore,
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
     private fun handleUndoAction(recentlyDeletedTransaction : TransactionData?,pos : Int){
-        if(recentlyDeletedTransaction!=null) {
+        if(recentlyDeletedTransaction != null) {
             transactionlist.add(pos, recentlyDeletedTransaction)
             adapter.notifyItemInserted(pos)
             val transactionId = recentlyDeletedTransaction.id

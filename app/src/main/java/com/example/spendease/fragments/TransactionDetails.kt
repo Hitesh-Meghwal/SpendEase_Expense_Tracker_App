@@ -3,13 +3,12 @@ package com.example.spendease.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.spendease.R
@@ -39,9 +38,9 @@ class TransactionDetails : Fragment() {
 
         binding.toolbarId.navigationIcon = ContextCompat.getDrawable(requireContext(),R.drawable.baseline_arrow_back_24)
         // Navigate back to the appropriate destination based on the "fragment" argument
-        val animation = AnimationUtils.loadAnimation(context, R.anim.back_pressed_animation)
+//        val animation = AnimationUtils.loadAnimation(context, R.anim.back_pressed_animation)
         binding.toolbarId.setNavigationOnClickListener {
-            binding.toolbarId.startAnimation(animation)
+//            binding.toolbarId.startAnimation(animation)
             if(transaction.fragment == "Dashboard"){
                 Navigation.findNavController(binding.root).navigate(R.id.action_transactionDetails_to_dashboard)
             }

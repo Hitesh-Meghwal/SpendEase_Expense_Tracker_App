@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/mainbackground"
     tools:context=".fragments.Profile">
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,7 +70,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="15dp"
             app:fabCustomSize="40dp"
-            android:backgroundTint="@color/background"
+            android:backgroundTint="@color/cream_"
             android:contentDescription="@string/fab"
             android:src="@drawable/ic_baseline_edit_24"
             app:maxImageSize="@dimen/_14sdp"
@@ -81,10 +81,13 @@
             android:id="@+id/moneycardview"
             android:layout_width="347dp"
             android:layout_height="70dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="40dp"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="@dimen/_8sdp"
+            app:cardBackgroundColor="@color/bottomNav"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

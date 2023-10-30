@@ -4,15 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".onBoarding.onBoardingOne">
+    android:layout_height="match_parent">
 
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView2"
         android:layout_width="313dp"
         android:layout_height="290dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +23,7 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="@string/easy_expense_tracking"
         android:textColor="@color/black"
         android:textSize="@dimen/_22sdp"
@@ -41,7 +40,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/screenonetext"
         android:textAlignment="center"
-        android:textSize="@dimen/_17ssp"
+        android:textSize="@dimen/_15ssp"
         app:layout_constraintEnd_toEndOf="@+id/text"
         app:layout_constraintHorizontal_bias="0.411"
         app:layout_constraintStart_toStartOf="@+id/text"

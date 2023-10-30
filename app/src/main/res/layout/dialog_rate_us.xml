@@ -109,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:text="@string/submit"
+                    android:backgroundTint="@color/purple_200"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:layout_gravity="center"
                     android:textAllCaps="true"

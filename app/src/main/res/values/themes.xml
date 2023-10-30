@@ -3,6 +3,7 @@
     <style name="Base.Theme.SpendEase" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
 <!--         <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">#BEADFA</item>
     </style>
 
     <style name="Theme.SpendEase" parent="Base.Theme.SpendEase" />
@@ -15,14 +16,14 @@
 <!--    add transactions category selector button-->
     <style name="category_selector_button" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="strokeColor">@color/textSecondary</item>
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="iconTint">@color/textSecondary</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="iconTint">@color/black</item>
     </style>
 
 <!--    transactions selector button-->
     <style name="transaction_selector_btn" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">@color/purple_200</item>
-        <item name="android:textColor">@color/purple_200</item>
+        <item name="strokeColor">@color/cream_</item>
+        <item name="android:textColor">@color/black</item>
         <item name="iconTint">@color/purple_200 </item>
     </style>
 

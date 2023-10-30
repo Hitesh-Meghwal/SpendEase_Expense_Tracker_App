@@ -5,8 +5,6 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +13,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.databinding.FragmentAddTransactionsBinding
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -131,7 +128,7 @@ class AddTransactions : Fragment(),View.OnClickListener {
         val date = binding.date.text.toString().trim()
         val amount = binding.amount.text.toString().trim()
         val note = binding.note.text.toString()
-        if (title.isEmpty() || date.isEmpty() || amount.isEmpty() || note.isEmpty() || category == ""){
+        if (title.isEmpty() || date.isEmpty() || amount.isEmpty() || category == ""){
             notifyUser("Enter all required details")
         }
         else {
@@ -256,9 +253,9 @@ class AddTransactions : Fragment(),View.OnClickListener {
     private fun setCategory(v: View, button:MaterialButton){
         category = button.text.toString()
         button.setBackgroundColor(ContextCompat.getColor(requireContext(), com.google.android.material.R.color.mtrl_btn_text_btn_bg_color_selector))
-        button.setIconTintResource(R.color.purple_200)
-        button.setStrokeColorResource(R.color.purple_200)
-        button.setTextColor(ContextCompat.getColor(requireContext(),R.color.purple_200))
+        button.setIconTintResource(R.color.bottomNav)
+        button.setStrokeColorResource(R.color.black)
+        button.setTextColor(ContextCompat.getColor(requireContext(),R.color.bottomNav))
         when(v){
             binding.foodbtn->{
                 removeBackground(binding.shoppingbtn)

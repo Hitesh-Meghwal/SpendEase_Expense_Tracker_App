@@ -10,6 +10,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/mainbackground"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,7 +25,9 @@
             android:id="@+id/newtranstoolbar_id"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/mainbackground"
             app:title="New Transactions"
+            app:titleTextColor="@color/black"
             />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -40,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="@string/category"
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:columnCount="3"
-            android:padding="@dimen/_3sdp"
+            android:padding="@dimen/_2sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -75,6 +78,8 @@
                 style="@style/category_selector_button"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_70sdp"
+                android:layout_row="0"
+                android:layout_column="1"
                 android:text="@string/shopping"
                 android:textSize="@dimen/_10ssp"
                 app:icon="@drawable/ic_baseline_shopping_cart_24"
@@ -138,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/details"
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -155,6 +160,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:hint="@string/title"
+            app:hintTextColor="@color/black"
             app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
             app:boxCornerRadiusBottomStart="@dimen/_5sdp"
             app:boxCornerRadiusTopEnd="@dimen/_5sdp"
@@ -194,6 +200,7 @@
             android:layout_marginEnd="@dimen/_65sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:hint="@string/amount"
+            app:hintTextColor="@color/black"
             app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
             app:boxCornerRadiusBottomStart="@dimen/_5sdp"
             app:boxCornerRadiusTopEnd="@dimen/_5sdp"
@@ -219,6 +226,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:hint="@string/date"
+            app:hintTextColor="@color/black"
             app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
             app:boxCornerRadiusBottomStart="@dimen/_5sdp"
             app:boxCornerRadiusTopEnd="@dimen/_5sdp"
@@ -240,6 +248,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/note"
+            app:hintTextColor="@color/black"
             app:counterEnabled="true"
             app:counterMaxLength="99"
             android:layout_marginTop="@dimen/_6sdp"

@@ -14,7 +14,6 @@
     <color name="button">#3F51B5</color>
     <color name="cream">#FFFDD0</color>
     <color name="cardBackground">#FFFFFF</color>
-    <color name="bottomNav">#FFFFFF</color>
     <color name="background">#F6F6F7</color>
     <color name="background_deep">#EFEFEF</color>
     <color name="textSecondary">#575A6C</color>
@@ -23,4 +22,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#0000FFFF</color>
     <color name="splashBackground">#232C3D</color>
+
+    <color name="mainbackground">#BEADFA</color>
+    <color name="cream_">#FFF8C9</color>
+    <color name="bottomNav">#DFCCFB</color>
 </resources>

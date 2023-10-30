@@ -9,7 +9,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -55,6 +57,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.itextpdf.text.BaseColor
 import com.itextpdf.text.Document
+import com.itextpdf.text.Element
+import com.itextpdf.text.Font
+import com.itextpdf.text.Image
+import com.itextpdf.text.Paragraph
 import com.itextpdf.text.Phrase
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
@@ -64,6 +70,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -139,7 +146,7 @@ class NavigationDrawer : AppCompatActivity(){
                     true
                 }
                 R.id.share_id->{
-                    val appLink = "\"Hey there! \uD83D\uDC4B I've been using this fantastic Expense Manager app, and it's made managing my finances a breeze. \uD83D\uDCB0 If you're looking for a simple and effective way to manage your money, I highly recommend giving it a try. You can download it here: https://shorturl.at/eEHQ6"
+                    val appLink = "\"Hey there! \uD83D\uDC4B I've been using this fantastic Expense Manager app, and it's made managing my finances a breeze. \uD83D\uDCB0 If you're looking for a simple and effective way to manage your money, I highly recommend giving it a try. You can download it here: https://bit.ly/SpendEase"
                     val intent = Intent()  // Set the action of the Intent to send
                     intent.action = Intent.ACTION_SEND
                     intent.putExtra(Intent.EXTRA_TEXT,appLink)
@@ -368,6 +375,10 @@ class NavigationDrawer : AppCompatActivity(){
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 val document = Document()
+                val name = userDetails.getString("Name","")
+                val monthlyExpenses = userDetails.getString("MonthlyBudget","")
+                val yearlyExpenses = userDetails.getString("YearlyBudget","")
+                val currencyname = userDetails.getString("Currency_name","")
                 // Get the current date and time for the PDF file name
                 val pdfFileName = "ExpenseReport_${selected}_${SimpleDateFormat("dd").format(Date())}.pdf"
                 val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
@@ -375,10 +386,46 @@ class NavigationDrawer : AppCompatActivity(){
                 val pdfWriter = PdfWriter.getInstance(document, FileOutputStream(pdfFile))
 
                 document.open()
-                document.addAuthor("Hitesh Meghwal")
-                document.addTitle("Transaction of $selected")
+
+                val infoTable = PdfPTable(2)
+                infoTable.widthPercentage = 100f
+                val logoCell = PdfPCell()
+                val context = applicationContext // Replace with your context
+                val drawableId = R.drawable.money_img // Replace with your logo drawable resource ID
+                val drawable = ContextCompat.getDrawable(context, drawableId)
+
+                if (drawable != null) {
+                    val bitmapDrawable = drawable as BitmapDrawable
+                    val bitmap = bitmapDrawable.bitmap
+                    // Convert the bitmap to an iText image
+                    val logoImage = Image.getInstance(bitmapToByteArray(bitmap))
+                    // Adjust the size of the logo image (if needed)
+                    logoImage.scaleToFit(70f, 70f) // Replace with your desired width and height
+                    logoCell.addElement(logoImage)
+                    logoCell.horizontalAlignment = Element.ALIGN_LEFT
+                    // Add the logo to the document
+                    infoTable.addCell(logoCell)
+                }
+
+                val infoCell = PdfPCell()
+                infoCell.addElement(Paragraph("User Name : $name"))
+                infoCell.addElement(Paragraph("Monthly Expenses : $monthlyExpenses"))
+                infoCell.addElement(Paragraph("Yearly Expenses : $yearlyExpenses"))
+                infoCell.addElement(Paragraph("Currency : $currencyname"))
+                infoCell.addElement(Paragraph("\n"))
+                infoCell.horizontalAlignment = Element.ALIGN_RIGHT
+                infoTable.addCell(infoCell)
+                document.add(infoTable)
+
+                val title = Paragraph("Expense Report of $selected")
+                title.alignment = Element.ALIGN_MIDDLE
+                title.spacingBefore = 10F
+                title.font = Font(Font.FontFamily.HELVETICA, 18f, Font.BOLD)
+                document.add(title)
+
 
                 val table = PdfPTable(5) //table with 5 columns
+                table.spacingBefore = 10F
                 table.widthPercentage = 100f
                 val headers = arrayOf("TITLE","CATEGORY","AMOUNT","DATE","NOTE")
 
@@ -386,6 +433,7 @@ class NavigationDrawer : AppCompatActivity(){
 //                    it represents the header text that you want to display in the table cell.
                     val cell = PdfPCell(Phrase(header))
                     cell.backgroundColor = BaseColor.LIGHT_GRAY
+                    cell.horizontalAlignment = Element.ALIGN_CENTER
                     table.addCell(cell)
                 }
 
@@ -423,6 +471,11 @@ class NavigationDrawer : AppCompatActivity(){
                 Log.d("Pdf Failed to Generate", "${e.message}")
             }
         }
+    }
+    private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        return stream.toByteArray()
     }
 
     private fun calculateTotalExpense(expenseData: List<TransactionData>, period:String):String{
