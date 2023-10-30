@@ -113,29 +113,29 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="61dp"
-        android:layout_height="64dp"
-        app:cardCornerRadius="@dimen/_100sdp"
-        app:cardElevation="@dimen/_20sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
-
-        <ImageView
-            android:id="@+id/googleimgvbtn"
-            android:layout_width="78dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/_110sdp"
-            android:contentDescription="@string/googleimg"
-            android:scaleType="center"
-            android:src="@drawable/ic_google"
-            tools:layout_editor_absoluteX="184dp"
-            tools:layout_editor_absoluteY="611dp" />
-
-    </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/cardView2"-->
+    <!--        android:layout_width="61dp"-->
+    <!--        android:layout_height="64dp"-->
+    <!--        app:cardCornerRadius="@dimen/_100sdp"-->
+    <!--        app:cardElevation="@dimen/_20sdp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/cardView"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/cardView"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/cardView"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/cardView">-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/googleimgvbtn"-->
+    <!--            android:layout_width="78dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginHorizontal="@dimen/_110sdp"-->
+    <!--            android:contentDescription="@string/googleimg"-->
+    <!--            android:scaleType="center"-->
+    <!--            android:src="@drawable/ic_google"-->
+    <!--            tools:layout_editor_absoluteX="184dp"-->
+    <!--            tools:layout_editor_absoluteY="611dp" />-->
+
+    <!--    </androidx.cardview.widget.CardView>-->
