@@ -4,15 +4,13 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.spendease.R
 import com.example.spendease.databinding.FragmentAboutBinding
-import com.example.spendease.databinding.FragmentCurrencyConverterBinding
-import com.google.android.material.appbar.MaterialToolbar
 
 @Suppress("UNREACHABLE_CODE")
 class About : Fragment() {

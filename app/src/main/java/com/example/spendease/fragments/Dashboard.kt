@@ -1,33 +1,23 @@
 package com.example.spendease.fragments
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.*
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -36,9 +26,8 @@ import com.example.spendease.Adapter.TransactionAdapter
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.SwipetoDelete.SwipeToDelete
+import com.example.spendease.Widget.ExpenseWidget
 import com.example.spendease.databinding.FragmentDashboardBinding
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.eazegraph.lib.models.PieModel
@@ -59,8 +48,6 @@ class Dashboard : Fragment() {
     private var totalOthers = 0.0f
     private val CHANNEL_ID = "Expense_Has_Been_Exceed"
     private val NOTIFICATION_ID = 101
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var navigationView: NavigationView
     lateinit var userDetails: SharedPreferences
     private val firestore = FirebaseFirestore.getInstance()
     lateinit var adapter: TransactionAdapter
@@ -97,6 +84,10 @@ class Dashboard : Fragment() {
             binding.dashboardrecyclerview.visibility = View.VISIBLE
             getdata()
         }
+
+        val intent = Intent(context, ExpenseWidget::class.java)
+        intent.action = "com.example.spendease.UPDATE_WIDGET"
+        context?.sendBroadcast(intent)
         return binding.root
 
     }
@@ -115,10 +106,10 @@ class Dashboard : Fragment() {
     private fun getdata(){
 
         userDetails = requireActivity().getSharedPreferences("UserDetails",MODE_PRIVATE)
+        val editor = userDetails.edit()
         val getname = userDetails.getString("Name","")
         val getMonthlyBudget = userDetails.getString("MonthlyBudget","")
         val getCurrency = userDetails.getString("Currency","")
-
 
         val formatmonth = SimpleDateFormat("MM")
         val currentMonth = formatmonth.format(Calendar.getInstance().time)
@@ -126,6 +117,8 @@ class Dashboard : Fragment() {
         val currentYear = formatyear.format(Calendar.getInstance().time)
         val format = SimpleDateFormat("MMMM")
         binding.datetv.text = "${format.format(Calendar.getInstance().time)} $currentYear"
+        editor.putString("date","${format.format(Calendar.getInstance().time)} $currentYear")
+        editor.apply()
 //        Greeting to user
         val calendar = Calendar.getInstance()
         val greeting = when(calendar.get(Calendar.HOUR_OF_DAY)){
@@ -182,6 +175,8 @@ class Dashboard : Fragment() {
 
                     for (i in transactionlist) {
                         totalExpense += i.amount
+                        editor.putString("totalExpense",totalExpense.toString())
+                        editor.apply()
                         when (i.category) {
                             "Food" -> {
                                 totalFood += (i.amount.toFloat())
@@ -210,7 +205,7 @@ class Dashboard : Fragment() {
                         binding.expensetv.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
 
                         val notification = NotificationCompat.Builder(requireContext(),CHANNEL_ID)
-                            .setSmallIcon(R.drawable.baseline_picture_as_pdf_24)
+                            .setSmallIcon(R.drawable.money)
                             .setContentTitle("Expense has Exceed for ${format.format(Calendar.getInstance().time)} month")
                             .setContentText("Your expenses have exceeded the monthly limit.")
                             .setPriority(NotificationCompat.PRIORITY_HIGH)

@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -20,7 +19,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
 import com.example.spendease.databinding.FragmentAddTransactionsBinding
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -37,8 +35,6 @@ class AddTransactions : Fragment(),View.OnClickListener {
     val transactions by navArgs<AddTransactionsArgs>()
     private var category = ""
     lateinit var bottomnav : BottomNavigationView
-    lateinit var toolbar: MaterialToolbar
-    lateinit var drawerLayout: DrawerLayout
     lateinit var userDetails : SharedPreferences
     lateinit var bottomCal : BottomSheetDialog
     var day = 0
@@ -190,7 +186,6 @@ class AddTransactions : Fragment(),View.OnClickListener {
             }
         }
     }
-
     @SuppressLint("SimpleDateFormat", "WeekBasedYear")
     private fun datePicker(binding: FragmentAddTransactionsBinding){
         val cal = Calendar.getInstance()

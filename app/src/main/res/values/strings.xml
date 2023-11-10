@@ -99,9 +99,9 @@
     <string name="about_description"> SpendEase is a user-friendly, finance management app which allows you to keep track of your transactions seamlessly and intuitively. It helps you to categorize your spending to create a budget and to stay within the limits set by you, and also provides you a detailed analysis of your spending habits. Moreover, as an expense management app, privacy of your financial data is our topmost concern and we pay utmost importance to its privacy and security. </string>
     <string name="developer">Developer</string>
     <string name="hitesh_meghwal">Hitesh Meghwal</string>
-    <string name="description">Android Developer. This is my third year project for computer science.</string>
+    <string name="description">Android Developer. This is my third year project in computer science.</string>
     <string name="done">Done</string>
-<!--    <string name="defaulf_web_client_id">1:967724410364:android:bebb077dc5fe820f763e79</string>-->
+    <!--    <string name="defaulf_web_client_id">1:967724410364:android:bebb077dc5fe820f763e79</string>-->
     <string name="skip">Skip</string>
     <string name="easy_expense_tracking">Easy Expense Tracking</string>
     <string name="screenonetext">Keep track of your personal expenses and compare them to your monthly income with the budget planner.</string>
@@ -110,6 +110,8 @@
     <string name="screenthree">Check how much you have spend previous month wise and save money accordingly and make pdf for record</string>
     <string name="filter_monthly_yearly_expense_and_make_pdf">Filter Monthly/Yearly \nExpenses and Make PDF</string>
     <string name="next">Next</string>
+    <string name="gallery">Gallery</string>
+    <string name="capture">Capture</string>
     <string-array name="Currency">
         <item>₹ Indian Rupee</item>
         <item>$ Dollar</item>
@@ -172,4 +174,7 @@
         <item>NOV</item>
         <item>DEC</item>
     </string-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 </resources>

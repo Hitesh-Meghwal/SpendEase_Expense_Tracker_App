@@ -30,7 +30,7 @@ class Signin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_signin)
 
         signuptv = findViewById(R.id.signuptv_id)
         loginbtn = findViewById(R.id.Loginbtn_id)
