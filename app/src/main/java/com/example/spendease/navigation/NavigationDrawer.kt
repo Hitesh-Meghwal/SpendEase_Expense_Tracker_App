@@ -331,7 +331,7 @@ class NavigationDrawer : AppCompatActivity(){
                     for(i in currentYear downTo 2022){
                         yearlist += i
                     }
-                    val yearAdapter = ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,yearlist)
+                    val yearAdapter = ArrayAdapter(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item,yearlist)
                     yearSpinner.adapter = yearAdapter
                     val generatebtn = dialog.findViewById<MaterialButton>(R.id.generatebtn)
 
@@ -506,7 +506,7 @@ class NavigationDrawer : AppCompatActivity(){
         val pendingIntent = PendingIntent.getActivity(this,0,openIntent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification = NotificationCompat.Builder(this,CHANNEL_ID)
-            .setSmallIcon(R.drawable.baseline_picture_as_pdf_24)
+            .setSmallIcon(R.drawable.baseline_calculate_24)
             .setContentTitle("PDF Generated")
             .setContentText("Your PDF has been generated successfully")
             .setContentIntent(pendingIntent)
@@ -541,5 +541,4 @@ class NavigationDrawer : AppCompatActivity(){
         editor.remove("shimmerShown")
         editor.apply()
     }
-
 }

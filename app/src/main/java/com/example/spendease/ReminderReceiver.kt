@@ -10,7 +10,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.spendease.fragments.Dashboard
 
 class ReminderReceiver :  BroadcastReceiver() {
     @SuppressLint("MissingPermission")
@@ -22,8 +21,8 @@ class ReminderReceiver :  BroadcastReceiver() {
         }
 
         // Create a PendingIntent to open the app's dashboard
-        val dashboardIntent = Intent(context,Dashboard::class.java)
-        val pendingIntent = PendingIntent.getActivity(context,0,dashboardIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val dashboardIntent = Intent(context,MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(context,30,dashboardIntent,PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification = NotificationCompat.Builder(context!!, "reminder_channel")
             .setSmallIcon(R.drawable.money)
@@ -33,14 +32,7 @@ class ReminderReceiver :  BroadcastReceiver() {
             .setAutoCancel(true)
             .build()
 
-        val alarmManger = AlarmManger()
-        alarmManger.scheduleAfternoonAlarm(context)
-        alarmManger.scheduleEveningAlarm(context)
-
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(1, notification)
-
     }
-
-
 }

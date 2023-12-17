@@ -1,10 +1,13 @@
 package com.example.spendease.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
-import android.content.Context.*
+import android.content.Context.ALARM_SERVICE
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
@@ -25,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spendease.Adapter.TransactionAdapter
 import com.example.spendease.Model.TransactionData
 import com.example.spendease.R
+import com.example.spendease.ReminderReceiver
 import com.example.spendease.SwipetoDelete.SwipeToDelete
 import com.example.spendease.Widget.ExpenseWidget
 import com.example.spendease.databinding.FragmentDashboardBinding
@@ -88,6 +92,8 @@ class Dashboard : Fragment() {
         val intent = Intent(context, ExpenseWidget::class.java)
         intent.action = "com.example.spendease.UPDATE_WIDGET"
         context?.sendBroadcast(intent)
+//        scheduleAfternoonAlarm()
+//        scheduleEveningAlarm()
         return binding.root
 
     }
@@ -259,5 +265,37 @@ class Dashboard : Fragment() {
             val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+    fun scheduleAfternoonAlarm() {
+        val alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
+        val reminderIntent = Intent(context, ReminderReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context,10,reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 50)
+        calendar.set(Calendar.SECOND,0)
+        val alarmTime = calendar.timeInMillis
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP, alarmTime,
+            AlarmManager.INTERVAL_DAY, // Repeat daily
+            pendingIntent
+        )
+    }
+    fun scheduleEveningAlarm() {
+        val alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
+        val reminderIntent = Intent(context, ReminderReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context,20,reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 1)
+        calendar.set(Calendar.MINUTE, 10)
+        calendar.set(Calendar.SECOND,0)
+        val alarmTime = calendar.timeInMillis
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP, alarmTime,
+            AlarmManager.INTERVAL_DAY, // Repeat daily
+            pendingIntent
+        )
     }
 }
