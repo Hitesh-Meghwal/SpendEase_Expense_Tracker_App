@@ -92,7 +92,7 @@ class Dashboard : Fragment() {
         val intent = Intent(context, ExpenseWidget::class.java)
         intent.action = "com.example.spendease.UPDATE_WIDGET"
         context?.sendBroadcast(intent)
-//        scheduleAfternoonAlarm()
+        scheduleAfternoonAlarm()
 //        scheduleEveningAlarm()
         return binding.root
 
@@ -271,8 +271,8 @@ class Dashboard : Fragment() {
         val reminderIntent = Intent(context, ReminderReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context,10,reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 50)
+        calendar.set(Calendar.HOUR_OF_DAY, 12)
+        calendar.set(Calendar.MINUTE, 10)
         calendar.set(Calendar.SECOND,0)
         val alarmTime = calendar.timeInMillis
 
@@ -287,7 +287,7 @@ class Dashboard : Fragment() {
         val reminderIntent = Intent(context, ReminderReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context,20,reminderIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 18)
         calendar.set(Calendar.MINUTE, 10)
         calendar.set(Calendar.SECOND,0)
         val alarmTime = calendar.timeInMillis

@@ -104,7 +104,6 @@ class Profile : Fragment() {
                     // Convert Bitmap to Uri
                     val capturedImageUri = getImageUriFromBitmap(requireContext(), bitimg)
                     uploadImageToFirebaseStorage(capturedImageUri)
-
                 }
                 GALLERY_REQ_CODE ->{
                     selectedImg = data.data!!

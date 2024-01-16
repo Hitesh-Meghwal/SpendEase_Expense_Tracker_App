@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spendease.R
 import com.example.spendease.Model.TransactionData
+import com.example.spendease.R
 import com.example.spendease.databinding.TransactionItemlistBinding
 import com.example.spendease.fragments.AllTransactionsDirections
 import com.example.spendease.fragments.DashboardDirections
