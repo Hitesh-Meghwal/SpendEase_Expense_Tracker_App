@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/monthlypdf"
+        android:title="@string/monthly_pdf"
+        />
+
+    <item
+        android:id="@+id/yearlypdf"
+        android:title="@string/yearly_pdf"
+        />
+</menu>

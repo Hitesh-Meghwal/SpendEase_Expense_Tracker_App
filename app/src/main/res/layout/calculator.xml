@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/donebtn"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/done"
+        android:textColor="@color/purple_200"
+        app:layout_constraintBottom_toTopOf="@+id/result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="end"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/_25ssp"
+        android:translationY="@dimen/_25sdp"
+        app:layout_constraintBottom_toTopOf="@+id/input"
+        app:layout_constraintEnd_toEndOf="@+id/input"
+        app:layout_constraintStart_toStartOf="@+id/input" />
+
+    <TextView
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="64dp"
+        android:gravity="end"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20ssp"
+        android:translationY="@dimen/_45sdp"
+        app:layout_constraintBottom_toTopOf="@+id/calculator"
+        app:layout_constraintEnd_toEndOf="@+id/calculator"
+        app:layout_constraintStart_toStartOf="@+id/calculator" />
+
+    <GridLayout
+        android:id="@+id/calculator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:columnCount="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="C"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_20ssp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mod"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="%"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp"
+            app:icon="@drawable/clear_character_svgrepo_com"
+            app:iconSize="@dimen/_25sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/plus"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="+"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/seven"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="7"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/eight"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="8"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nine"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="9"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/minus"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="-"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/four"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="4"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/five"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="5"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/six"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="6"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mul"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="*"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/one"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="@string/_1"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/two"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="2"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/three"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="3"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/divide"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="/"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/zero"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="0"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/doublezero"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="00"
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dot"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="."
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/equal"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:text="="
+            android:textSize="@dimen/_20sdp"
+            app:cornerRadius="@dimen/_2sdp" />
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

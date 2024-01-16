@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/dashboard">
+
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="com.example.spendease.fragments.Dashboard"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboard_to_addTransactions"
+            app:destination="@id/addTransactions" />
+        <action
+            android:id="@+id/action_dashboard_to_transactionDetails"
+            app:destination="@id/transactionDetails"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_dashboard_to_about"
+            app:destination="@id/about_id" />
+        <action
+            android:id="@+id/action_dashboard_to_allTransactions2"
+            app:destination="@id/allTransactions"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/allTransactions"
+        android:name="com.example.spendease.fragments.AllTransactions"
+        android:label="fragment_all_transactions"
+        tools:layout="@layout/fragment_all_transactions" >
+        <action
+            android:id="@+id/action_allTransactions_to_transactionDetails"
+            app:destination="@id/transactionDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.spendease.fragments.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
+    <fragment
+        android:id="@+id/transactionDetails"
+        android:name="com.example.spendease.fragments.TransactionDetails"
+        android:label="fragment_transaction__details"
+        tools:layout="@layout/fragment_transaction__details" >
+        <action
+            android:id="@+id/action_transactionDetails_to_addTransactions"
+            app:destination="@id/addTransactions" />
+        <argument
+            android:name="data"
+            app:argType="com.example.spendease.Model.TransactionData" />
+        <argument
+            android:name="fragment"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_transactionDetails_to_allTransactions"
+            app:destination="@id/allTransactions" />
+        <action
+            android:id="@+id/action_transactionDetails_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTransactions"
+        android:name="com.example.spendease.fragments.AddTransactions"
+        android:label="fragment_add_transactions"
+        tools:layout="@layout/fragment_add_transactions" >
+        <action
+            android:id="@+id/action_addTransactions_to_dashboard"
+            app:destination="@id/dashboard"
+            app:popUpTo="@id/dashboard"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="data"
+            app:argType="com.example.spendease.Model.TransactionData" />
+        <argument
+            android:name="from"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_addTransactions_to_transactionDetails"
+            app:destination="@id/transactionDetails"
+        />
+    </fragment>
+    <fragment
+        android:id="@+id/about_id"
+        android:name="com.example.spendease.navigation.About"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+</navigation>

@@ -4,15 +4,17 @@ package com.example.spendease.userAuthentication
 
 import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.spendease.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import org.mindrot.jbcrypt.BCrypt
 
 @Suppress("DEPRECATION")
 class Signup : AppCompatActivity() {
@@ -31,7 +33,7 @@ class Signup : AppCompatActivity() {
 
         logintv = findViewById(R.id.logintv_id)
         logintv.setOnClickListener {
-            val loginintent = Intent(this,Login::class.java)
+            val loginintent = Intent(this,Signin::class.java)
             startActivity(loginintent)
         }
 
@@ -49,41 +51,65 @@ class Signup : AppCompatActivity() {
         val getusername = username.text.toString()
         val getemail = email.text.toString().trim()
         val getpassword = password.text.toString()
-//        checking format of email
-        val checkemail = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
-        val passwordlen = getpassword.length in 6..8
 
-//        creating object of firebaseauthentication & firestore
+        val validpassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$".toRegex()
+
+//      creating object of firebaseauthentication & firestore
         val firebaseauth = FirebaseAuth.getInstance()
         val firestore = FirebaseFirestore.getInstance()
 
         if(getusername.isEmpty()){
-            username.setError("Username cannot be empty!")
+            username.error = "Username cannot be empty!"
         }
-        else if(getemail.isEmpty() && getemail.matches(checkemail)){      //or we can do "&& Patterns.EMAIL_ADDRESS.matcher(getemail).matches()"
-            email.setError("Email cannot be empty!")
+        else if(getemail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(getemail).matches()){
+            email.error = "Email cannot be empty!"
         }
-        else if(getpassword.isEmpty() && passwordlen){
-            password.setError("Password cannot be empty!")
+        else if(getpassword.isEmpty() && getpassword.matches(validpassword)){
+            password.error = "Password cannot be empty!"
         }
         else {
+            val hashpassword = BCrypt.hashpw(getpassword,BCrypt.gensalt())
             firebaseauth.createUserWithEmailAndPassword(getemail, getpassword)
-                .addOnSuccessListener {
-                    firestore.collection("User")
-                        .document(FirebaseAuth.getInstance().uid.toString())
-                        .set(UserModal(getusername,getemail,getpassword))
-                    val switchtologin = Intent(this, Login::class.java)
-                    startActivity(switchtologin)
-                    Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()
-                    progressDialog.cancel()
+                .addOnSuccessListener {authResult->
+                    val user = authResult.user
+                    user?.getIdToken(true)
+                        ?.addOnCompleteListener{ task->
+                            if(task.isSuccessful){
+                                val token = task.result?.token
+                                firestore.collection("User")
+                                    .document(FirebaseAuth.getInstance().uid.toString())
+                                    .set(UserModal(getusername,getemail,hashpassword))
+                                    .addOnCompleteListener {
+                                        if (task.isSuccessful){
+                                            val userDetails = this.getSharedPreferences("UserDetails", MODE_PRIVATE)
+                                            val editor = userDetails.edit()
+                                            editor.putBoolean("isFirstTime",true)
+                                            editor.putString("email",getemail)
+                                            editor.apply()
+                                            val gettingInfo = Intent(this, GettingInfo::class.java)
+                                            startActivity(gettingInfo)
+                                            finish()
+                                            notifyUser("Sign Up Successfully")
+                                            progressDialog.cancel()
+                                        }
+                                        else{
+                                            notifyUser("Something went wrong!!")
+                                        }
+                                    }
+                            }
+                        }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this,"Something went wrong!\n"+e.message, Toast.LENGTH_SHORT).show()
+                    notifyUser("Something went wrong!!"+e.message)
                     progressDialog.cancel()
                 }
-            progressDialog.setMessage("Signing ...")
+            progressDialog.setMessage("Signup...")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
         }
     }
+    private fun notifyUser(msg : String){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
 }

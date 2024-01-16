@@ -2,14 +2,73 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SpendEase" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-<!--         <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!--         <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">#BEADFA</item>
     </style>
 
     <style name="Theme.SpendEase" parent="Base.Theme.SpendEase" />
 
-
-<!--    profile image with circularimage-->
+    <!--    profile image with circularimage-->
     <style name="roundImageView" parent="">
         <item name="cornerSize">50%</item>
+    </style>
+
+    <!--    add transactions category selector button-->
+    <style name="category_selector_button" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/textSecondary</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="iconTint">@color/black</item>
+    </style>
+
+    <!--    transactions selector button-->
+    <style name="transaction_selector_btn" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/cream_</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="iconTint">@color/purple_200</item>
+    </style>
+
+    <!--    monthly selector button-->
+    <style name="selector_button" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/textSecondary</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="iconTint">@color/textSecondary</item>
+    </style>
+
+    <style name="button_overlay">
+        <item name="colorSurface">@android:color/white</item>
+    </style>
+
+    <style name="editFAB">
+        <item name="android:radius">@dimen/_50sdp</item>
+    </style>
+
+    <style name="bottom_dialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/modal</item>
+    </style>
+
+    <style name="modal" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/dialog_rounded_corners</item>
+    </style>
+
+    <style name="MyRatingStar" parent="Widget.AppCompat.RatingBar">
+        <!--non selected star-->
+        <item name="colorControlNormal">@color/black</item>
+        <!-- selected star-->
+        <item name="colorControlActivated">@color/yellow</item>
+    </style>
+
+    <style name="Theme.SpendEase.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+        <!-- Radius of the outer bound of widgets to make the rounded corners -->
+        <item name="appWidgetRadius">16dp</item>
+        <!--
+        Radius of the inner view's bound of widgets to make the rounded corners.
+        It needs to be 8dp or less than the value of appWidgetRadius
+        -->
+        <item name="appWidgetInnerRadius">8dp</item>
+    </style>
+
+    <style name="Theme.SpendEase.AppWidgetContainer" parent="Theme.SpendEase.AppWidgetContainerParent">
+        <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
+        <item name="appWidgetPadding">16dp</item>
     </style>
 </resources>

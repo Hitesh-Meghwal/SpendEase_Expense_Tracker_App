@@ -2,9 +2,8 @@
     <string name="app_name">SpendEase</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
-    <string name="log_in">Log In</string>
-    <string name="log_in_btn">Log in</string>
-    <string name="haven_t_an_account">haven\'t an account?</string>
+    <string name="log_in">Sign In</string>
+    <string name="haven_t_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
     <string name="or">OR</string>
     <string name="google">Google</string>
@@ -14,7 +13,6 @@
     <string name="enter_password_signup">Enter Password</string>
     <string name="sign_up_button">Sign Up</string>
     <string name="have_an_account">have an account?</string>
-    <string name="log_in_in_sign_up">Log in</string>
     <string name="sign_up_tv">Sign Up</string>
     <string name="enter_name">Enter Name</string>
     <string name="enter_monthly_budget">Enter Monthly Budget</string>
@@ -36,4 +34,147 @@
     <string name="dashboard">Dashboard</string>
     <string name="darklightmode">Darklightmode</string>
     <string name="log_out">Log out</string>
+    <string name="cardimage">cardimage</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="add_your_transcations_for_this_month">Add your transcations for this month!!</string>
+    <string name="monthly_budget">Monthly Budget</string>
+    <string name="your_expenses">Your Expenses</string>
+    <string name="icon">icon</string>
+    <string name="addtransactions">addtransactions</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="category">Category</string>
+    <string name="food">Food</string>
+    <string name="shopping">Shopping</string>
+    <string name="education">Education</string>
+    <string name="transport">Transport</string>
+    <string name="health">Health</string>
+    <string name="other">Other</string>
+    <string name="details">Details</string>
+    <string name="title">Title</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="note">Note</string>
+    <string name="add_transaction">Add transaction</string>
+    <string name="all">All</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="all_transactions">All Transactions</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="september">September</string>
+    <string name="august">August</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="your_transactions">Your Transactions</string>
+    <string name="fab">FAB</string>
+    <string name="monthly_budget_profile">Monthly Budget</string>
+    <string name="yearly_budget_profile">Yearly Budget</string>
+    <string name="editfab">editfab</string>
+    <string name="update_details">Update Details</string>
+    <string name="name">Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="communicate">Communicate</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="select_currency">Select Currency</string>
+    <string name="_1">1</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="currency_amount">Amount</string>
+    <string name="convert">Convert</string>
+    <string name="monthly_pdf">Monthly PDF</string>
+    <string name="yearly_pdf">Yearly PDF</string>
+    <string name="generate">Generate</string>
+    <string name="rate_our_app">Rate Our App</string>
+    <string name="if_you_are_enjoy_using_our_app_would_you_mind_rating_us_on_the_play_store">If you think this app is really helpful and need any improvement in this app. Would you mind rating us on below Box.</string>
+    <string name="submit">Submit</string>
+    <string name="feedback">FeedBack</string>
+    <string name="version_1_0">Version: 1.0</string>
+    <string name="about_description"> SpendEase is a user-friendly, finance management app which allows you to keep track of your transactions seamlessly and intuitively. It helps you to categorize your spending to create a budget and to stay within the limits set by you, and also provides you a detailed analysis of your spending habits. Moreover, as an expense management app, privacy of your financial data is our topmost concern and we pay utmost importance to its privacy and security. </string>
+    <string name="developer">Developer</string>
+    <string name="hitesh_meghwal">Hitesh Meghwal</string>
+    <string name="description">Android Developer. This is my third year project in computer science.</string>
+    <string name="done">Done</string>
+    <!--    <string name="defaulf_web_client_id">1:967724410364:android:bebb077dc5fe820f763e79</string>-->
+    <string name="skip">Skip</string>
+    <string name="easy_expense_tracking">Easy Expense Tracking</string>
+    <string name="screenonetext">Keep track of your personal expenses and compare them to your monthly income with the budget planner.</string>
+    <string name="categorised_data_chart">Categorised Data Chart</string>
+    <string name="screentwotext">Allegric to numebers? see ypur spending statistics on colorful pie chart with different category</string>
+    <string name="screenthree">Check how much you have spend previous month wise and save money accordingly and make pdf for record</string>
+    <string name="filter_monthly_yearly_expense_and_make_pdf">Filter Monthly/Yearly \nExpenses and Make PDF</string>
+    <string name="next">Next</string>
+    <string name="gallery">Gallery</string>
+    <string name="capture">Capture</string>
+    <string-array name="Currency">
+        <item>₹ Indian Rupee</item>
+        <item>$ Dollar</item>
+        <item>£ United Kingdom Pound</item>
+        <item>$ Argentina Peso</item>
+        <item>ƒ Aruba Guilder</item>
+        <item>₼ Azerbaijan Manat</item>
+        <item>Br Belarus Ruble</item>
+        <item>лв Bulgaria Lev</item>
+        <item>R$ Brazil Real</item>
+        <item>៛ Cambodia Riel</item>
+        <item>¥ China Yuan Renminbi</item>
+        <item>৳ Bangladeshi taka</item>
+    </string-array>
+    <string-array name="currency_converter">
+        <item>CAD</item>
+        <item>EUR</item>
+        <item>HKD</item>
+        <item>ISK</item>
+        <item>PHP</item>
+        <item>DKK</item>
+        <item>HUF</item>
+        <item>CZK</item>
+        <item>AUD</item>
+        <item>RON</item>
+        <item>SEK</item>
+        <item>IDR</item>
+        <item>INR</item>
+        <item>BRL</item>
+        <item>RUB</item>
+        <item>HRK</item>
+        <item>JPY</item>
+        <item>THB</item>
+        <item>CHF</item>
+        <item>SGD</item>
+        <item>PLN</item>
+        <item>BGN</item>
+        <item>CNY</item>
+        <item>NOK</item>
+        <item>NZD</item>
+        <item>ZAR</item>
+        <item>USD</item>
+        <item>MXN</item>
+        <item>ILS</item>
+        <item>GBP</item>
+        <item>KRW</item>
+        <item>MYR</item>
+    </string-array>
+    <string-array name="month">
+        <item>JAN</item>
+        <item>FEB</item>
+        <item>MAR</item>
+        <item>APR</item>
+        <item>MAY</item>
+        <item>JUN</item>
+        <item>JUL</item>
+        <item>AUG</item>
+        <item>SEP</item>
+        <item>OCT</item>
+        <item>NOV</item>
+        <item>DEC</item>
+    </string-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 </resources>

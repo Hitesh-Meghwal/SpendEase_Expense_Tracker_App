@@ -6,46 +6,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start"
     android:id="@+id/drawerlayout"
     tools:context=".navigation.NavigationDrawer">
 
-    <include
-        layout="@layout/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/mainbackground"
+                    app:menu="@menu/toolbar_menu"
+                    app:title="SpendEase" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomnavigation_id"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                app:itemIconSize="@dimen/_12sdp"
+                app:itemIconTint="@drawable/bottomitem_selector"
+                app:itemRippleColor="@android:color/transparent"
+                app:labelVisibilityMode="selected"
+                android:background="@color/bottomNav"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottomnav_menu" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toTopOf="@+id/bottomnavigation_id"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+                app:navGraph="@navigation/app_navigation" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_drawer"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_180sdp"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        android:background="@color/mainbackground"
+        app:itemTextColor="@color/black"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_layout"
         app:menu="@menu/navi_menu"
         />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomnavigation_id"
-            android:layout_width="match_parent"
-            android:layout_height="69dp"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/bottomround_corner"
-            android:elevation="@dimen/_10sdp"
-            app:itemIconSize="@dimen/_13sdp"
-            app:itemIconTint="@drawable/bottomitem_selector"
-            app:itemRippleColor="@android:color/transparent"
-            app:labelVisibilityMode="selected"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottomnav_menu" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.drawerlayout.widget.DrawerLayout>

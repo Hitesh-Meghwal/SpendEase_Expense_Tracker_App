@@ -10,8 +10,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
-        android:layout_width="318dp"
-        android:layout_height="221dp"
+        android:layout_width="274dp"
+        android:layout_height="177dp"
         android:layout_marginStart="46dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="47dp"
@@ -29,30 +29,27 @@
         android:layout_height="68dp"
         android:layout_marginStart="46dp"
         android:layout_marginEnd="45dp"
-        android:layout_marginBottom="12dp"
         android:fontFamily="@font/cantora_one"
         android:text="@string/add_few_details_befor_you_continue"
         android:textColor="@color/black"
         android:textSize="@dimen/_20sdp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="371dp"
         android:layout_margin="@dimen/_20sdp"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="100dp"
         app:cardCornerRadius="@dimen/_10ssp"
         app:cardElevation="@dimen/_20ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.901"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -66,6 +63,7 @@
                 android:id="@+id/entername_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:drawableStart="@drawable/baseline_person_24"
                 android:inputType="textPersonName"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp" />
@@ -83,6 +81,7 @@
                 android:id="@+id/entermonthlyb_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp" />
@@ -100,25 +99,36 @@
                 android:id="@+id/enteryearlyb_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_baseline_currency_rupee_24"
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/currencyspinner_id"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_180sdp"
-            android:layout_marginEnd="@dimen/_15sdp" />
+            android:layout_marginTop="@dimen/_182sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:hint="@string/select_currency">
+
+            <AutoCompleteTextView
+                android:id="@+id/currencyselector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/letsgo_id"
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_224sdp"
+            android:layout_marginTop="@dimen/_240sdp"
             android:background="@drawable/login_button"
             android:text="@string/let_s_go"
             android:textSize="@dimen/_13sdp" />

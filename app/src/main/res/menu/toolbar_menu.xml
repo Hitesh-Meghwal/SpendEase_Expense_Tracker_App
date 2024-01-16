@@ -5,16 +5,16 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/darklightmode"
-            android:title="@string/darklightmode"
-            android:icon="@drawable/night"
-            app:showAsAction="ifRoom" />
+            android:id="@+id/reports_id"
+            android:title="@string/report"
+            android:icon="@drawable/report"
+            app:showAsAction="always" />
 
         <item
             android:id="@+id/logout_id"
             android:title="@string/log_out"
             android:icon="@drawable/logout"
-            app:showAsAction="always" />
+            app:showAsAction="ifRoom" />
     </group>
 
 </menu>
